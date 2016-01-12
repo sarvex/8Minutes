@@ -3,9 +3,15 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
 
   <uses-permission android:name="android.permission.WAKE_LOCK"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <!-- To auto-complete the email text field in the login form with the user's emails -->
+  <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+  <uses-permission android:name="android.permission.READ_PROFILE"/>
+  <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
   <application
-    android:name=".MainApplication"
+    android:name="com.eightmins.eightminutes.MainApplication"
     android:allowBackup="true"
     android:fullBackupContent="true"
     android:icon="@mipmap/ic_launcher"
@@ -13,7 +19,7 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
     <activity
-      android:name=".MainActivity"
+      android:name="com.eightmins.eightminutes.MainActivity"
       android:label="@string/app_name"
       android:theme="@style/AppTheme.NoActionBar">
       <intent-filter>
@@ -22,9 +28,16 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+
     <meta-data
       android:name="io.fabric.ApiKey"
       android:value="5bbbd945453d1879bfc1afe8f3d4d400cc8bff89"/>
+    <meta-data
+      android:name="com.parse.APPLICATION_ID"
+      android:value="dJDm7ykUrDyWwRxvRuwxPVwM4Wf9aMr3mugB2Sey" />
+    <meta-data
+      android:name="com.parse.CLIENT_KEY"
+      android:value="c9VA3tjWCkUVwDnEdfS35N1FmJ8DLmY20C69L9Ud" />
   </application>
-  <uses-permission android:name="android.permission.INTERNET"/>
+
 </manifest>

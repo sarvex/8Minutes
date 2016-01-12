@@ -18,7 +18,7 @@ public class MainApplication extends Application {
     super.onCreate();
 
     Parse.enableLocalDatastore(this);
-    Parse.initialize(this, BuildConfig.PARSE_APP_ID, BuildConfig.PARSE_API_KEY);
+    Parse.initialize(this);
     Fabric.with(this, new Crashlytics(), new Answers());
   }
 }
