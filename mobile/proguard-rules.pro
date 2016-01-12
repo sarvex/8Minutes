@@ -15,10 +15,21 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-dontwarn butterknife.internal.**
+-dontwarn com.parse.**
+
+-keepattributes *Annotation*
+-keepattributes Signature
+-keepattributes InnerClasses
+-keepattributes InnerClasses,EnclosingMethod
 
 -keep class butterknife.** { *; }
--dontwarn butterknife.internal.**
 -keep class **$$ViewBinder { *; }
+-keep class com.parse.** { *; }
+-keep class org.eclipse.mat.** { *; }
+-keep class com.squareup.leakcanary.** { *; }
+-keep class com.crashlytics.** { *; }
+-keep class com.crashlytics.android.**
 
 -keepclasseswithmembernames class * {
     @butterknife.* <fields>;
