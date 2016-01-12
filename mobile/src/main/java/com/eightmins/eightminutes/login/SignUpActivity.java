@@ -45,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
-    this.getMenuInflater().inflate(menu.menu_sign_up, menu);
+    this.getMenuInflater().inflate(R.menu.menu_sign_up, menu);
     return true;
   }
 
@@ -57,7 +57,7 @@ public class SignUpActivity extends AppCompatActivity {
     int id = item.getItemId();
 
     //noinspection SimplifiableIfStatement
-    if (id == id.action_settings) {
+    if (id == R.id.action_settings) {
       return true;
     }
 

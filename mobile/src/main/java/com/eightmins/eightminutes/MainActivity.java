@@ -22,7 +22,6 @@ import android.view.View;
 
 import com.eightmins.eightminutes.R.id;
 import com.eightmins.eightminutes.R.layout;
-import com.eightmins.eightminutes.R.mipmap;
 import com.eightmins.eightminutes.login.LoginActivity;
 import com.parse.ParseAnalytics;
 import com.parse.ParseUser;
@@ -33,7 +32,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-  private final boolean searchBoxShown;
+  private final boolean searchBoxShown = false;
   @Bind(id.drawer_layout)
   DrawerLayout drawerLayout;
   @Bind(id.toolbar)
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     ActionBar actionBar = this.getSupportActionBar();
     if (actionBar != null) {
-      actionBar.setHomeAsUpIndicator(mipmap.ic_menu);
+      actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
       actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
@@ -100,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    this.getMenuInflater().inflate(menu.menu_main, menu);
+    this.getMenuInflater().inflate(R.menu.menu_main, menu);
     MenuItem searchItem = menu.findItem(id.action_search);
 
     SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -121,12 +120,12 @@ public class MainActivity extends AppCompatActivity {
     boolean result = false;
 
     switch (id) {
-      case id.action_logout:
+      case R.id.action_logout:
         ParseUser.logOutInBackground();
         this.toLoginActivity();
         result = true;
         break;
-      case id.action_settings:
+      case R.id.action_settings:
         result = true;
         break;
       case android.R.id.home:
