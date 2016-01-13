@@ -19,22 +19,22 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
   }
 
   public void addFragment(Fragment fragment, String title) {
-    this.fragments.add(fragment);
-    this.titles.add(title);
+    fragments.add(fragment);
+    titles.add(title);
   }
 
   @Override
   public Fragment getItem(int position) {
-    return this.fragments.get(position);
+    return fragments.get(position);
   }
 
   @Override
   public int getCount() {
-    return this.fragments.size();
+    return fragments.size();
   }
 
   @Override
   public CharSequence getPageTitle(int position) {
-    return this.titles.get(position);
+    return titles.get(position);
   }
 }

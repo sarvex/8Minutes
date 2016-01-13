@@ -13,8 +13,6 @@ import android.widget.EditText;
 
 import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
-import com.eightmins.eightminutes.R.id;
-import com.eightmins.eightminutes.R.layout;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -25,23 +23,21 @@ import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
 
-  @Bind(id.username)
-  EditText username;
-  @Bind(id.password)
-  EditText password;
+  @Bind(R.id.username) EditText username;
+  @Bind(R.id.password) EditText password;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    this.requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+    requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
-    this.setContentView(layout.activity_login);
+    setContentView(R.layout.activity_login);
     ButterKnife.bind(this);
   }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
-    this.getMenuInflater().inflate(R.menu.menu_login, menu);
+    getMenuInflater().inflate(R.menu.menu_login, menu);
     return true;
   }
 
@@ -60,12 +56,12 @@ public class LoginActivity extends AppCompatActivity {
   }
 
 
-  @OnClick(id.button_login_sign_up)
+  @OnClick(R.id.button_login_sign_up)
   public void signUp(View view) {
-    this.startActivity(new Intent(this, SignUpActivity.class));
+    startActivity(new Intent(this, SignUpActivity.class));
   }
 
-  @OnClick(id.button_sign_in)
+  @OnClick(R.id.button_sign_in)
   public void signIn(View view) {
     String username = this.username.getText().toString().trim();
     String password = this.password.getText().toString().trim();
@@ -77,13 +73,13 @@ public class LoginActivity extends AppCompatActivity {
       new AlertDialog.Builder(this).setTitle(R.string.error_title).setMessage(R.string.password_cannot_be_empty)
           .setPositiveButton(string.ok, null).create().show();
     } else {
-      this.setProgressBarIndeterminate(true);
+      setProgressBarIndeterminate(true);
       ParseUser.logInInBackground(username, password, new LogInCallback() {
         @Override
         public void done(ParseUser user, ParseException exception) {
-          LoginActivity.this.setProgressBarIndeterminate(false);
+          setProgressBarIndeterminate(false);
           if (exception == null) {
-            LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainActivity.class)
+            startActivity(new Intent(LoginActivity.this, MainActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
           } else {
             new AlertDialog.Builder(LoginActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage())
