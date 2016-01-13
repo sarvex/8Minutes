@@ -5,13 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -20,9 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.eightmins.eightminutes.R.id;
-import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.login.LoginActivity;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.parse.ParseAnalytics;
 import com.parse.ParseUser;
 
@@ -33,74 +33,115 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
   private final boolean searchBoxShown = false;
-  @Bind(id.drawer_layout)
-  DrawerLayout drawerLayout;
-  @Bind(id.toolbar)
-  Toolbar toolbar;
-  @Bind(id.viewpager)
-  ViewPager viewPager;
-  @Bind(id.tabs)
-  TabLayout tabLayout;
-  @Bind(id.fab)
-  FloatingActionButton floatingActionButton;
+  @Bind(R.id.toolbar) Toolbar toolbar;
+  @Bind(R.id.viewpager) ViewPager viewPager;
+  @Bind(R.id.tabs) TabLayout tabLayout;
+  @Bind(R.id.fab) FloatingActionButton floatingActionButton;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    this.setContentView(layout.activity_main);
+    setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
-    this.setSupportActionBar(this.toolbar);
+    setSupportActionBar(toolbar);
 
-    ActionBar actionBar = this.getSupportActionBar();
+    ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) {
       actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
       actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
-    this.drawerLayout = (DrawerLayout) this.findViewById(id.drawer_layout);
-    NavigationView navigationView = (NavigationView) this.findViewById(id.nav_view);
-    if (navigationView != null) {
-      navigationView.setNavigationItemSelectedListener(
-          new OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-              menuItem.setChecked(true);
-              MainActivity.this.drawerLayout.closeDrawers();
-              return true;
-            }
-          });
-    }
+    setupDrawer();
 
-    if (this.viewPager != null) {
-      PagerAdapter adapter = new PagerAdapter(this.getSupportFragmentManager());
+    if (viewPager != null) {
+      PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
 //      adapter.addFragment(new StintFragment(), "Offered");
 //      adapter.addFragment(new StintFragment(), "Accepted");
 //      adapter.addFragment(new StintFragment(), "Completed");
 //      adapter.addFragment(new StintFragment(), "Approved");
-      this.viewPager.setAdapter(adapter);
-      this.viewPager.setCurrentItem(1);
+      viewPager.setAdapter(adapter);
+//      viewPager.setCurrentItem(1);
     }
 
-    this.tabLayout.setupWithViewPager(this.viewPager);
-    this.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-    this.tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+    tabLayout.setupWithViewPager(viewPager);
+    tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+    tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-    ParseAnalytics.trackAppOpenedInBackground(this.getIntent());
+    ParseAnalytics.trackAppOpenedInBackground(getIntent());
     if (ParseUser.getCurrentUser() == null) {
-      this.toLoginActivity();
+      toLoginActivity();
     }
   }
 
+//  private OnFilterChangedListener onFilterChangedListener;
+
+//  public void setOnFilterChangedListener(OnFilterChangedListener onFilterChangedListener) {
+//    this.onFilterChangedListener = onFilterChangedListener;
+//  }
+
+  private void setupDrawer () {
+    AccountHeader accountHeader = new AccountHeaderBuilder()
+        .withActivity(this)
+        .withHeaderBackground(R.drawable.header)
+        .addProfiles(
+            new ProfileDrawerItem().withName(ParseUser.getCurrentUser().getUsername()).withEmail(ParseUser.getCurrentUser().getEmail())
+        )
+        .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+          @Override
+          public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+            return false;
+          }
+        })
+        .build();
+
+    Drawer drawer = new DrawerBuilder()
+        .withActivity(this)
+        .withToolbar(toolbar)
+        .withAccountHeader(accountHeader)
+
+        .withHeader(R.layout.header)
+//        .addDrawerItems(
+//            new PrimaryDrawerItem().withName(R.string.category_all).withIdentifier(Category.ALL.id).withIcon(GoogleMaterial.Icon.gmd_landscape),
+//            new PrimaryDrawerItem().withName(R.string.category_featured).withIdentifier(Category.FEATURED.id).withIcon(GoogleMaterial.Icon.gmd_grade),
+//            new SectionDrawerItem().withName(R.string.category_section_categories),
+//            new PrimaryDrawerItem().withName(R.string.category_buildings).withIdentifier(Category.BUILDINGS.id).withIcon(GoogleMaterial.Icon.gmd_location_city),
+//            new PrimaryDrawerItem().withName(R.string.category_food).withIdentifier(Category.FOOD.id).withIcon(GoogleMaterial.Icon.gmd_local_bar),
+//            new PrimaryDrawerItem().withName(R.string.category_nature).withIdentifier(Category.NATURE.id).withIcon(GoogleMaterial.Icon.gmd_local_florist),
+//            new PrimaryDrawerItem().withName(R.string.category_objects).withIdentifier(Category.OBJECTS.id).withIcon(GoogleMaterial.Icon.gmd_style),
+//            new PrimaryDrawerItem().withName(R.string.category_people).withIdentifier(Category.PEOPLE.id).withIcon(GoogleMaterial.Icon.gmd_person),
+//            new PrimaryDrawerItem().withName(R.string.category_technology).withIdentifier(Category.TECHNOLOGY.id).withIcon(GoogleMaterial.Icon.gmd_local_see)
+//        )
+//        .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+//
+//          @Override
+//          public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+//            if (drawerItem != null) {
+//              if (drawerItem instanceof Nameable) {
+//                toolbar.setTitle(((Nameable) drawerItem).getName().getText(MainActivity.this));
+//              }
+//              if (onFilterChangedListener != null) {
+//                onFilterChangedListener.onFilterChanged(drawerItem.getIdentifier());
+//              }
+//            }
+//
+//            return false;
+//          }
+//        })
+        .build();
+
+    drawer.getRecyclerView().setVerticalScrollBarEnabled(false);
+  }
+
   private void toLoginActivity() {
-    this.startActivity(new Intent(this, LoginActivity.class)
+    startActivity(new Intent(this, LoginActivity.class)
         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
   }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    this.getMenuInflater().inflate(R.menu.menu_main, menu);
-    MenuItem searchItem = menu.findItem(id.action_search);
+    getMenuInflater().inflate(R.menu.menu_main, menu);
+    MenuItem searchItem = menu.findItem(R.id.action_search);
 
     SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
@@ -122,15 +163,12 @@ public class MainActivity extends AppCompatActivity {
     switch (id) {
       case R.id.action_logout:
         ParseUser.logOutInBackground();
-        this.toLoginActivity();
+        toLoginActivity();
         result = true;
         break;
       case R.id.action_settings:
         result = true;
         break;
-      case android.R.id.home:
-        this.drawerLayout.openDrawer(GravityCompat.START);
-        result = true;
       default:
         break;
     }
@@ -138,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
     return result || super.onOptionsItemSelected(item);
   }
 
-  @OnClick(id.fab)
+  @OnClick(R.id.fab)
   public void onFloatingActionButtonClicked(View view) {
     Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
   }

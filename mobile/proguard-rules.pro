@@ -17,12 +17,15 @@
 #}
 -dontwarn butterknife.internal.**
 -dontwarn com.parse.**
+-dontwarn retrofit2.**
 
 -keepattributes *Annotation*
 -keepattributes Signature
 -keepattributes InnerClasses
+-keepattributes Exceptions
 -keepattributes InnerClasses,EnclosingMethod
 
+-keep class retrofit2.** { *; }
 -keep class butterknife.** { *; }
 -keep class **$$ViewBinder { *; }
 -keep class com.parse.** { *; }
