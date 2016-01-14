@@ -48,7 +48,6 @@
     android:inputType="phone"/>
 
   <LinearLayout
-    style="?android:buttonBarButtonStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
@@ -58,6 +57,7 @@
 
     <Button
       android:id="@+id/button_login_sign_up"
+      style="?android:attr/buttonBarButtonStyle"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_weight="1"
