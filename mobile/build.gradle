@@ -104,6 +104,7 @@ dependencies {
   compile 'com.squareup.okhttp:okhttp-urlconnection:2.7.2'
   compile 'com.squareup.picasso:picasso:2.5.2'
   compile 'com.github.xiprox.errorview:library:2.2.0'
-  compile 'com.mikepenz:google-material-typeface:1.2.0.1@aar'
+  compile 'com.mikepenz:iconics-core:2.5.4@aar'
+  compile 'com.mikepenz:google-material-typeface:2.1.0.1.original@aar'
   compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
 }

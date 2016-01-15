@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -16,11 +15,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.eightmins.eightminutes.advocate.MemberActivity;
 import com.eightmins.eightminutes.advocate.ReferActivity;
-import com.eightmins.eightminutes.advocate.ReferralFragment;
 import com.eightmins.eightminutes.advocate.SpreadFragment;
-import com.eightmins.eightminutes.advocate.TeamFragment;
 import com.eightmins.eightminutes.advocate.VideoFragment;
+import com.eightmins.eightminutes.advocate.member.TeamFragment;
+import com.eightmins.eightminutes.advocate.refer.ReferralFragment;
 import com.eightmins.eightminutes.login.LoginActivity;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   @Bind(R.id.toolbar) Toolbar toolbar;
   @Bind(R.id.viewpager) ViewPager viewPager;
   @Bind(R.id.tabs) TabLayout tabLayout;
-  @Bind(R.id.refer_button) FloatingActionButton floatingActionButton;
 
   private AccountHeader accountHeader;
   private Drawer drawer;
@@ -122,9 +121,9 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
         .withHeader(R.layout.header)
         .addDrawerItems(
             new PrimaryDrawerItem().withName("Order T-Shirts").withIcon(GoogleMaterial.Icon.gmd_local_florist),
-            new PrimaryDrawerItem().withName("Profile").withIcon(GoogleMaterial.Icon.gmd_style),
-            new PrimaryDrawerItem().withName("Settings").withIcon(GoogleMaterial.Icon.gmd_person),
-            new PrimaryDrawerItem().withName("Logout").withIcon(GoogleMaterial.Icon.gmd_local_see)
+            new PrimaryDrawerItem().withName("Profile").withIcon(GoogleMaterial.Icon.gmd_person),
+            new PrimaryDrawerItem().withName("Settings").withIcon(GoogleMaterial.Icon.gmd_settings),
+            new PrimaryDrawerItem().withName("Logout").withIcon(GoogleMaterial.Icon.gmd_android)
         )
         .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
 
@@ -190,9 +189,19 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     return result || super.onOptionsItemSelected(item);
   }
 
-  @OnClick(R.id.refer_button)
-  public void onFloatingActionButtonClicked(View view) {
-    startActivity(new Intent(this, ReferActivity.class));
+  @OnClick(R.id.add_button)
+  public void onAddButtonClicked(View view) {
+    switch (viewPager.getCurrentItem()) {
+      case 0:
+        startActivity(new Intent(this, ReferActivity.class));
+        break;
+      case 1:
+        startActivity(new Intent(this, MemberActivity.class));
+        break;
+      default:
+        break;
+    }
+
   }
 
   @Override

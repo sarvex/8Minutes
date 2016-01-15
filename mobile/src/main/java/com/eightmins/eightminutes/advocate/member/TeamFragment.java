@@ -1,14 +1,23 @@
-package com.eightmins.eightminutes.advocate;
+package com.eightmins.eightminutes.advocate.member;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.eightmins.eightminutes.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,12 +28,14 @@ import com.eightmins.eightminutes.R;
  * create an instance of this fragment.
  */
 public class TeamFragment extends Fragment {
-  // TODO: Rename parameter arguments, choose names that match
-  // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+  @Bind(R.id.team_recycler_view) RecyclerView recyclerView;
+  private TeamAdapter adapter;
+  private List<Team> teams;
+
   private static final String ARG_PARAM1 = "param1";
   private static final String ARG_PARAM2 = "param2";
 
-  // TODO: Rename and change types of parameters
   private String mParam1;
   private String mParam2;
 
@@ -57,13 +68,33 @@ public class TeamFragment extends Fragment {
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
     }
+
+    // TODO dummy data
+    teams = new ArrayList<>(10);
+    teams.add(new Team(R.mipmap.ic_menu, "Member 1", "Member One Description", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 2", "Member Two Description", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 3", "Member Three Description", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 4", "Member Four Description", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 5", "Member Five Description", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 6", "Member Six Description", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 7", "Member Seven Description", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 8", "Member Eight Description", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 9", "Member Nine Description", 2, 4, 6, 10000));
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     // Inflate the layout for this fragment
-    return inflater.inflate(R.layout.fragment_team, container, false);
+    View view = inflater.inflate(R.layout.fragment_team, container, false);
+
+    ButterKnife.bind(this, view);
+    recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+    recyclerView.setItemAnimator(new DefaultItemAnimator());
+    recyclerView.setHasFixedSize(true);
+    recyclerView.setAdapter(new TeamAdapter(teams));
+
+    return view;
   }
 
   // TODO: Rename method, update argument and hook method into UI event

@@ -1,14 +1,23 @@
-package com.eightmins.eightminutes.advocate;
+package com.eightmins.eightminutes.advocate.refer;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.eightmins.eightminutes.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,12 +28,14 @@ import com.eightmins.eightminutes.R;
  * create an instance of this fragment.
  */
 public class ReferralFragment extends Fragment {
-  // TODO: Rename parameter arguments, choose names that match
-  // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+  @Bind(R.id.referral_recycler_view) RecyclerView recyclerView;
+  private ReferralAdapter adapter;
+  private List<Referral> referrals;
+
   private static final String ARG_PARAM1 = "param1";
   private static final String ARG_PARAM2 = "param2";
 
-  // TODO: Rename and change types of parameters
   private String mParam1;
   private String mParam2;
 
@@ -57,13 +68,34 @@ public class ReferralFragment extends Fragment {
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
     }
+
+
+    // TODO dummy data
+    referrals = new ArrayList<>(10);
+    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 1", "Referral One Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 2", "Referral Two Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 3", "Referral Three Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 4", "Referral Four Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 5", "Referral Five Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 6", "Referral Six Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 7", "Referral Seven Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 8", "Referral Eight Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 9", "Referral Nine Description", R.mipmap.ic_done));
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     // Inflate the layout for this fragment
-    return inflater.inflate(R.layout.fragment_referral, container, false);
+    View view = inflater.inflate(R.layout.fragment_referral, container, false);
+
+    ButterKnife.bind(this, view);
+    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    recyclerView.setItemAnimator(new DefaultItemAnimator());
+    recyclerView.setHasFixedSize(true);
+    recyclerView.setAdapter(new ReferralAdapter(referrals));
+
+    return view;
   }
 
   // TODO: Rename method, update argument and hook method into UI event

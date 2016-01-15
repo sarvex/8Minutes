@@ -1,4 +1,4 @@
-package com.eightmins.eightminutes.login;
+package com.eightmins.eightminutes.advocate;
 
 import android.R.string;
 import android.app.AlertDialog.Builder;
@@ -13,17 +13,16 @@ import android.widget.Toast;
 import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
 import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SignUpActivity extends AppCompatActivity {
+public class MemberActivity extends AppCompatActivity {
 
-  @Bind(R.id.username) EditText username;
-  @Bind(R.id.password) EditText password;
+  @Bind(R.id.name) EditText name;
   @Bind(R.id.email) EditText email;
   @Bind(R.id.phone) EditText phone;
 
@@ -31,21 +30,18 @@ public class SignUpActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_sign_up);
+    setContentView(R.layout.activity_member);
     ButterKnife.bind(this);
   }
 
-  @OnClick(R.id.button_login_sign_up)
-  public void signUpClicked(final View view) {
-    String username = this.username.getText().toString().trim();
-    String password = this.password.getText().toString().trim();
+  @OnClick(R.id.add_member)
+  public void addMemberClicked(final View view) {
+    String name = this.name.getText().toString().trim();
     String email = this.email.getText().toString().trim();
     String phone = this.phone.getText().toString().trim();
 
-    if (username.isEmpty()) {
+    if (name.isEmpty()) {
       new Builder(this).setTitle(R.string.error_title).setMessage(R.string.username_cannot_be_empty).setPositiveButton(string.ok, null).create().show();
-    } else if (password.isEmpty()) {
-      new Builder(this).setTitle(R.string.error_title).setMessage(R.string.password_cannot_be_empty).setPositiveButton(string.ok, null).create().show();
     } else if (email.isEmpty()) {
       new Builder(this).setTitle(R.string.error_title).setMessage(R.string.email_cannot_be_empty).setPositiveButton(string.ok, null).create().show();
     } else if (phone.isEmpty()) {
@@ -53,20 +49,18 @@ public class SignUpActivity extends AppCompatActivity {
     } else {
       setProgressBarIndeterminate(true);
 
-      ParseUser newUser = new ParseUser();
-      newUser.setUsername(username);
-      newUser.setPassword(password);
-      newUser.setEmail(email);
-      newUser.put("phone", phone);
-      newUser.signUpInBackground(new SignUpCallback() {
+      ParseObject member = new ParseObject("Member");
+      member.put("name", name);
+      member.put("email", email);
+      member.put("phone", phone);
+      member.saveInBackground(new SaveCallback() {
         @Override
         public void done(ParseException exception) {
-          setProgressBarIndeterminate(false);
           if (exception == null) {
-            Toast.makeText(SignUpActivity.this, "Sign up done successfully", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(SignUpActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            Toast.makeText(MemberActivity.this, "Member added sucessfully", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MemberActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
           } else {
-            new Builder(SignUpActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(string.ok, null).create().show();
+            new Builder(MemberActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(string.ok, null).create().show();
           }
         }
       });
