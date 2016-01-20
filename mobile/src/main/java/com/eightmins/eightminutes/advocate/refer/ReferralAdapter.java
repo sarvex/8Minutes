@@ -31,7 +31,7 @@ public class ReferralAdapter extends RecyclerView.Adapter<ReferralAdapter.ViewHo
 
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
-    holder.bindStint(referrals.get(position));
+    holder.bind(referrals.get(position));
   }
 
   @Override
@@ -50,7 +50,7 @@ public class ReferralAdapter extends RecyclerView.Adapter<ReferralAdapter.ViewHo
       ButterKnife.bind(this, view);
     }
 
-    public void bindStint(Referral referral) {
+    public void bind(Referral referral) {
       photo.setImageResource(referral.getImage());
       name.setText(referral.getName());
       description.setText(referral.getDescription());

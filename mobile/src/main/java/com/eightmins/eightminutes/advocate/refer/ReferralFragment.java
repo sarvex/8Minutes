@@ -69,7 +69,6 @@ public class ReferralFragment extends Fragment {
       mParam2 = getArguments().getString(ARG_PARAM2);
     }
 
-
     // TODO dummy data
     referrals = new ArrayList<>(10);
     referrals.add(new Referral(R.mipmap.ic_menu, "Referral 1", "Referral One Description", R.mipmap.ic_done));

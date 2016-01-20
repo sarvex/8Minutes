@@ -1,26 +1,30 @@
-package com.eightmins.eightminutes.advocate;
+package com.eightmins.eightminutes.advocate.dash;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.eightmins.eightminutes.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link SpreadFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link SpreadFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class SpreadFragment extends Fragment {
-  // TODO: Rename parameter arguments, choose names that match
-  // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class DashFragment extends Fragment {
+  @Bind(R.id.dash_recycler_view)
+  RecyclerView recyclerView;
+  private DashAdapter adapter;
+  private List<Dash> dashes;
+
   private static final String ARG_PARAM1 = "param1";
   private static final String ARG_PARAM2 = "param2";
 
@@ -36,11 +40,11 @@ public class SpreadFragment extends Fragment {
    *
    * @param param1 Parameter 1.
    * @param param2 Parameter 2.
-   * @return A new instance of fragment SpreadFragment.
+   * @return A new instance of fragment DashFragment.
    */
   // TODO: Rename and change types and number of parameters
-  public static SpreadFragment newInstance(String param1, String param2) {
-    SpreadFragment fragment = new SpreadFragment();
+  public static DashFragment newInstance(String param1, String param2) {
+    DashFragment fragment = new DashFragment();
     Bundle args = new Bundle();
     args.putString(ARG_PARAM1, param1);
     args.putString(ARG_PARAM2, param2);
@@ -48,7 +52,7 @@ public class SpreadFragment extends Fragment {
     return fragment;
   }
 
-  public SpreadFragment() {
+  public DashFragment() {
     // Required empty public constructor
   }
 
@@ -59,14 +63,26 @@ public class SpreadFragment extends Fragment {
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
     }
+
+    // TODO dummy data
+    dashes = new ArrayList<>(10);
+    dashes.add(new Dash("Progress", "3 Completed"));
+    dashes.add(new Dash("Team", "5 Members"));
+    dashes.add(new Dash("Earnings", "Rs 10,00,000"));
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-    return inflater.inflate(R.layout.fragment_spread, container, false);
-  }
+    View view = inflater.inflate(R.layout.fragment_dash, container, false);
+
+    ButterKnife.bind(this, view);
+    recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+    recyclerView.setItemAnimator(new DefaultItemAnimator());
+    recyclerView.setHasFixedSize(true);
+    recyclerView.setAdapter(new DashAdapter(dashes));
+
+    return view;  }
 
   // TODO: Rename method, update argument and hook method into UI event
   public void onButtonPressed(Uri uri) {

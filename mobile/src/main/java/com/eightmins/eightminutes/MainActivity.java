@@ -1,15 +1,13 @@
 package com.eightmins.eightminutes;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,8 +15,8 @@ import android.view.View;
 
 import com.eightmins.eightminutes.advocate.MemberActivity;
 import com.eightmins.eightminutes.advocate.ReferActivity;
-import com.eightmins.eightminutes.advocate.SpreadFragment;
 import com.eightmins.eightminutes.advocate.VideoFragment;
+import com.eightmins.eightminutes.advocate.dash.DashFragment;
 import com.eightmins.eightminutes.advocate.member.TeamFragment;
 import com.eightmins.eightminutes.advocate.refer.ReferralFragment;
 import com.eightmins.eightminutes.login.LoginActivity;
@@ -41,9 +39,8 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements ReferralFragment.OnFragmentInteractionListener,
     TeamFragment.OnFragmentInteractionListener, VideoFragment.OnFragmentInteractionListener,
-    SpreadFragment.OnFragmentInteractionListener {
+    DashFragment.OnFragmentInteractionListener {
 
-  private final boolean searchBoxShown = false;
   @Bind(R.id.toolbar) Toolbar toolbar;
   @Bind(R.id.viewpager) ViewPager viewPager;
   @Bind(R.id.tabs) TabLayout tabLayout;
@@ -57,28 +54,13 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
-    setSupportActionBar(toolbar);
-
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
-      actionBar.setDisplayHomeAsUpEnabled(true);
-    }
+    setupToolbar();
 
     setupDrawer();
 
-    if (viewPager != null) {
-      PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
-      adapter.addFragment(new ReferralFragment(), "Referrals");
-      adapter.addFragment(new TeamFragment(), "Team");
-      adapter.addFragment(new VideoFragment(), "Videos");
-      adapter.addFragment(new SpreadFragment(), "Spread");
-      viewPager.setAdapter(adapter);
-    }
+    setupViewPager();
 
-    tabLayout.setupWithViewPager(viewPager);
-    tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-    tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+    setupCollapsingToolbar();
 
     ParseAnalytics.trackAppOpenedInBackground(getIntent());
     if (ParseUser.getCurrentUser() == null) {
@@ -86,13 +68,41 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     }
   }
 
-  private OnFilterChangedListener onFilterChangedListener;
+  private void setupCollapsingToolbar() {
+    final CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
 
-  public void setOnFilterChangedListener(OnFilterChangedListener onFilterChangedListener) {
-    this.onFilterChangedListener = onFilterChangedListener;
+    collapsingToolbar.setTitleEnabled(false);
+    collapsingToolbar.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+    collapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
+    collapsingToolbar.setStatusBarScrimColor(getResources().getColor(R.color.primary_dark));
   }
 
-  private void setupDrawer () {
+  private void setupViewPager() {
+    if (viewPager != null) {
+      PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
+      adapter.addFragment(new DashFragment(), "Home");
+      adapter.addFragment(new ReferralFragment(), "Referrals");
+      adapter.addFragment(new TeamFragment(), "Team");
+      adapter.addFragment(new VideoFragment(), "Videos");
+      viewPager.setAdapter(adapter);
+    }
+
+    tabLayout.setupWithViewPager(viewPager);
+    tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+    tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+  }
+
+  private void setupToolbar() {
+    setSupportActionBar(toolbar);
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) {
+      actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
+      actionBar.setDisplayHomeAsUpEnabled(true);
+      actionBar.setDisplayShowTitleEnabled(false);
+    }
+  }
+
+  private void setupDrawer() {
 
     String username = "";
     String email = "";
@@ -146,6 +156,13 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     drawer.getRecyclerView().setVerticalScrollBarEnabled(false);
   }
 
+  private OnFilterChangedListener onFilterChangedListener;
+
+  public void setOnFilterChangedListener(OnFilterChangedListener onFilterChangedListener) {
+    this.onFilterChangedListener = onFilterChangedListener;
+  }
+
+
   private void toLoginActivity() {
     startActivity(new Intent(this, LoginActivity.class)
         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
@@ -154,17 +171,6 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.menu_main, menu);
-    MenuItem searchItem = menu.findItem(R.id.action_search);
-
-    SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-    SearchView searchView = null;
-    if (searchItem != null) {
-      searchView = (SearchView) searchItem.getActionView();
-    }
-    if (searchView != null) {
-      searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-    }
     return super.onCreateOptionsMenu(menu);
   }
 
@@ -174,11 +180,6 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     boolean result = false;
 
     switch (id) {
-      case R.id.action_logout:
-        ParseUser.logOutInBackground();
-        toLoginActivity();
-        result = true;
-        break;
       case R.id.action_settings:
         result = true;
         break;
@@ -192,10 +193,10 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   @OnClick(R.id.add_button)
   public void onAddButtonClicked(View view) {
     switch (viewPager.getCurrentItem()) {
-      case 0:
+      case 1:
         startActivity(new Intent(this, ReferActivity.class));
         break;
-      case 1:
+      case 2:
         startActivity(new Intent(this, MemberActivity.class));
         break;
       default:

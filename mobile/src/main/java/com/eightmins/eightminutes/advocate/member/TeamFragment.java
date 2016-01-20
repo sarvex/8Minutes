@@ -71,15 +71,15 @@ public class TeamFragment extends Fragment {
 
     // TODO dummy data
     teams = new ArrayList<>(10);
-    teams.add(new Team(R.mipmap.ic_menu, "Member 1", "Member One Description", 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_menu, "Member 2", "Member Two Description", 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_menu, "Member 3", "Member Three Description", 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_menu, "Member 4", "Member Four Description", 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_menu, "Member 5", "Member Five Description", 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_menu, "Member 6", "Member Six Description", 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_menu, "Member 7", "Member Seven Description", 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_menu, "Member 8", "Member Eight Description", 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_menu, "Member 9", "Member Nine Description", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 1", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 2", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 3", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 4", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 5", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 6", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 7", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 8", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_menu, "Member 9", 2, 4, 6, 10000));
   }
 
   @Override

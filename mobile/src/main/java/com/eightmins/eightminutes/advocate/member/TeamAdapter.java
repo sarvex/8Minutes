@@ -31,7 +31,7 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
 
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
-    holder.bindStint(teams.get(position));
+    holder.bind(teams.get(position));
   }
 
   @Override
@@ -42,7 +42,6 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
   public class ViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.team_photo) ImageView photo;
     @Bind(R.id.team_name) TextView name;
-    @Bind(R.id.team_description) TextView description;
     @Bind(R.id.team_installed) TextView installed;
     @Bind(R.id.team_installed_label) TextView installedLabel;
     @Bind(R.id.team_progress) TextView progress;
@@ -56,10 +55,9 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
       ButterKnife.bind(this, view);
     }
 
-    public void bindStint(Team team) {
+    public void bind(Team team) {
       photo.setImageResource(team.getImage());
       name.setText(team.getName());
-      description.setText(team.getDescription());
       installed.setText(String.valueOf(team.getInstalled()));
       installedLabel.setText(" Installed");
       progress.setText(String.valueOf(team.getInstalled()));

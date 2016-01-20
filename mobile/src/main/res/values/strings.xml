@@ -33,4 +33,9 @@
   <string name="average_bill_cannot_be_empty">Average Bill cannot be empty</string>
   <string name="notes_cannot_be_empty">Notes cannot be empty</string>
   <string name="add_member">Add Member</string>
+  <string name="stars">Stars</string>
+  <string name="team">Team</string>
+  <string name="project">Project</string>
+  <string name="earnings">Earnings</string>
+  <string name="progress">Progress</string>
 </resources>

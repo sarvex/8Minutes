@@ -5,9 +5,9 @@
   android:id="@+id/team_card_view"
   android:layout_height="wrap_content"
   android:layout_width="match_parent"
-  android:layout_margin="3dp"
-  card_view:cardCornerRadius="3dp"
-  card_view:cardElevation="6dp">
+  android:layout_margin="3sp"
+  card_view:cardCornerRadius="6sp"
+  card_view:cardElevation="6sp">
 
   <RelativeLayout
     android:layout_height="wrap_content"
@@ -37,17 +37,8 @@
       android:layout_toRightOf="@id/team_photo"/>
 
     <TextView
-      android:id="@+id/team_description"
-      android:layout_below="@id/team_name"
-      android:layout_height="wrap_content"
-      android:layout_toEndOf="@id/team_photo"
-      android:layout_width="wrap_content"
-      tools:text="Member Description"
-      android:layout_toRightOf="@id/team_photo"/>
-
-    <TextView
       android:id="@+id/team_earnings"
-      android:layout_below="@id/team_description"
+      android:layout_below="@id/team_name"
       android:layout_height="wrap_content"
       android:layout_toEndOf="@id/team_photo"
       android:layout_width="wrap_content"
