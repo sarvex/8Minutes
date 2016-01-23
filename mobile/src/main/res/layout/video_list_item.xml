@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:card_view="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_marginTop="10dp"
+  android:clickable="true"
+  card_view:cardCornerRadius="6sp"
+  card_view:cardElevation="6sp">
+
+
+  <com.google.android.youtube.player.YouTubeThumbnailView
+    android:id="@+id/youtube_thumbnail"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:scaleType="centerCrop"
+    android:visibility="visible"/>
+
+  <RelativeLayout
+    android:id="@+id/relativeLayout_over_youtube_thumbnail"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:visibility="visible">
+
+    <ImageView
+      android:id="@+id/btnYoutube_player"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scaleType="center"
+      android:src="@mipmap/ic_play_circle"/>
+
+  </RelativeLayout>
+</android.support.v7.widget.CardView>

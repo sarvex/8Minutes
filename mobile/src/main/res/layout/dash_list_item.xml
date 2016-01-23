@@ -18,11 +18,12 @@
     android:id="@+id/team"
     android:layout_width="match_parent"
     android:layout_height="200sp"
+    custom:external_color="@color/size_external_circle"
     custom:base_color="@color/colorAccent"
     custom:duration="3500"
     custom:max="999"
     custom:min="0"
-    custom:progress_icon="@drawable/star">
+    custom:progress_icon="@mipmap/ic_sun">
 
     <RelativeLayout
       android:layout_width="wrap_content"

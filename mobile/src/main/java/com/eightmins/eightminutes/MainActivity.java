@@ -15,10 +15,10 @@ import android.view.View;
 
 import com.eightmins.eightminutes.advocate.MemberActivity;
 import com.eightmins.eightminutes.advocate.ReferActivity;
-import com.eightmins.eightminutes.advocate.VideoFragment;
 import com.eightmins.eightminutes.advocate.dash.DashFragment;
 import com.eightmins.eightminutes.advocate.member.TeamFragment;
 import com.eightmins.eightminutes.advocate.refer.ReferralFragment;
+import com.eightmins.eightminutes.advocate.video.VideoFragment;
 import com.eightmins.eightminutes.login.LoginActivity;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
