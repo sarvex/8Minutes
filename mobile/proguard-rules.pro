@@ -122,3 +122,6 @@
     **[] $VALUES;
     public *;
 }
+
+#youtube
+-keep class com.google.android.youtube.player.**  { *; }

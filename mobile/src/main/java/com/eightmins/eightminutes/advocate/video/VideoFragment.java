@@ -1,4 +1,4 @@
-package com.eightmins.eightminutes.advocate.refer;
+package com.eightmins.eightminutes.advocate.video;
 
 import android.content.Context;
 import android.net.Uri;
@@ -22,20 +22,21 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ReferralFragment.OnFragmentInteractionListener} interface
+ * {@link VideoFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ReferralFragment#newInstance} factory method to
+ * Use the {@link VideoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ReferralFragment extends Fragment {
-
-  @Bind(R.id.referral_recycler_view) RecyclerView recyclerView;
-  private ReferralAdapter adapter;
-  private List<Referral> referrals;
+public class VideoFragment extends Fragment {
+  @Bind(R.id.video_recycler_view)
+  RecyclerView recyclerView;
+  private VideoAdapter adapter;
+  private List<Video> videos;
 
   private static final String ARG_PARAM1 = "param1";
   private static final String ARG_PARAM2 = "param2";
 
+  // TODO: Rename and change types of parameters
   private String mParam1;
   private String mParam2;
 
@@ -47,17 +48,19 @@ public class ReferralFragment extends Fragment {
    *
    * @param param1 Parameter 1.
    * @param param2 Parameter 2.
-   * @return A new instance of fragment ReferralFragment.
+   * @return A new instance of fragment VideoFragment.
    */
   // TODO: Rename and change types and number of parameters
-  public static ReferralFragment newInstance(String param1, String param2) {
-    ReferralFragment fragment = new ReferralFragment();
+  public static VideoFragment newInstance(String param1, String param2) {
+    VideoFragment fragment = new VideoFragment();
     Bundle args = new Bundle();
     args.putString(ARG_PARAM1, param1);
     args.putString(ARG_PARAM2, param2);
     fragment.setArguments(args);
     return fragment;
-  }  public ReferralFragment() {
+  }
+
+  public VideoFragment() {
     // Required empty public constructor
   }
 
@@ -70,33 +73,29 @@ public class ReferralFragment extends Fragment {
     }
 
     // TODO dummy data
-    referrals = new ArrayList<>(10);
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 1", "Referral One Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 2", "Referral Two Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 3", "Referral Three Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 4", "Referral Four Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 5", "Referral Five Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 6", "Referral Six Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 7", "Referral Seven Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 8", "Referral Eight Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 9", "Referral Nine Description", R.mipmap.ic_done));
+    videos = new ArrayList<>(10);
+    videos.add(new Video("Solar Energy", "", "4uPVZUTLAvA"));
+    videos.add(new Video("How Solar Energy Panels Work", "", "x4CTceusK9I"));
+    videos.add(new Video("How We Turn Solar Energy Into Electricity", "", "EnYjlsGXugo"));
+    videos.add(new Video("Why aren't we only using solar power?", "", "k8d5Pf7VIiU"));
+    videos.add(new Video("The future of solar power", "", "umyvqxDOIhs"));
+    videos.add(new Video("Why solar power is spreading so fast in Africa", "", "tkvbZ0ADmz0"));
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_referral, container, false);
+    View view = inflater.inflate(R.layout.fragment_video, container, false);
 
     ButterKnife.bind(this, view);
     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     recyclerView.setItemAnimator(new DefaultItemAnimator());
     recyclerView.setHasFixedSize(true);
-    recyclerView.setAdapter(new ReferralAdapter(referrals));
+    recyclerView.setAdapter(new VideoAdapter(getContext(), videos));
 
     return view;
   }
 
-  // TODO: Rename method, update argument and hook method into UI event
   public void onButtonPressed(Uri uri) {
     if (mListener != null) {
       mListener.onFragmentInteraction(uri);
@@ -131,7 +130,6 @@ public class ReferralFragment extends Fragment {
    * >Communicating with Other Fragments</a> for more information.
    */
   public interface OnFragmentInteractionListener {
-    // TODO: Update argument type and name
     void onFragmentInteraction(Uri uri);
   }
 }

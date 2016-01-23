@@ -33,7 +33,7 @@
       android:layout_toEndOf="@id/referral_photo"
       android:layout_width="wrap_content"
       android:textSize="24sp"
-      tools:text="Stint Name"
+      tools:text="Referral Name"
       android:layout_toRightOf="@id/referral_photo"/>
 
     <TextView
@@ -42,7 +42,7 @@
       android:layout_height="wrap_content"
       android:layout_toEndOf="@id/referral_photo"
       android:layout_width="wrap_content"
-      tools:text="Stint Description"
+      tools:text="Referral Description"
       android:layout_toRightOf="@id/referral_photo"/>
 
     <ImageView

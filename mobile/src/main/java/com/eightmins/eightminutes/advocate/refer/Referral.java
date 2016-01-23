@@ -34,6 +34,17 @@ public class Referral implements Parcelable{
   public void writeToParcel(Parcel dest, int flags) {
   }
 
+  public Referral(int image, String name, String description, int status) {
+    this.image = image;
+    this.name = name;
+    this.description = description;
+    this.status = status;
+
+  }
+
+  protected Referral(Parcel parcel) {
+  }
+
   public Referral () {
 
   }
@@ -70,14 +81,5 @@ public class Referral implements Parcelable{
     this.status = status;
   }
 
-  public Referral(int image, String name, String description, int status) {
-    this.image = image;
-    this.name = name;
-    this.description = description;
-    this.status = status;
 
-  }
-
-  protected Referral(Parcel in) {
-  }
 }
