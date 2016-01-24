@@ -3,6 +3,7 @@
   <!-- item image -->
   <color name="image_without_palette">#1C1D23</color>
   <color name="text_without_palette">#ffeae1da</color>
+  <color name="window_background">#FFF5F5F5</color>
 
   <!-- default theme colors-->
   <color name="primary">#3F51B5</color>

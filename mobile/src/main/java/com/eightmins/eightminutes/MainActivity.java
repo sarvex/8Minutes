@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     collapsingToolbar.setTitleEnabled(false);
     collapsingToolbar.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
     collapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
-    collapsingToolbar.setStatusBarScrimColor(getResources().getColor(R.color.primary_dark));
+    collapsingToolbar.setStatusBarScrimColor(getResources().getColor(R.color.primary));
   }
 
   private void setupViewPager() {
@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     setSupportActionBar(toolbar);
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) {
-      actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
       actionBar.setDisplayHomeAsUpEnabled(true);
       actionBar.setDisplayShowTitleEnabled(false);
     }
