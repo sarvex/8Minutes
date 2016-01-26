@@ -10,13 +10,46 @@
   android:paddingTop="@dimen/activity_vertical_margin"
   tools:context="com.eightmins.eightminutes.login.LoginActivity">
 
+  <LinearLayout
+    android:id="@+id/social_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:orientation="horizontal">
+
+    <Button
+      android:id="@+id/facebook_login"
+      style="?android:attr/buttonBarButtonStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="@string/facebook"/>
+
+    <Button
+      android:id="@+id/twitter_login"
+      style="?android:attr/buttonBarButtonStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="@string/twitter"/>
+
+    <Button
+      android:id="@+id/google_login"
+      style="?android:attr/buttonBarButtonStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="@string/google"/>
+  </LinearLayout>
+
   <EditText
     android:id="@+id/username"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
-    android:layout_alignParentTop="true"
+    android:layout_centerInParent="true"
     android:hint="@string/username_hint"/>
 
   <EditText
@@ -30,47 +63,30 @@
     android:hint="@string/password_hint"
     android:inputType="textPassword"/>
 
-  <RelativeLayout
-    style="?android:buttonBarButtonStyle"
-    android:layout_width="match_parent"
+
+  <LinearLayout
+    android:id="@+id/login_layout"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
+    android:layout_alignParentBottom="true"
     android:orientation="horizontal">
 
-    <LinearLayout
-      android:id="@+id/login_layout"
-      android:layout_width="fill_parent"
+    <Button
+      android:id="@+id/button_login_sign_up"
+      style="?android:attr/buttonBarButtonStyle"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_alignParentLeft="true"
-      android:orientation="horizontal">
+      android:layout_weight="1"
+      android:text="@string/sign_up"/>
 
-      <Button
-        android:id="@+id/button_login_sign_up"
-        style="?android:attr/buttonBarButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_weight="1"
-        android:text="@string/sign_up"/>
-
-      <Button
-        android:id="@+id/button_sign_in"
-        style="?android:attr/buttonBarButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/button_login_sign_up"
-        android:layout_toRightOf="@+id/button_login_sign_up"
-        android:layout_weight="1"
-        android:text="@string/sign_in"/>
-
-    </LinearLayout>
-  </RelativeLayout>
-
+    <Button
+      android:id="@+id/button_sign_in"
+      style="?android:attr/buttonBarButtonStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="@string/sign_in"/>
+  </LinearLayout>
 </RelativeLayout>
