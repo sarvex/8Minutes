@@ -13,22 +13,36 @@
   <com.google.android.youtube.player.YouTubeThumbnailView
     android:id="@+id/youtube_thumbnail"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="192sp"
     android:scaleType="centerCrop"
+    android:paddingRight="8sp"
+    android:paddingLeft="8sp"
     android:visibility="visible"/>
 
   <RelativeLayout
-    android:id="@+id/relativeLayout_over_youtube_thumbnail"
+    android:id="@+id/youtube_layout"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="192sp"
     android:visibility="visible">
 
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/youtube_title"
+      android:gravity="top"/>
+
     <ImageView
-      android:id="@+id/btnYoutube_player"
+      android:id="@+id/youtube_play"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:scaleType="center"
       android:src="@mipmap/ic_play_circle"/>
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/youtube_description"
+      android:gravity="bottom"/>
 
   </RelativeLayout>
 </android.support.v7.widget.CardView>

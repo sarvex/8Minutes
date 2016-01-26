@@ -1,13 +1,21 @@
 package com.eightmins.eightminutes;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.TabLayout.Tab;
+import android.support.design.widget.TabLayout.ViewPagerOnTabSelectedListener;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +28,7 @@ import com.eightmins.eightminutes.advocate.member.TeamFragment;
 import com.eightmins.eightminutes.advocate.refer.ReferralFragment;
 import com.eightmins.eightminutes.advocate.video.VideoFragment;
 import com.eightmins.eightminutes.login.LoginActivity;
-import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial.Icon;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -29,8 +37,9 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.mikepenz.materialdrawer.model.interfaces.Nameable;
+import com.parse.LogOutCallback;
 import com.parse.ParseAnalytics;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import butterknife.Bind;
@@ -41,12 +50,18 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     TeamFragment.OnFragmentInteractionListener, VideoFragment.OnFragmentInteractionListener,
     DashFragment.OnFragmentInteractionListener {
 
-  @Bind(R.id.toolbar) Toolbar toolbar;
-  @Bind(R.id.viewpager) ViewPager viewPager;
-  @Bind(R.id.tabs) TabLayout tabLayout;
+  @Bind(R.id.toolbar)
+  Toolbar toolbar;
+  @Bind(R.id.viewpager)
+  ViewPager viewPager;
+  @Bind(R.id.tabs)
+  TabLayout tabLayout;
+  @Bind(R.id.add_button)
+  FloatingActionButton addButton;
 
   private AccountHeader accountHeader;
   private Drawer drawer;
+  private ShareActionProvider shareActionProvider;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +103,36 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     }
 
     tabLayout.setupWithViewPager(viewPager);
-    tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-    tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+    tabLayout.setOnTabSelectedListener(new ViewPagerOnTabSelectedListener(viewPager) {
+      @Override
+      public void onTabSelected(Tab tab) {
+        super.onTabSelected(tab);
+        switch (tab.getText().toString()) {
+          case "Home":
+            addButton.setVisibility(View.INVISIBLE);
+            break;
+          case "Referrals":
+            addButton.setVisibility(View.VISIBLE);
+            break;
+          case "Team":
+            addButton.setVisibility(View.VISIBLE);
+            break;
+          case "Videos":
+            addButton.setVisibility(View.INVISIBLE);
+            break;
+        }
+      }
+
+      @Override
+      public void onTabUnselected(Tab tab) {
+        super.onTabUnselected(tab);
+      }
+
+      @Override
+      public void onTabReselected(Tab tab) {
+        super.onTabReselected(tab);
+      }
+    });
   }
 
   private void setupToolbar() {
@@ -129,27 +172,27 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
         .withAccountHeader(accountHeader)
         .withHeader(R.layout.header)
         .addDrawerItems(
-            new PrimaryDrawerItem().withName("Order T-Shirts").withIcon(GoogleMaterial.Icon.gmd_local_florist),
-            new PrimaryDrawerItem().withName("Profile").withIcon(GoogleMaterial.Icon.gmd_person),
-            new PrimaryDrawerItem().withName("Settings").withIcon(GoogleMaterial.Icon.gmd_settings),
-            new PrimaryDrawerItem().withName("Logout").withIcon(GoogleMaterial.Icon.gmd_android)
-        )
-        .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-
-          @Override
-          public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-            if (drawerItem != null) {
-              if (drawerItem instanceof Nameable) {
-                toolbar.setTitle(((Nameable) drawerItem).getName().getText(MainActivity.this));
-              }
-              if (onFilterChangedListener != null) {
-                onFilterChangedListener.onFilterChanged(drawerItem.getIdentifier());
-              }
-            }
-
-            return false;
-          }
-        })
+            new PrimaryDrawerItem().withName("Order T-Shirts").withIcon(Icon.gmd_local_florist),
+            new PrimaryDrawerItem().withName("Profile").withIcon(Icon.gmd_person),
+            new PrimaryDrawerItem().withName("Link Facebook").withIcon(Icon.gmd_person),
+            new PrimaryDrawerItem().withName("Settings").withIcon(Icon.gmd_settings),
+            new PrimaryDrawerItem().withName("Logout").withIcon(Icon.gmd_android)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                  @Override
+                  public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                    if (ParseUser.getCurrentUser() != null) {
+                      ParseUser.logOutInBackground(new LogOutCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                          if (e == null) {
+                            toLoginActivity();
+                          }
+                        }
+                      });
+                    }
+                    return true;
+                  }
+                }))
         .build();
 
     drawer.getRecyclerView().setVerticalScrollBarEnabled(false);
@@ -162,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   }
 
 
-  private void toLoginActivity() {
+  protected void toLoginActivity() {
     startActivity(new Intent(this, LoginActivity.class)
         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
   }
@@ -170,7 +213,25 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.menu_main, menu);
+
+    SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+    MenuItem searchItem = menu.findItem(R.id.action_search);
+    SearchView searchView = null;
+    if (searchItem != null) {
+      searchView = (SearchView) searchItem.getActionView();
+    }
+    if (searchView != null) {
+      searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+    }
+
+    MenuItem shareItem = menu.findItem(R.id.action_share);
+    shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
+    shareActionProvider.setShareIntent(doShare());
     return super.onCreateOptionsMenu(menu);
+  }
+
+  private Intent doShare() {
+    return null;
   }
 
   @Override

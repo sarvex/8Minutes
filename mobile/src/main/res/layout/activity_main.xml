@@ -71,6 +71,9 @@
     android:layout_height="wrap_content"
     android:layout_gravity="end|bottom"
     android:layout_margin="16dp"
+    app:tabMode="scrollable"
+    app:tabGravity="fill"
+    android:visibility="invisible"
     android:src="@mipmap/ic_person_add"
     app:borderWidth="0dp"/>
 

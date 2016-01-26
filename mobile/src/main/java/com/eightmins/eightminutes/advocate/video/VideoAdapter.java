@@ -7,19 +7,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.eightmins.eightminutes.BuildConfig;
 import com.eightmins.eightminutes.R;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
+import com.google.android.youtube.player.YouTubeThumbnailLoader.ErrorReason;
 import com.google.android.youtube.player.YouTubeThumbnailLoader.OnThumbnailLoadedListener;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.google.android.youtube.player.YouTubeThumbnailView.OnInitializedListener;
 
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by nabhilax on 23/01/16.
@@ -49,21 +54,19 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     return videos.size();
   }
 
-  public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+  public class ViewHolder extends RecyclerView.ViewHolder {
 
-    protected RelativeLayout relativeLayout;
-    YouTubeThumbnailView youTubeThumbnailView;
-    protected ImageView playButton;
+    @Bind(R.id.youtube_title) TextView title;
+    @Bind(R.id.youtube_description) TextView description;
+    @Bind(R.id.youtube_layout) RelativeLayout relativeLayout;
+    @Bind(R.id.youtube_thumbnail) YouTubeThumbnailView youTubeThumbnailView;
 
-    public ViewHolder(View itemView) {
-      super(itemView);
-      playButton=(ImageView)itemView.findViewById(R.id.btnYoutube_player);
-      playButton.setOnClickListener(this);
-      relativeLayout = (RelativeLayout) itemView.findViewById(R.id.relativeLayout_over_youtube_thumbnail);
-      youTubeThumbnailView = (YouTubeThumbnailView) itemView.findViewById(R.id.youtube_thumbnail);
+    public ViewHolder(View view) {
+      super(view);
+      ButterKnife.bind(this, view);
     }
 
-    @Override
+    @OnClick(R.id.youtube_play)
     public void onClick(View v) {
 
       Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, BuildConfig.YOUTUBE_DATA_KEY, videos.get(getLayoutPosition()).getUrl());
@@ -79,7 +82,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         }
 
         @Override
-        public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
+        public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, ErrorReason errorReason) {
           //write something for failure
         }
       };

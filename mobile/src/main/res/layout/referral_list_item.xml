@@ -22,7 +22,7 @@
       android:layout_height="wrap_content"
       android:layout_marginEnd="16dp"
       android:layout_width="wrap_content"
-      android:src="@mipmap/ic_menu"
+      android:src="@mipmap/ic_account_circle"
       android:layout_alignParentLeft="true"
       android:layout_marginRight="16dp"/>
 

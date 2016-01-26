@@ -20,6 +20,7 @@ public class Team implements Parcelable {
   };
 
   private int image;
+  private int members;
   private String name;
   private int installed;
   private int progress;
@@ -34,9 +35,18 @@ public class Team implements Parcelable {
 
   }
 
-  public Team (int image, String name, int installed, int progress, int pending, long earnings) {
+  public int getMembers() {
+    return members;
+  }
+
+  public void setMembers(int members) {
+    this.members = members;
+  }
+
+  public Team (int image, String name, int members, int installed, int progress, int pending, long earnings) {
     this.image = image;
     this.name = name;
+    this.members = members;
     this.installed = installed;
     this.progress = progress;
     this.pending = pending;

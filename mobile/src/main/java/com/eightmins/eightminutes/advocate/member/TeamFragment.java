@@ -71,15 +71,15 @@ public class TeamFragment extends Fragment {
 
     // TODO dummy data
     teams = new ArrayList<>(10);
-    teams.add(new Team(R.mipmap.ic_menu, "Member 1", 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_menu, "Member 2", 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_menu, "Member 3", 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_menu, "Member 4", 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_menu, "Member 5", 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_menu, "Member 6", 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_menu, "Member 7", 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_menu, "Member 8", 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_menu, "Member 9", 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_account_circle, "Member 1", 11, 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_account_circle, "Member 2", 11, 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_account_circle, "Member 3", 11, 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_account_circle, "Member 4", 11, 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_account_circle, "Member 5", 11, 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_account_circle, "Member 6", 11, 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_account_circle, "Member 7", 11, 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_account_circle, "Member 8", 11, 2, 4, 6, 10000));
+    teams.add(new Team(R.mipmap.ic_account_circle, "Member 9", 11, 2, 4, 6, 10000));
   }
 
   @Override

@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
@@ -40,8 +39,9 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
-    @Bind(R.id.team_photo) ImageView photo;
     @Bind(R.id.team_name) TextView name;
+    @Bind(R.id.team_members) TextView members;
+    @Bind(R.id.team_members_label) TextView membersLabel;
     @Bind(R.id.team_installed) TextView installed;
     @Bind(R.id.team_installed_label) TextView installedLabel;
     @Bind(R.id.team_progress) TextView progress;
@@ -56,8 +56,9 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
     }
 
     public void bind(Team team) {
-      photo.setImageResource(team.getImage());
       name.setText(team.getName());
+      members.setText(String.valueOf(team.getMembers()));
+      membersLabel.setText(" Members");
       installed.setText(String.valueOf(team.getInstalled()));
       installedLabel.setText(" Installed");
       progress.setText(String.valueOf(team.getInstalled()));

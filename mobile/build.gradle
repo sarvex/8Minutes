@@ -26,6 +26,10 @@ android {
     buildConfigField "String", "PARSE_APP_ID", "\"dJDm7ykUrDyWwRxvRuwxPVwM4Wf9aMr3mugB2Sey\""
     buildConfigField "String", "PARSE_API_KEY", "\"c9VA3tjWCkUVwDnEdfS35N1FmJ8DLmY20C69L9Ud\""
     buildConfigField "String", "YOUTUBE_DATA_KEY", "\"AIzaSyB2ILG90jY5XJGCZZ9fVKNquSuxZB9SDnw\""
+    buildConfigField "String", "TWITTER_KEY", "\"UM0Vi9zgNKWZ4b1C01Nos6Ghg\""
+    buildConfigField "String", "TWITTER_SECRET", "\"kHt73HiM7tCrlfkd9b5CcXqZrh0r6vVOvGkmKXJSukewqZyoca\""
+    buildConfigField "String", "FACEBOOK_ID", "\"464032287120780\""
+    buildConfigField "String", "FACEBOOK_SECRET", "\"f1ed34039ed27f87d9627ce049942285\""
   }
 
   buildTypes {
@@ -39,7 +43,6 @@ android {
 
     debug {
       minifyEnabled false
-      applicationIdSuffix '.debug'
       versionNameSuffix '-DEBUG'
     }
   }
@@ -93,12 +96,17 @@ dependencies {
   compile 'com.android.support:recyclerview-v7:23.1.1'
   compile 'com.android.support:support-v4:23.1.1'
   compile 'com.google.android.gms:play-services:8.4.0'
+  compile 'com.google.android.gms:play-services-auth:8.4.0'
+  compile 'com.google.android.gms:play-services-appinvite:8.4.0'
   compile 'io.reactivex:rxandroid:1.1.0'
   compile 'io.reactivex:rxjava:1.1.0'
   compile 'io.reactivex:rxjava-math:1.0.0'
   compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
   compile 'com.jakewharton:butterknife:7.0.1'
-  compile 'com.parse:parse-android:1.12.0'
+  compile 'com.parse:parse-android:1.13.0'
+  compile 'com.parse:parsefacebookutils-v4-android:1.10.4@aar'
+  compile 'com.facebook.android:facebook-android-sdk:4.9.0'
+  compile 'com.parse:parsetwitterutils-android:1.10.4'
   compile 'com.parse.bolts:bolts-android:1.4.0'
   compile 'com.squareup.retrofit:retrofit:1.9.0'
   compile 'com.squareup.okhttp:okhttp:2.7.2'
@@ -108,6 +116,12 @@ dependencies {
   compile 'com.mikepenz:iconics-core:2.5.5@aar'
   compile 'com.mikepenz:google-material-typeface:2.1.0.1.original@aar'
   compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
-  compile 'com.github.bumptech.glide:glide:3.6.1'
+  compile 'com.github.bumptech.glide:glide:3.7.0'
   compile 'com.github.glomadrian:dashed-circular-progress:1fe8b13942'
+
+  androidTestCompile 'com.android.support.test:runner:0.3'
+  androidTestCompile 'com.android.support.test:rules:0.3'
+  androidTestCompile 'com.android.support:support-annotations:23.1.1'
 }
+
+apply plugin: 'com.google.gms.google-services'
