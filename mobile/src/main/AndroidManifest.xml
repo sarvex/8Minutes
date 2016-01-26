@@ -32,6 +32,7 @@
       android:theme="@style/AppTheme.NoActionBar">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
+
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
@@ -78,9 +79,11 @@
         <category android:name="com.eightmins.eightminutes"/>
       </intent-filter>
     </receiver>
-    <provider android:authorities="com.facebook.app.FacebookContentProvider464032287120780"
-              android:name="com.facebook.FacebookContentProvider"
-              android:exported="true" />
+
+    <provider
+      android:name="com.facebook.FacebookContentProvider"
+      android:authorities="com.facebook.app.FacebookContentProvider464032287120780"
+      android:exported="true"/>
 
     <activity android:name=".advocate.MemberActivity"/>
     <activity
@@ -88,6 +91,12 @@
       android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
       android:label="@string/app_name"
       android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+    <activity android:name=".login.ProfileActivity">
+    </activity>
+    <activity
+      android:name=".login.SettingsActivity"
+      android:label="@string/title_activity_settings">
+    </activity>
   </application>
 
 </manifest>
