@@ -4,10 +4,13 @@ import android.R.string;
 import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.eightmins.eightminutes.MainActivity;
@@ -19,6 +22,7 @@ import com.parse.SignUpCallback;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -26,6 +30,9 @@ public class SignUpActivity extends AppCompatActivity {
   @Bind(R.id.password) EditText password;
   @Bind(R.id.email) EditText email;
   @Bind(R.id.phone) EditText phone;
+  @Bind(R.id.progress_bar) ProgressBar progressBar;
+
+  @Bind(R.id.sign_up) FloatingActionButton signUp;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
     ButterKnife.bind(this);
   }
 
-  @OnClick(R.id.button_login_sign_up)
+  @OnClick(R.id.sign_up)
   public void signUpClicked(final View view) {
     String username = this.username.getText().toString().trim();
     String password = this.password.getText().toString().trim();
@@ -51,7 +58,7 @@ public class SignUpActivity extends AppCompatActivity {
     } else if (phone.isEmpty()) {
       new Builder(this).setTitle(R.string.error_title).setMessage(R.string.phone_cannot_be_empty).setPositiveButton(string.ok, null).create().show();
     } else {
-      setProgressBarIndeterminate(true);
+      showProgressBar();
 
       ParseUser newUser = new ParseUser();
       newUser.setUsername(username);
@@ -61,7 +68,7 @@ public class SignUpActivity extends AppCompatActivity {
       newUser.signUpInBackground(new SignUpCallback() {
         @Override
         public void done(ParseException exception) {
-          setProgressBarIndeterminate(false);
+          hideProgressBar();
           if (exception == null) {
             Toast.makeText(SignUpActivity.this, "Sign up done successfully", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(SignUpActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
@@ -71,5 +78,24 @@ public class SignUpActivity extends AppCompatActivity {
         }
       });
     }
+  }
+
+  @OnEditorAction(R.id.phone)
+  boolean password(int actionId) {
+    if (actionId == EditorInfo.IME_ACTION_DONE) {
+      signUp.performClick();
+      return true;
+    }
+    return false;
+  }
+
+  private void hideProgressBar() {
+    setProgressBarIndeterminate(false);
+    progressBar.setVisibility(View.INVISIBLE);
+  }
+
+  private void showProgressBar() {
+    setProgressBarIndeterminate(true);
+    progressBar.setVisibility(View.VISIBLE);
   }
 }

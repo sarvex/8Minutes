@@ -1,16 +1,21 @@
 package com.eightmins.eightminutes.login;
 
 import android.R.string;
-import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
@@ -28,15 +33,29 @@ import com.parse.ParseUser;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 
 public class LoginActivity extends AppCompatActivity {
 
   @Bind(R.id.username) EditText username;
   @Bind(R.id.password) EditText password;
 
+  @Bind(R.id.progress_bar) ProgressBar progressBar;
+  @Bind(R.id.facebook_login) FloatingActionButton facebook;
+  @Bind(R.id.twitter_login) FloatingActionButton twitter;
+  @Bind(R.id.google_login) FloatingActionButton google;
+  @Bind(R.id.sign_up) FloatingActionButton signUp;
+  @Bind(R.id.expand) FloatingActionButton expand;
+  @Bind(R.id.login) FloatingActionButton login;
+
   private static final int RC_SIGN_IN = 9001;
   private GoogleSignInOptions googleSignInOptions;
   private GoogleApiClient googleApiClient;
+  private boolean isFabOpen;
+  private Animation fabOpen;
+  private Animation fabClose;
+  private Animation rotateForward;
+  private Animation rotateBackward;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +79,11 @@ public class LoginActivity extends AppCompatActivity {
         })
         .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
         .build();
+
+    fabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+    fabClose = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
+    rotateForward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
+    rotateBackward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_backward);
   }
 
   @Override
@@ -98,39 +122,80 @@ public class LoginActivity extends AppCompatActivity {
     return super.onOptionsItemSelected(item);
   }
 
-
-  @OnClick(R.id.button_login_sign_up)
-  public void signUp(View view) {
-    startActivity(new Intent(this, SignUpActivity.class));
+@OnEditorAction(R.id.password)
+boolean password(int actionId) {
+  if (actionId == EditorInfo.IME_ACTION_DONE) {
+    login.performClick();
+    return true;
   }
+  return false;
+}
 
-  @OnClick(R.id.button_sign_in)
-  public void signIn(View view) {
+  @OnClick(R.id.login)
+  public void login(View view) {
     String username = this.username.getText().toString().trim();
     String password = this.password.getText().toString().trim();
 
     if (username.isEmpty()) {
-      new AlertDialog.Builder(this).setTitle(R.string.error_title).setMessage(R.string.username_cannot_be_empty)
+      new Builder(this).setTitle(R.string.error_title).setMessage(R.string.username_cannot_be_empty)
           .setPositiveButton(string.ok, null).create().show();
     } else if (password.isEmpty()) {
-      new AlertDialog.Builder(this).setTitle(R.string.error_title).setMessage(R.string.password_cannot_be_empty)
+      new Builder(this).setTitle(R.string.error_title).setMessage(R.string.password_cannot_be_empty)
           .setPositiveButton(string.ok, null).create().show();
     } else {
-      setProgressBarIndeterminate(true);
+      showProgressBar();
       ParseUser.logInInBackground(username, password, new LogInCallback() {
         @Override
         public void done(ParseUser user, ParseException exception) {
-          setProgressBarIndeterminate(false);
+          hideProgressBar();
           if (exception == null) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
           } else {
-            new AlertDialog.Builder(LoginActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage())
+            new Builder(LoginActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage())
                 .setPositiveButton(string.ok, null).create().show();
           }
         }
       });
     }
+  }
+
+  private void hideProgressBar() {
+    setProgressBarIndeterminate(false);
+    progressBar.setVisibility(View.INVISIBLE);
+  }
+
+  private void showProgressBar() {
+    setProgressBarIndeterminate(true);
+    progressBar.setVisibility(View.VISIBLE);
+  }
+
+  @OnClick(R.id.sign_up)
+  public void signUp(View view) {
+    startActivity(new Intent(this, SignUpActivity.class));
+  }
+
+  @OnClick(R.id.expand)
+  public void onExpand(View view) {
+    if(isFabOpen){
+      expand.startAnimation(rotateBackward);
+      facebook.startAnimation(fabClose);
+      twitter.startAnimation(fabClose);
+      google.startAnimation(fabClose);
+      signUp.startAnimation(fabClose);
+    } else {
+      expand.startAnimation(rotateForward);
+      facebook.startAnimation(fabOpen);
+      twitter.startAnimation(fabOpen);
+      google.startAnimation(fabOpen);
+      signUp.startAnimation(fabOpen);
+    }
+
+    isFabOpen = !isFabOpen;
+    facebook.setClickable(isFabOpen);
+    twitter.setClickable(isFabOpen);
+    google.setClickable(isFabOpen);
+    signUp.setClickable(isFabOpen);
   }
 
   @OnClick(R.id.facebook_login)
@@ -139,11 +204,11 @@ public class LoginActivity extends AppCompatActivity {
       @Override
       public void done(ParseUser user, ParseException err) {
         if (user == null) {
-          Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
+          Toast.makeText(LoginActivity.this, "Uh oh. The user cancelled the Facebook login.", Toast.LENGTH_SHORT).show();
         } else if (user.isNew()) {
-          Log.d("MyApp", "User signed up and logged in through Facebook!");
+          Toast.makeText(LoginActivity.this, "User signed up and logged in through Facebook!", Toast.LENGTH_SHORT).show();
         } else {
-          Log.d("MyApp", "User logged in through Facebook!");
+          Toast.makeText(LoginActivity.this, "User logged in through Facebook!", Toast.LENGTH_SHORT).show();
         }
       }
     });
@@ -155,11 +220,11 @@ public class LoginActivity extends AppCompatActivity {
       @Override
       public void done(ParseUser user, ParseException err) {
         if (user == null) {
-          Log.d("MyApp", "Uh oh. The user cancelled the Twitter login.");
+          Toast.makeText(LoginActivity.this, "Uh oh. The user cancelled the Twitter login.", Toast.LENGTH_SHORT).show();
         } else if (user.isNew()) {
-          Log.d("MyApp", "User signed up and logged in through Twitter!");
+          Toast.makeText(LoginActivity.this, "User signed up and logged in through Twitter!", Toast.LENGTH_SHORT).show();
         } else {
-          Log.d("MyApp", "User logged in through Twitter!");
+          Toast.makeText(LoginActivity.this, "User logged in through Twitter!", Toast.LENGTH_SHORT).show();
         }
       }
     });

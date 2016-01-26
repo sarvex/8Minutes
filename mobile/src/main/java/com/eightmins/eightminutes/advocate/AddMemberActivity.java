@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.eightmins.eightminutes.MainActivity;
@@ -20,17 +21,19 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MemberActivity extends AppCompatActivity {
+public class AddMemberActivity extends AppCompatActivity {
 
   @Bind(R.id.name) EditText name;
   @Bind(R.id.email) EditText email;
   @Bind(R.id.phone) EditText phone;
+  @Bind(R.id.progress_bar) ProgressBar progressBar;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_member);
+    setContentView(R.layout.activity_add_member);
     ButterKnife.bind(this);
   }
 
@@ -47,8 +50,7 @@ public class MemberActivity extends AppCompatActivity {
     } else if (phone.isEmpty()) {
       new Builder(this).setTitle(R.string.error_title).setMessage(R.string.phone_cannot_be_empty).setPositiveButton(string.ok, null).create().show();
     } else {
-      setProgressBarIndeterminate(true);
-
+      showProgressBar();
       ParseObject member = new ParseObject("Member");
       member.put("name", name);
       member.put("email", email);
@@ -56,14 +58,23 @@ public class MemberActivity extends AppCompatActivity {
       member.saveInBackground(new SaveCallback() {
         @Override
         public void done(ParseException exception) {
+          hideProgressBar();
           if (exception == null) {
-            Toast.makeText(MemberActivity.this, "Member added sucessfully", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(MemberActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            Toast.makeText(AddMemberActivity.this, "Member added sucessfully", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(AddMemberActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
           } else {
-            new Builder(MemberActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(string.ok, null).create().show();
+            new Builder(AddMemberActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(string.ok, null).create().show();
           }
         }
       });
     }
+  }
+
+  private void hideProgressBar() {
+    progressBar.setVisibility(View.INVISIBLE);
+  }
+
+  private void showProgressBar() {
+    progressBar.setVisibility(View.VISIBLE);
   }
 }

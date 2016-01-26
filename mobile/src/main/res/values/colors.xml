@@ -51,4 +51,8 @@
   <color name="size_external">#ffff001e</color>
   <color name="size_base">#ff959595</color>
   <color name="size_external_circle">#a3ff3443</color>
+
+  <color name="facebook">#3b5998</color>
+  <color name="twitter">#0084b4</color>
+  <color name="google">#d34836</color>
 </resources>

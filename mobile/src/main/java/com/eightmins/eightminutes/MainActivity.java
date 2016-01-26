@@ -20,14 +20,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.ProgressBar;
 
-import com.eightmins.eightminutes.advocate.MemberActivity;
-import com.eightmins.eightminutes.advocate.ReferActivity;
+import com.eightmins.eightminutes.advocate.AddMemberActivity;
+import com.eightmins.eightminutes.advocate.AddReferralActivity;
 import com.eightmins.eightminutes.advocate.dash.DashFragment;
 import com.eightmins.eightminutes.advocate.member.TeamFragment;
 import com.eightmins.eightminutes.advocate.refer.ReferralFragment;
 import com.eightmins.eightminutes.advocate.video.VideoFragment;
 import com.eightmins.eightminutes.login.LoginActivity;
+import com.eightmins.eightminutes.login.ProfileActivity;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial.Icon;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -50,14 +53,11 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     TeamFragment.OnFragmentInteractionListener, VideoFragment.OnFragmentInteractionListener,
     DashFragment.OnFragmentInteractionListener {
 
-  @Bind(R.id.toolbar)
-  Toolbar toolbar;
-  @Bind(R.id.viewpager)
-  ViewPager viewPager;
-  @Bind(R.id.tabs)
-  TabLayout tabLayout;
-  @Bind(R.id.add_button)
-  FloatingActionButton addButton;
+  @Bind(R.id.toolbar) Toolbar toolbar;
+  @Bind(R.id.viewpager) ViewPager viewPager;
+  @Bind(R.id.tabs) TabLayout tabLayout;
+  @Bind(R.id.add_button) FloatingActionButton addButton;
+  @Bind(R.id.progress_bar) ProgressBar progressBar;
 
   private AccountHeader accountHeader;
   private Drawer drawer;
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
@@ -173,17 +174,25 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
         .withHeader(R.layout.header)
         .addDrawerItems(
             new PrimaryDrawerItem().withName("Order T-Shirts").withIcon(Icon.gmd_local_florist),
-            new PrimaryDrawerItem().withName("Profile").withIcon(Icon.gmd_person),
-            new PrimaryDrawerItem().withName("Link Facebook").withIcon(Icon.gmd_person),
+            new PrimaryDrawerItem().withName("Profile").withIcon(Icon.gmd_person)
+            .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+              @Override
+              public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                toProfileActivity();
+                return true;
+              }
+            }),
             new PrimaryDrawerItem().withName("Settings").withIcon(Icon.gmd_settings),
             new PrimaryDrawerItem().withName("Logout").withIcon(Icon.gmd_android)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                   @Override
                   public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                     if (ParseUser.getCurrentUser() != null) {
+                      showProgressBar();
                       ParseUser.logOutInBackground(new LogOutCallback() {
                         @Override
                         public void done(ParseException e) {
+                          hideProgressBar();
                           if (e == null) {
                             toLoginActivity();
                           }
@@ -196,6 +205,19 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
         .build();
 
     drawer.getRecyclerView().setVerticalScrollBarEnabled(false);
+  }
+
+  private void hideProgressBar() {
+progressBar.setVisibility(View.INVISIBLE);
+  }
+
+  private void showProgressBar() {
+    progressBar.setVisibility(View.VISIBLE);
+  }
+
+  private void toProfileActivity() {
+    startActivity(new Intent(this, ProfileActivity.class)
+        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
   }
 
   private OnFilterChangedListener onFilterChangedListener;
@@ -254,10 +276,10 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   public void onAddButtonClicked(View view) {
     switch (viewPager.getCurrentItem()) {
       case 1:
-        startActivity(new Intent(this, ReferActivity.class));
+        startActivity(new Intent(this, AddReferralActivity.class));
         break;
       case 2:
-        startActivity(new Intent(this, MemberActivity.class));
+        startActivity(new Intent(this, AddMemberActivity.class));
         break;
       default:
         break;

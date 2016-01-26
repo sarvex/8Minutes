@@ -54,8 +54,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
   }
 
 
-
-
   /**
    * Helper method to determine if the device has an extra-large screen. For
    * example, 10" tablets are extra-large.
@@ -65,16 +63,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
   }
 
-  /**
-   * Set up the {@link android.app.ActionBar}, if the API is available.
-   */
-  private void setupActionBar() {
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      // Show the Up button in the action bar.
-      actionBar.setDisplayHomeAsUpEnabled(true);
-    }
-  }
 
   /**
    * {@inheritDoc}
@@ -82,7 +70,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
   @Override
   public boolean onIsMultiPane() {
     return isXLargeTablet(this);
-  }  /**
+  }
+
+  /**
    * A preference value change listener that updates the preference's summary
    * to reflect its new value.
    */
@@ -141,7 +131,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
   @TargetApi(Build.VERSION_CODES.HONEYCOMB)
   public void onBuildHeaders(List<Header> target) {
     loadHeadersFromResource(R.xml.pref_headers, target);
-  }  /**
+  }
+
+  /**
    * Binds a preference's summary to its value. More specifically, when the
    * preference's value is changed, its summary (line of text below the
    * preference title) is updated to reflect the value. The summary is also

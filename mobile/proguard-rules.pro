@@ -58,24 +58,24 @@
 -keep public class com.android.vending.licensing.ILicensingService
 
 -keepclasseswithmembernames class * {
-    native <methods>;
+  native <methods>;
 }
 
 -keepclasseswithmembers class * {
-    public <init>(android.content.Context, android.util.AttributeSet);
+  public <init>(android.content.Context, android.util.AttributeSet);
 }
 
 -keepclasseswithmembers class * {
-    public <init>(android.content.Context, android.util.AttributeSet, int);
+  public <init>(android.content.Context, android.util.AttributeSet, int);
 }
 
 -keepclassmembers class * extends android.app.Activity {
-   public void *(android.view.View);
+ public void *(android.view.View);
 }
 
 -keepclassmembers enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
+  public static **[] values();
+  public static ** valueOf(java.lang.String);
 }
 
 -keep class * implements android.os.Parcelable {
@@ -83,37 +83,37 @@
 }
 
 -keepclasseswithmembernames class * {
-    @butterknife.* <fields>;
+  @butterknife.* <fields>;
 }
 
 -keepclasseswithmembernames class * {
-    @butterknife.* <methods>;
+  @butterknife.* <methods>;
 }
 
 -keepclasseswithmembers class * {
-    @retrofit.http.* <methods>;
+  @retrofit.http.* <methods>;
 }
 
 # rxjava
 -keep class rx.schedulers.Schedulers {
-    public static <methods>;
+  public static <methods>;
 }
 -keep class rx.schedulers.ImmediateScheduler {
-    public <methods>;
+  public <methods>;
 }
 -keep class rx.schedulers.TestScheduler {
-    public <methods>;
+  public <methods>;
 }
 -keep class rx.schedulers.Schedulers {
-    public static ** test();
+  public static ** test();
 }
 -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
-    long producerIndex;
-    long consumerIndex;
+  long producerIndex;
+  long consumerIndex;
 }
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
-    long producerNode;
-    long consumerNode;
+  long producerNode;
+  long consumerNode;
 }
 
 #Share
@@ -123,9 +123,20 @@
 #glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
-    **[] $VALUES;
-    public *;
+  **[] $VALUES;
+  public *;
 }
 
 #youtube
 -keep class com.google.android.youtube.player.**  { *; }
+
+-keep class com.mobsandgeeks.saripaar.** {*;}
+-keep @com.mobsandgeeks.saripaar.annotation.ValidateUsing class * {*;}
+
+#android-shape-imageview
+-dontwarn android.support.v7.**
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v7.* { *; }
+-keepattributes *Annotation,Signature
+-dontwarn com.github.siyamed.**
+-keep class com.github.siyamed.shapeimageview.**{ *; }

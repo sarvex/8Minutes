@@ -1,13 +1,13 @@
 <android.support.v7.widget.CardView
   android:id="@+id/team_card_view"
   xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:card_view="http://schemas.android.com/apk/res-auto"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
   android:layout_margin="3sp"
-  card_view:cardCornerRadius="6sp"
-  card_view:cardElevation="6sp">
+  app:cardCornerRadius="6sp"
+  app:cardElevation="6sp">
 
   <RelativeLayout
     android:layout_width="match_parent"

@@ -102,4 +102,16 @@
   <string name="pref_ringtone_silent">Silent</string>
 
   <string name="pref_title_vibrate">Vibrate</string>
+  <string name="username_placeholder">Username</string>
+  <string name="name_placeholder">Name</string>
+  <string name="password_placeholder">Password</string>
+  <string name="email_placeholder">Email</string>
+  <string name="phone_placeholder">Phone</string>
+  <string name="address1_placeholder">Address Line 1</string>
+  <string name="address2_placeholder">Address Line 2</string>
+  <string name="notes_placeholder">Notes</string>
+  <string name="average_bill_placeholder">Average Bill</string>
+  <string name="city_placeholder">City</string>
+  <string name="pincode_placeholder">Pincode</string>
+  <string name="locality_placeholder">Locality</string>
 </resources>

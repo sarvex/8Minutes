@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.eightmins.eightminutes.MainActivity;
@@ -21,7 +22,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ReferActivity extends AppCompatActivity {
+public class AddReferralActivity extends AppCompatActivity {
 
   @Bind(R.id.name) EditText name;
   @Bind(R.id.email) EditText email;
@@ -33,12 +34,13 @@ public class ReferActivity extends AppCompatActivity {
   @Bind(R.id.pincode) EditText pincode;
   @Bind(R.id.average_bill) EditText averageBill;
   @Bind(R.id.notes) EditText notes;
+  @Bind(R.id.progress_bar) ProgressBar progressBar;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_refer);
+    setContentView(R.layout.activity_add_referral);
     ButterKnife.bind(this);
   }
 
@@ -92,15 +94,25 @@ public class ReferActivity extends AppCompatActivity {
       referral.put("status", "referred");
       referral.put("lead", ParseUser.getCurrentUser().getUsername());
 
+      showProgressBar();
       referral.saveInBackground(new SaveCallback() {
         public void done(ParseException exception) {
+          showProgressBar();
           if (exception == null) {
-            Toast.makeText(ReferActivity.this, "Referral done successfully", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(ReferActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            Toast.makeText(AddReferralActivity.this, "Referral done successfully", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(AddReferralActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
           } else {
-            new Builder(ReferActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(string.ok, null).create().show();
+            new Builder(AddReferralActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(string.ok, null).create().show();
           }
       }});
     }
+  }
+
+  private void hideProgressBar() {
+    progressBar.setVisibility(View.INVISIBLE);
+  }
+
+  private void showProgressBar() {
+    progressBar.setVisibility(View.VISIBLE);
   }
 }
