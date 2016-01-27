@@ -18,8 +18,8 @@
     android:id="@+id/team"
     android:layout_width="match_parent"
     android:layout_height="200sp"
-    custom:external_color="@color/size_external_circle"
-    custom:base_color="@color/colorAccent"
+    custom:external_color="@color/secondary_text"
+    custom:base_color="@color/primary_text"
     custom:duration="3500"
     custom:max="999"
     custom:min="0"
@@ -34,9 +34,9 @@
         android:id="@+id/dash_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/primary_text"
         android:layout_centerInParent="true"
         android:text="@string/team"
-        android:textColor="@color/primary_dark_green"
         android:textSize="18sp"/>
 
       <TextView
@@ -44,6 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dash_title"
+        android:textColor="@color/secondary_text"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24sp"
         android:text="5 Members"/>

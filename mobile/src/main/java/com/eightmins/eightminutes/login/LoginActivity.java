@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.eightmins.eightminutes.MainActivity;
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
   @Bind(R.id.username) EditText username;
   @Bind(R.id.password) EditText password;
+  @Bind(R.id.scroll_view) ScrollView scrollView;
 
   @Bind(R.id.progress_bar) ProgressBar progressBar;
   @Bind(R.id.facebook_login) FloatingActionButton facebook;
@@ -162,11 +164,17 @@ boolean password(int actionId) {
 
   private void hideProgressBar() {
     setProgressBarIndeterminate(false);
+    scrollView.setVisibility(View.VISIBLE);
+    signUp.setVisibility(View.VISIBLE);
+    login.setVisibility(View.VISIBLE);
     progressBar.setVisibility(View.INVISIBLE);
   }
 
   private void showProgressBar() {
     setProgressBarIndeterminate(true);
+    scrollView.setVisibility(View.INVISIBLE);
+    signUp.setVisibility(View.INVISIBLE);
+    login.setVisibility(View.INVISIBLE);
     progressBar.setVisibility(View.VISIBLE);
   }
 

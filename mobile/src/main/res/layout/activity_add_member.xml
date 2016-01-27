@@ -17,6 +17,7 @@
     android:visibility="invisible"/>
 
   <ScrollView
+    android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -46,7 +47,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/name_placeholder"
             android:imeOptions="actionNext"
-            android:inputType="textAutoComplete"/>
+            android:inputType="textPersonName"/>
         </android.support.design.widget.TextInputLayout>
       </android.support.v7.widget.CardView>
 

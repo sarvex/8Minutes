@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">8 Minutes</string>
+  <string name="app_name">8Minutes</string>
   <string name="action_settings" translatable="false">Settings</string>
   <string name="password_hint" translatable="false">P@ssword</string>
   <string name="username_hint" translatable="false">UserName</string>

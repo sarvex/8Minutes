@@ -16,9 +16,14 @@
     android:indeterminate="true"
     android:visibility="invisible"/>
 
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scroll_view">
+
   <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
       android:id="@+id/username_card"
@@ -41,7 +46,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:imeOptions="actionNext"
-          android:inputType="textAutoComplete"/>
+          android:inputType="textVisiblePassword|textNoSuggestions"/>
       </android.support.design.widget.TextInputLayout>
     </android.support.v7.widget.CardView>
 
@@ -71,7 +76,7 @@
       </android.support.design.widget.TextInputLayout>
     </android.support.v7.widget.CardView>
   </RelativeLayout>
-
+  </ScrollView>
   <android.support.design.widget.FloatingActionButton
     android:id="@+id/expand"
     android:layout_width="wrap_content"

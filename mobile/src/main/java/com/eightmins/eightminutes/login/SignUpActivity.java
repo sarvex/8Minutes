@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.eightmins.eightminutes.MainActivity;
@@ -33,6 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
   @Bind(R.id.progress_bar) ProgressBar progressBar;
 
   @Bind(R.id.sign_up) FloatingActionButton signUp;
+  @Bind(R.id.scroll_view) ScrollView scrollView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
       newUser.setPassword(password);
       newUser.setEmail(email);
       newUser.put("phone", phone);
+//      newUser.put("photo", new ParseFile("profile.jpg", image));
       newUser.signUpInBackground(new SignUpCallback() {
         @Override
         public void done(ParseException exception) {
@@ -91,11 +94,13 @@ public class SignUpActivity extends AppCompatActivity {
 
   private void hideProgressBar() {
     setProgressBarIndeterminate(false);
+    scrollView.setVisibility(View.VISIBLE);
     progressBar.setVisibility(View.INVISIBLE);
   }
 
   private void showProgressBar() {
     setProgressBarIndeterminate(true);
+    scrollView.setVisibility(View.INVISIBLE);
     progressBar.setVisibility(View.VISIBLE);
   }
 }

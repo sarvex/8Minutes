@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.eightmins.eightminutes.MainActivity;
@@ -35,6 +36,7 @@ public class AddReferralActivity extends AppCompatActivity {
   @Bind(R.id.average_bill) EditText averageBill;
   @Bind(R.id.notes) EditText notes;
   @Bind(R.id.progress_bar) ProgressBar progressBar;
+  @Bind(R.id.scroll_view) ScrollView scrollView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +96,7 @@ public class AddReferralActivity extends AppCompatActivity {
       referral.put("status", "referred");
       referral.put("lead", ParseUser.getCurrentUser().getUsername());
 
-      showProgressBar();
+      hideProgressBar();
       referral.saveInBackground(new SaveCallback() {
         public void done(ParseException exception) {
           showProgressBar();
@@ -109,10 +111,14 @@ public class AddReferralActivity extends AppCompatActivity {
   }
 
   private void hideProgressBar() {
+    setProgressBarIndeterminate(false);
+    scrollView.setVisibility(View.VISIBLE);
     progressBar.setVisibility(View.INVISIBLE);
   }
 
   private void showProgressBar() {
+    setProgressBarIndeterminate(true);
+    scrollView.setVisibility(View.INVISIBLE);
     progressBar.setVisibility(View.VISIBLE);
   }
 }

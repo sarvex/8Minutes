@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.eightmins.eightminutes.MainActivity;
@@ -27,6 +28,7 @@ public class AddMemberActivity extends AppCompatActivity {
   @Bind(R.id.email) EditText email;
   @Bind(R.id.phone) EditText phone;
   @Bind(R.id.progress_bar) ProgressBar progressBar;
+  @Bind(R.id.scroll_view) ScrollView scrollView;
 
 
   @Override
@@ -71,10 +73,14 @@ public class AddMemberActivity extends AppCompatActivity {
   }
 
   private void hideProgressBar() {
+    setProgressBarIndeterminate(false);
+    scrollView.setVisibility(View.VISIBLE);
     progressBar.setVisibility(View.INVISIBLE);
   }
 
   private void showProgressBar() {
+    setProgressBarIndeterminate(true);
+    scrollView.setVisibility(View.INVISIBLE);
     progressBar.setVisibility(View.VISIBLE);
   }
 }
