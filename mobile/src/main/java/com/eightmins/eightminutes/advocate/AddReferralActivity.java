@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.eightmins.eightminutes.MainActivity;
@@ -34,7 +35,7 @@ public class AddReferralActivity extends AppCompatActivity {
   @Bind(R.id.pincode) EditText pincode;
   @Bind(R.id.average_bill) EditText averageBill;
   @Bind(R.id.notes) EditText notes;
-  private ProgressDialog progress;
+  @Bind(R.id.progress_bar) ProgressBar progressBar;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

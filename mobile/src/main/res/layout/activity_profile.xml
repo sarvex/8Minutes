@@ -112,6 +112,7 @@
           <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
+            android:enabled="false"
             android:layout_height="wrap_content"
             android:enabled="false"
             android:inputType="textPassword"/>
@@ -205,6 +206,23 @@
     app:layout_anchor="@+id/link_facebook"
     app:layout_anchorGravity="end|right"
     app:pressedTranslationZ="12dp"
+    app:tabGravity="fill"
+    app:backgroundTint="@color/facebook"
+    app:tabMode="scrollable"/>
+
+  <android.support.design.widget.FloatingActionButton
+    android:id="@+id/link_twitter"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="end|bottom"
+    android:layout_margin="16dp"
+    android:clickable="true"
+    android:src="@mipmap/ic_twitter"
+    app:borderWidth="0dp"
+    app:layout_anchor="@+id/link_facebook"
+    app:layout_anchorGravity="end|right"
+    app:pressedTranslationZ="12dp"
+    app:backgroundTint="@color/twitter"
     app:tabGravity="fill"
     app:tabMode="scrollable"/>
 
