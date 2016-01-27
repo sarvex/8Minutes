@@ -1,5 +1,6 @@
 package com.eightmins.eightminutes;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -21,7 +22,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.ProgressBar;
 
 import com.eightmins.eightminutes.advocate.AddMemberActivity;
 import com.eightmins.eightminutes.advocate.AddReferralActivity;
@@ -57,11 +57,11 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   @Bind(R.id.viewpager) ViewPager viewPager;
   @Bind(R.id.tabs) TabLayout tabLayout;
   @Bind(R.id.add_button) FloatingActionButton addButton;
-  @Bind(R.id.progress_bar) ProgressBar progressBar;
 
   private AccountHeader accountHeader;
   private Drawer drawer;
   private ShareActionProvider shareActionProvider;
+  private ProgressDialog progress;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -207,12 +207,18 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     drawer.getRecyclerView().setVerticalScrollBarEnabled(false);
   }
 
-  private void hideProgressBar() {
-progressBar.setVisibility(View.INVISIBLE);
+  protected void hideProgressBar() {
+    if ((progress != null) && progress.isShowing()) {
+      progress.dismiss();
+    }
   }
 
-  private void showProgressBar() {
-    progressBar.setVisibility(View.VISIBLE);
+  protected void showProgressBar() {
+    progress = new ProgressDialog(this);
+    progress.setMessage("Logging in...");
+    progress.setIndeterminate(true);
+    progress.setProgress(0);
+    progress.show();
   }
 
   private void toProfileActivity() {

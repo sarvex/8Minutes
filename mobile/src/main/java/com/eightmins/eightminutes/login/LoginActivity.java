@@ -2,6 +2,7 @@ package com.eightmins.eightminutes.login;
 
 import android.R.string;
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.eightmins.eightminutes.MainActivity;
@@ -37,16 +38,27 @@ import butterknife.OnEditorAction;
 
 public class LoginActivity extends AppCompatActivity {
 
-  @Bind(R.id.username) EditText username;
-  @Bind(R.id.password) EditText password;
+  @Bind(R.id.username)
+  EditText username;
+  @Bind(R.id.password)
+  EditText password;
+  @Bind(R.id.scroll_view)
+  ScrollView scrollView;
 
-  @Bind(R.id.progress_bar) ProgressBar progressBar;
-  @Bind(R.id.facebook_login) FloatingActionButton facebook;
-  @Bind(R.id.twitter_login) FloatingActionButton twitter;
-  @Bind(R.id.google_login) FloatingActionButton google;
-  @Bind(R.id.sign_up) FloatingActionButton signUp;
-  @Bind(R.id.expand) FloatingActionButton expand;
-  @Bind(R.id.login) FloatingActionButton login;
+  @Bind(R.id.facebook_login)
+  FloatingActionButton facebook;
+  @Bind(R.id.twitter_login)
+  FloatingActionButton twitter;
+  @Bind(R.id.google_login)
+  FloatingActionButton google;
+  @Bind(R.id.sign_up)
+  FloatingActionButton signUp;
+  @Bind(R.id.expand)
+  FloatingActionButton expand;
+  @Bind(R.id.login)
+  FloatingActionButton login;
+
+  private ProgressDialog progress;
 
   private static final int RC_SIGN_IN = 9001;
   private GoogleSignInOptions googleSignInOptions;
@@ -81,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
         .build();
 
     fabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-    fabClose = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
+    fabClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
     rotateForward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
     rotateBackward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_backward);
   }
@@ -122,14 +134,14 @@ public class LoginActivity extends AppCompatActivity {
     return super.onOptionsItemSelected(item);
   }
 
-@OnEditorAction(R.id.password)
-boolean password(int actionId) {
-  if (actionId == EditorInfo.IME_ACTION_DONE) {
-    login.performClick();
-    return true;
+  @OnEditorAction(R.id.password)
+  boolean password(int actionId) {
+    if (actionId == EditorInfo.IME_ACTION_DONE) {
+      login.performClick();
+      return true;
+    }
+    return false;
   }
-  return false;
-}
 
   @OnClick(R.id.login)
   public void login(View view) {
@@ -152,8 +164,13 @@ boolean password(int actionId) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
           } else {
-            new Builder(LoginActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage())
-                .setPositiveButton(string.ok, null).create().show();
+//            if (user.getBoolean("authenticated")) {
+
+              new Builder(LoginActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage())
+                  .setPositiveButton(string.ok, null).create().show();
+//            } else {
+//              Toast.makeText(LoginActivity.this, "Please wait for proper authentication!", Toast.LENGTH_SHORT).show();
+//            }
           }
         }
       });
@@ -161,13 +178,17 @@ boolean password(int actionId) {
   }
 
   private void hideProgressBar() {
-    setProgressBarIndeterminate(false);
-    progressBar.setVisibility(View.INVISIBLE);
+    if ((progress != null) && progress.isShowing()) {
+      progress.dismiss();
+    }
   }
 
   private void showProgressBar() {
-    setProgressBarIndeterminate(true);
-    progressBar.setVisibility(View.VISIBLE);
+    progress = new ProgressDialog(this);
+    progress.setMessage("Logging In...");
+    progress.setIndeterminate(true);
+    progress.setProgress(0);
+    progress.show();
   }
 
   @OnClick(R.id.sign_up)
@@ -177,7 +198,7 @@ boolean password(int actionId) {
 
   @OnClick(R.id.expand)
   public void onExpand(View view) {
-    if(isFabOpen){
+    if (isFabOpen) {
       expand.startAnimation(rotateBackward);
       facebook.startAnimation(fabClose);
       twitter.startAnimation(fabClose);

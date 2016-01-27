@@ -13,7 +13,7 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:padding="4dp"
-    android:background="@drawable/bg_gradient">
+    android:background="@drawable/gradient">
 
     <ImageView
       android:id="@+id/referral_photo"

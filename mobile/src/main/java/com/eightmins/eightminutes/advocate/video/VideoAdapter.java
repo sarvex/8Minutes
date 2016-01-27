@@ -74,6 +74,9 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     }
 
     public void bind(final int position) {
+      title.setText(videos.get(position).getName());
+      description.setText(videos.get(position).getDescription());
+
       final OnThumbnailLoadedListener onThumbnailLoadedListener = new OnThumbnailLoadedListener(){
         @Override
         public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {

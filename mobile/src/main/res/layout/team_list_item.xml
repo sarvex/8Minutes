@@ -12,13 +12,13 @@
   <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient"
+    android:background="@drawable/gradient"
     android:padding="4dp">
 
     <ImageView
       android:layout_width="match_parent"
       android:layout_height="128sp"
-      android:scaleType="centerCrop"
+      android:scaleType="fitCenter"
       android:src="@mipmap/ic_account_circle"/>
 
     <TextView

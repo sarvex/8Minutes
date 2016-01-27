@@ -2,6 +2,7 @@ package com.eightmins.eightminutes.login;
 
 import android.R.string;
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.eightmins.eightminutes.MainActivity;
@@ -30,9 +30,9 @@ public class SignUpActivity extends AppCompatActivity {
   @Bind(R.id.password) EditText password;
   @Bind(R.id.email) EditText email;
   @Bind(R.id.phone) EditText phone;
-  @Bind(R.id.progress_bar) ProgressBar progressBar;
 
   @Bind(R.id.sign_up) FloatingActionButton signUp;
+  private ProgressDialog progress;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +65,7 @@ public class SignUpActivity extends AppCompatActivity {
       newUser.setPassword(password);
       newUser.setEmail(email);
       newUser.put("phone", phone);
+//      newUser.put("photo", new ParseFile("profile.jpg", image));
       newUser.signUpInBackground(new SignUpCallback() {
         @Override
         public void done(ParseException exception) {
@@ -90,12 +91,16 @@ public class SignUpActivity extends AppCompatActivity {
   }
 
   private void hideProgressBar() {
-    setProgressBarIndeterminate(false);
-    progressBar.setVisibility(View.INVISIBLE);
+    if ((progress != null) && progress.isShowing()) {
+      progress.dismiss();
+    }
   }
 
   private void showProgressBar() {
-    setProgressBarIndeterminate(true);
-    progressBar.setVisibility(View.VISIBLE);
+    progress = new ProgressDialog(this);
+    progress.setMessage("Signing Up...");
+    progress.setIndeterminate(true);
+    progress.setProgress(0);
+    progress.show();
   }
 }

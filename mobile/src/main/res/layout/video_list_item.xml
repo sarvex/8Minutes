@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
   xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:card_view="http://schemas.android.com/apk/res-auto"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
+  android:layout_margin="6sp"
   android:layout_marginTop="10dp"
   android:clickable="true"
-  card_view:cardCornerRadius="6sp"
-  card_view:cardElevation="6sp">
+  app:cardBackgroundColor="@color/primary"
+  app:cardCornerRadius="6sp"
+  app:cardElevation="6sp">
 
 
   <com.google.android.youtube.player.YouTubeThumbnailView
     android:id="@+id/youtube_thumbnail"
     android:layout_width="match_parent"
     android:layout_height="192sp"
-    android:scaleType="centerCrop"
-    android:paddingRight="8sp"
     android:paddingLeft="8sp"
+    android:paddingRight="8sp"
+    android:scaleType="centerCrop"
     android:visibility="visible"/>
 
   <RelativeLayout
@@ -26,10 +28,12 @@
     android:visibility="visible">
 
     <TextView
+      android:id="@+id/youtube_title"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:id="@+id/youtube_title"
-      android:gravity="top"/>
+      android:layout_alignParentTop="true"
+      android:text="Title"
+      android:gravity="left"/>
 
     <ImageView
       android:id="@+id/youtube_play"
@@ -39,10 +43,12 @@
       android:src="@mipmap/ic_play_circle"/>
 
     <TextView
+      android:id="@+id/youtube_description"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:id="@+id/youtube_description"
-      android:gravity="bottom"/>
+      android:layout_alignParentBottom="true"
+      android:text="Description"
+      android:gravity="end"/>
 
   </RelativeLayout>
 </android.support.v7.widget.CardView>

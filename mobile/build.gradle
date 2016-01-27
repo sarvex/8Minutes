@@ -111,7 +111,7 @@ dependencies {
   compile 'com.parse:parse-android:1.13.0'
   compile 'com.parse:parsefacebookutils-v4-android:1.10.4@aar'
   compile 'com.facebook.android:facebook-android-sdk:4.9.0'
-  compile 'com.parse:parsetwitterutils-android:1.10.4'
+  compile 'com.parse:parsetwitterutils-android:1.10.5'
   compile 'com.parse.bolts:bolts-android:1.4.0'
   compile 'com.squareup.retrofit:retrofit:1.9.0'
   compile 'com.squareup.okhttp:okhttp:2.7.2'

@@ -27,7 +27,7 @@
       <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
         android:id="@+id/photo"
         android:layout_width="match_parent"
-        android:layout_height="128sp"
+        android:layout_height="192sp"
         android:src="@mipmap/ic_account_circle"
         app:siShape="@mipmap/ic_sun"
         app:siSquare="true"/>
@@ -36,9 +36,11 @@
         android:id="@+id/username_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/photo"
         android:layout_margin="6sp"
         android:layout_toEndOf="@id/photo"
         android:layout_toRightOf="@id/photo"
+        app:cardBackgroundColor="@color/primary"
         app:cardCornerRadius="6sp"
         app:cardElevation="6sp">
 
@@ -54,7 +56,9 @@
           <EditText
             android:id="@+id/username"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:inputType="textVisiblePassword|textNoSuggestions"/>
         </android.support.design.widget.TextInputLayout>
       </android.support.v7.widget.CardView>
 
@@ -64,6 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/photo"
         android:layout_margin="6sp"
+        app:cardBackgroundColor="@color/primary"
         app:cardCornerRadius="6sp"
         app:cardElevation="6sp">
 
@@ -79,7 +84,9 @@
           <EditText
             android:id="@+id/name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:inputType="textPersonName"/>
         </android.support.design.widget.TextInputLayout>
       </android.support.v7.widget.CardView>
 
@@ -89,6 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/name_card"
         android:layout_margin="6sp"
+        app:cardBackgroundColor="@color/primary"
         app:cardCornerRadius="6sp"
         app:cardElevation="6sp">
 
@@ -105,6 +113,7 @@
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
       </android.support.v7.widget.CardView>
@@ -115,6 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/password_card"
         android:layout_margin="6sp"
+        app:cardBackgroundColor="@color/primary"
         app:cardCornerRadius="6sp"
         app:cardElevation="6sp">
 
@@ -131,6 +141,7 @@
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:inputType="textEmailAddress"/>
         </android.support.design.widget.TextInputLayout>
       </android.support.v7.widget.CardView>
@@ -141,6 +152,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/email_card"
         android:layout_margin="6sp"
+        app:cardBackgroundColor="@color/primary"
         app:cardCornerRadius="6sp"
         app:cardElevation="6sp">
 
@@ -157,6 +169,7 @@
             android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:inputType="phone"/>
         </android.support.design.widget.TextInputLayout>
       </android.support.v7.widget.CardView>
@@ -164,16 +177,33 @@
   </ScrollView>
 
   <android.support.design.widget.FloatingActionButton
-    android:id="@+id/link_button"
+    android:id="@+id/link_facebook"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="start|bottom"
     android:layout_margin="16dp"
     android:clickable="true"
-    android:src="@mipmap/ic_link"
+    android:src="@mipmap/ic_facebook"
+    app:backgroundTint="@color/facebook"
     app:borderWidth="0dp"
     app:layout_anchor="@+id/phone_card"
     app:layout_anchorGravity="bottom|start|left"
+    app:pressedTranslationZ="12dp"
+    app:tabGravity="fill"
+    app:tabMode="scrollable"/>
+
+  <android.support.design.widget.FloatingActionButton
+    android:id="@+id/link_twitter"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="end|bottom"
+    android:layout_margin="16dp"
+    android:clickable="true"
+    android:src="@mipmap/ic_twitter"
+    app:backgroundTint="@color/twitter"
+    app:borderWidth="0dp"
+    app:layout_anchor="@+id/link_facebook"
+    app:layout_anchorGravity="end|right"
     app:pressedTranslationZ="12dp"
     app:tabGravity="fill"
     app:tabMode="scrollable"/>

@@ -2,13 +2,13 @@ package com.eightmins.eightminutes.advocate;
 
 import android.R.string;
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.eightmins.eightminutes.MainActivity;
@@ -34,7 +34,7 @@ public class AddReferralActivity extends AppCompatActivity {
   @Bind(R.id.pincode) EditText pincode;
   @Bind(R.id.average_bill) EditText averageBill;
   @Bind(R.id.notes) EditText notes;
-  @Bind(R.id.progress_bar) ProgressBar progressBar;
+  private ProgressDialog progress;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +94,7 @@ public class AddReferralActivity extends AppCompatActivity {
       referral.put("status", "referred");
       referral.put("lead", ParseUser.getCurrentUser().getUsername());
 
-      showProgressBar();
+      hideProgressBar();
       referral.saveInBackground(new SaveCallback() {
         public void done(ParseException exception) {
           showProgressBar();
@@ -109,10 +109,16 @@ public class AddReferralActivity extends AppCompatActivity {
   }
 
   private void hideProgressBar() {
-    progressBar.setVisibility(View.INVISIBLE);
+    if ((progress != null) && progress.isShowing()) {
+      progress.dismiss();
+    }
   }
 
   private void showProgressBar() {
-    progressBar.setVisibility(View.VISIBLE);
+    progress = new ProgressDialog(this);
+    progress.setMessage("Referring...");
+    progress.setIndeterminate(true);
+    progress.setProgress(0);
+    progress.show();
   }
 }

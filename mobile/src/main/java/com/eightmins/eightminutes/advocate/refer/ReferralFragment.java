@@ -71,15 +71,15 @@ public class ReferralFragment extends Fragment {
 
     // TODO dummy data
     referrals = new ArrayList<>(10);
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 1", "Referral One Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 2", "Referral Two Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 3", "Referral Three Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 4", "Referral Four Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 5", "Referral Five Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 6", "Referral Six Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 7", "Referral Seven Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 8", "Referral Eight Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_menu, "Referral 9", "Referral Nine Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 1", "Referral One Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 2", "Referral Two Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 3", "Referral Three Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 4", "Referral Four Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 5", "Referral Five Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 6", "Referral Six Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 7", "Referral Seven Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 8", "Referral Eight Description", R.mipmap.ic_done));
+    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 9", "Referral Nine Description", R.mipmap.ic_done));
   }
 
   @Override

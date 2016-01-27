@@ -74,12 +74,12 @@ public class VideoFragment extends Fragment {
 
     // TODO dummy data
     videos = new ArrayList<>(10);
-    videos.add(new Video("Solar Energy", "", "4uPVZUTLAvA"));
-    videos.add(new Video("How Solar Energy Panels Work", "", "x4CTceusK9I"));
-    videos.add(new Video("How We Turn Solar Energy Into Electricity", "", "EnYjlsGXugo"));
-    videos.add(new Video("Why aren't we only using solar power?", "", "k8d5Pf7VIiU"));
-    videos.add(new Video("The future of solar power", "", "umyvqxDOIhs"));
-    videos.add(new Video("Why solar power is spreading so fast in Africa", "", "tkvbZ0ADmz0"));
+    videos.add(new Video("Solar Energy", "Solar Energy", "4uPVZUTLAvA"));
+    videos.add(new Video("How Solar Energy Panels Work", "How Solar Energy Panels Work", "x4CTceusK9I"));
+    videos.add(new Video("How We Turn Solar Energy Into Electricity", "How We Turn Solar Energy Into Electricity", "EnYjlsGXugo"));
+    videos.add(new Video("Why aren't we only using solar power?", "Why aren't we only using solar power?", "k8d5Pf7VIiU"));
+    videos.add(new Video("The future of solar power", "The future of solar power", "umyvqxDOIhs"));
+    videos.add(new Video("Why solar power is spreading so fast in Africa", "Why solar power is spreading so fast in Africa", "tkvbZ0ADmz0"));
   }
 
   @Override
