@@ -9,11 +9,11 @@ import com.parse.ParseObject;
 @ParseClassName("Video")
 public class Video extends ParseObject {
 
-  public void load(String name, String description, String id) {
+  public void load(String name, String description, String url) {
 
     put("name", name);
     put("description", description);
-    put("id", id);
+    put("url", url);
   }
 
   public String getName() {

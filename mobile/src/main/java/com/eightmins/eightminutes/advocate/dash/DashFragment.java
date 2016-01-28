@@ -1,5 +1,6 @@
 package com.eightmins.eightminutes.advocate.dash;
 
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,8 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +26,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class DashFragment extends Fragment {
-  @Bind(R.id.dash_recycler_view)
-  RecyclerView recyclerView;
-  private DashAdapter adapter;
-  private List<Dash> dashes;
+  @Bind(R.id.progress_bar) ProgressBar progressBar;
+  @Bind(R.id.progress_text) TextView progressText;
+  @Bind(R.id.dash_recycler_view) RecyclerView recyclerView;
+
+  private List<Dash> dashes = new ArrayList<>(1);
 
   private static final String ARG_PARAM1 = "param1";
   private static final String ARG_PARAM2 = "param2";
@@ -63,26 +70,47 @@ public class DashFragment extends Fragment {
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
     }
-
-    // TODO dummy data
-    dashes = new ArrayList<>(10);
-    dashes.add(new Dash("Progress", "3 Completed"));
-    dashes.add(new Dash("Team", "5 Members"));
-    dashes.add(new Dash("Earnings", "Rs 10,00,000"));
+    load();
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_dash, container, false);
-
     ButterKnife.bind(this, view);
+    load();
+
     recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
     recyclerView.setItemAnimator(new DefaultItemAnimator());
     recyclerView.setHasFixedSize(true);
     recyclerView.setAdapter(new DashAdapter(dashes));
 
-    return view;  }
+    return view;
+  }
+
+  public void load() {
+    showProgress();
+    ParseQuery<Dash> query = ParseQuery.getQuery("Dash");
+    query.findInBackground(new FindCallback<Dash>() {
+      @Override
+      public void done(List<Dash> objects, ParseException exception) {
+        hideProgress();
+        if (exception == null) {
+          if (objects == null) {
+            new Builder(getActivity()).setTitle(R.string.error_title).setMessage("Unable to Load Dashboard").setPositiveButton(android.R.string.ok, null).create().show();
+          } else {
+            dashes = new ArrayList<>(objects);
+            final DashAdapter videoAdapter = new DashAdapter(dashes);
+            recyclerView.setAdapter(videoAdapter);
+            videoAdapter.notifyDataSetChanged();
+          }
+        } else {
+          new Builder(getActivity()).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
+        }
+      }
+    });
+  }
+
 
   // TODO: Rename method, update argument and hook method into UI event
   public void onButtonPressed(Uri uri) {
@@ -113,7 +141,7 @@ public class DashFragment extends Fragment {
    * fragment to allow an interaction in this fragment to be communicated
    * to the activity and potentially other fragments contained in that
    * activity.
-   * <p/>
+   * <p>
    * See the Android Training lesson <a href=
    * "http://developer.android.com/training/basics/fragments/communicating.html"
    * >Communicating with Other Fragments</a> for more information.
@@ -121,5 +149,19 @@ public class DashFragment extends Fragment {
   public interface OnFragmentInteractionListener {
     // TODO: Update argument type and name
     void onFragmentInteraction(Uri uri);
+  }
+
+  protected void hideProgress() {
+    progressBar.setIndeterminate(false);
+    progressBar.setVisibility(View.INVISIBLE);
+    progressText.setVisibility(View.INVISIBLE);
+    recyclerView.setVisibility(View.VISIBLE);
+  }
+
+  protected void showProgress() {
+    progressBar.setIndeterminate(true);
+    progressBar.setVisibility(View.VISIBLE);
+    progressText.setVisibility(View.VISIBLE);
+    recyclerView.setVisibility(View.INVISIBLE);
   }
 }

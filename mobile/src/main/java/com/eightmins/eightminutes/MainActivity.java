@@ -23,10 +23,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
-import com.eightmins.eightminutes.advocate.team.AddActivity;
 import com.eightmins.eightminutes.advocate.dash.DashFragment;
-import com.eightmins.eightminutes.advocate.team.MembersFragment;
 import com.eightmins.eightminutes.advocate.refer.ReferralFragment;
+import com.eightmins.eightminutes.advocate.team.AddActivity;
+import com.eightmins.eightminutes.advocate.team.MemberFragment;
 import com.eightmins.eightminutes.advocate.video.VideoFragment;
 import com.eightmins.eightminutes.login.LoginActivity;
 import com.eightmins.eightminutes.login.ProfileActivity;
@@ -50,7 +50,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements ReferralFragment.OnFragmentInteractionListener,
-    MembersFragment.OnFragmentInteractionListener, VideoFragment.OnFragmentInteractionListener,
+    MemberFragment.OnFragmentInteractionListener, VideoFragment.OnFragmentInteractionListener,
     DashFragment.OnFragmentInteractionListener {
 
   @Bind(R.id.toolbar) Toolbar toolbar;
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
       PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
       adapter.addFragment(new DashFragment(), "Home");
       adapter.addFragment(new ReferralFragment(), "Referrals");
-      adapter.addFragment(new MembersFragment(), "Team");
+      adapter.addFragment(new MemberFragment(), "Team");
       adapter.addFragment(new VideoFragment(), "Videos");
       viewPager.setAdapter(adapter);
     }

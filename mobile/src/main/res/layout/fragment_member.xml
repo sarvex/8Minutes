@@ -3,7 +3,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".advocate.dash.DashFragment">
+  tools:context=".advocate.team.MemberFragment">
 
   <ProgressBar
     android:id="@+id/progress_bar"
@@ -29,9 +29,8 @@
     android:text="@string/loading"
     android:textSize="24sp"/>
 
-
   <android.support.v7.widget.RecyclerView
-    android:id="@+id/dash_recycler_view"
+    android:id="@+id/team_recycler_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>
 

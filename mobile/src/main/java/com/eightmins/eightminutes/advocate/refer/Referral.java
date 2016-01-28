@@ -9,15 +9,20 @@ import com.parse.ParseObject;
 @ParseClassName("Referral")
 public class Referral extends ParseObject {
 
-  private int image;
-  private String name;
-  private String description;
-  private int status;
-
-  public void load(int image, String name, String description, int status) {
+  public void load(int image, String name, String email, String phone, String address1, String address2,
+                   String locality, String city, String pincode, String averageBill, String notes, String lead, String status) {
     put("image", image);
     put("name", name);
-    put("description", description);
+    put("email", email);
+    put("phone", phone);
+    put("address1", address1);
+    put("address2", address2);
+    put("locality", locality);
+    put("city", city);
+    put("pincode", pincode);
+    put("averageBill", averageBill);
+    put("notes", notes);
+    put("lead", lead);
     put("status", status);
   }
 
@@ -40,12 +45,84 @@ public class Referral extends ParseObject {
     put("name", name);
   }
 
-  public String getDescription() {
-    return getString("description");
+  public String getEmail() {
+    return getString("email");
   }
 
-  public void setDescription(String description) {
-    put("description", description);
+  public void setEmail(String email) {
+    put("email", email);
+  }
+
+  public String getPhone() {
+    return getString("phone");
+  }
+
+  public void setPhone(String phone) {
+    put("phone", phone);
+  }
+
+  public String getAddress1() {
+    return getString("address1");
+  }
+
+  public void setAddress1(String address1) {
+    put("address1", address1);
+  }
+
+  public String getAddress2() {
+    return getString("address2");
+  }
+
+  public void setAddress2(String address2) {
+    put("address2", address2);
+  }
+
+  public String getLocality() {
+    return getString("locality");
+  }
+
+  public void setLocality(String locality) {
+    put("locality", locality);
+  }
+
+  public String getCity() {
+    return getString("city");
+  }
+
+  public void setCity(String city) {
+    put("city", city);
+  }
+
+  public String getPincode() {
+    return getString("pincode");
+  }
+
+  public void setPincode(String pincode) {
+    put("pincode", pincode);
+  }
+
+  public String getAverageBill() {
+    return getString("averageBill");
+  }
+
+  public void setAverageBill(String averageBill) {
+    put("averageBill", averageBill);
+  }
+
+  public String getNotes() {
+    return getString("notes");
+  }
+
+  public void setNotes(String notes) {
+    put("notes", notes);
+  }
+
+  public String getLead() {
+    return getString("lead");
+  }
+
+  public void setLead(String name) {
+    put("name", name);
   }
 
   public int getStatus() {

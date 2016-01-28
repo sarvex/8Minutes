@@ -150,6 +150,20 @@
     app:tabMode="scrollable"/>
 
   <android.support.design.widget.FloatingActionButton
+    android:id="@+id/forgot"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center|bottom"
+    android:layout_margin="16dp"
+    android:layout_marginTop="48dp"
+    android:src="@mipmap/ic_help"
+    app:borderWidth="0dp"
+    app:layout_anchor="@+id/password_card"
+    app:layout_anchorGravity="bottom|center"
+    app:tabGravity="fill"
+    app:tabMode="scrollable"/>
+
+  <android.support.design.widget.FloatingActionButton
     android:id="@+id/login"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

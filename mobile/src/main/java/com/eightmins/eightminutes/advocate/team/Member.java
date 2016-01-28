@@ -9,7 +9,7 @@ import com.parse.ParseUser;
 @ParseClassName("Member")
 public class Member extends ParseUser {
 
-  public void load(int image, String name, int members, int installed, int progress, int pending, long earnings) {
+  public void load(int image, String name, int members, int installed, int progress, int pending, long earnings, String owner) {
     put("image", image);
     put("name", name);
     put("members", members);
@@ -17,6 +17,7 @@ public class Member extends ParseUser {
     put("progress", progress);
     put("pending", pending);
     put("earnings", earnings);
+    put("owner", owner);
   }
 
   public int getImage() {
@@ -29,6 +30,14 @@ public class Member extends ParseUser {
 
   public String getName() {
     return getString("name");
+  }
+
+  public void setOwner(String owner) {
+    put("owner", owner);
+  }
+
+  public String getOwner() {
+    return getString("owner");
   }
 
   public void setName(String name) {

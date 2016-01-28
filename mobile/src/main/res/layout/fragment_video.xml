@@ -1,8 +1,33 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".advocate.video.VideoFragment">
+
+  <ProgressBar
+    android:id="@+id/progress_bar"
+    style="?android:attr/progressBarStyleLargeInverse"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".advocate.video.VideoFragment">
+    android:layout_centerInParent="true"
+    android:indeterminate="true"
+    android:visibility="invisible"/>
+
+  <TextView
+    android:id="@+id/progress_text"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignBottom="@id/progress_bar"
+    android:layout_alignEnd="@id/progress_bar"
+    android:layout_alignLeft="@id/progress_bar"
+    android:layout_alignRight="@id/progress_bar"
+    android:layout_alignStart="@id/progress_bar"
+    android:layout_alignTop="@id/progress_bar"
+    android:text="@string/loading"
+    android:gravity="center"
+    android:textSize="24sp"
+    android:background="@android:color/transparent"/>
 
   <android.support.v7.widget.RecyclerView
     android:id="@+id/video_recycler_view"

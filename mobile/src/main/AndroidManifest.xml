@@ -35,6 +35,11 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+    <activity
+      android:name="com.facebook.FacebookActivity"
+      android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+      android:label="@string/app_name"
+      android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
     <meta-data
       android:name="io.fabric.ApiKey"
@@ -48,31 +53,6 @@
     <meta-data
       android:name="com.facebook.sdk.ApplicationId"
       android:value="464032287120780"/>
-
-    <activity android:name=".login.LoginActivity"/>
-    <activity
-      android:name=".login.SignUpActivity"
-      android:parentActivityName=".login.LoginActivity"/>
-    <activity
-      android:name=".advocate.refer.AddActivity"
-      android:parentActivityName=".MainActivity"/>
-    <activity
-      android:name=".advocate.team.AddActivity"
-      android:parentActivityName=".MainActivity"/>
-    <activity
-      android:name=".login.ProfileActivity"
-      android:parentActivityName=".MainActivity"/>
-    <activity
-      android:name=".login.SettingsActivity"
-      android:label="@string/title_activity_settings"
-      android:parentActivityName=".MainActivity">
-    </activity>
-    <activity
-      android:name="com.facebook.FacebookActivity"
-      android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-      android:label="@string/app_name"
-      android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-
     <meta-data
       android:name="com.google.android.gms.version"
       android:value="@integer/google_play_services_version"/>
@@ -104,10 +84,33 @@
       android:authorities="com.facebook.app.FacebookContentProvider464032287120780"
       android:exported="true"/>
 
-    <activity android:name=".advocate.refer.DetailActivity">
-    </activity>
-    <activity android:name=".advocate.team.DetailActivity">
-    </activity>
+    <activity
+      android:name=".login.LoginActivity"
+      android:parentActivityName=".MainActivity"/>
+    <activity
+      android:name=".login.SignUpActivity"
+      android:parentActivityName=".login.LoginActivity"/>
+    <activity
+      android:name=".advocate.refer.AddActivity"
+      android:parentActivityName=".MainActivity"/>
+    <activity
+      android:name=".advocate.team.AddActivity"
+      android:parentActivityName=".MainActivity"/>
+    <activity
+      android:name=".login.ProfileActivity"
+      android:parentActivityName=".MainActivity"/>
+    <activity
+      android:name=".login.SettingsActivity"
+      android:parentActivityName=".MainActivity"/>
+    <activity
+      android:name=".advocate.refer.DetailActivity"
+      android:parentActivityName=".MainActivity"/>
+    <activity
+      android:name=".advocate.team.DetailActivity"
+      android:parentActivityName=".MainActivity"/>
+    <activity
+      android:name=".login.ForgotActivity"
+      android:parentActivityName=".MainActivity"/>
   </application>
 
 </manifest>

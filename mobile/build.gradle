@@ -122,6 +122,7 @@ dependencies {
   compile 'com.mikepenz:iconics-core:2.5.5@aar'
   compile 'com.mikepenz:google-material-typeface:2.1.0.1.original@aar'
   compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
+  compile 'com.malinskiy:materialicons:1.0.2'
   compile 'com.github.bumptech.glide:glide:3.7.0'
   compile 'com.github.glomadrian:dashed-circular-progress:1fe8b13942'
   compile 'com.code-troopers.betterpickers:library:2.3.0'

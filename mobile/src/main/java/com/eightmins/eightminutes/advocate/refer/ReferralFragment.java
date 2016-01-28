@@ -1,5 +1,6 @@
 package com.eightmins.eightminutes.advocate.refer;
 
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,8 +11,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +35,10 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class ReferralFragment extends Fragment {
-
+  @Bind(R.id.progress_bar) ProgressBar progressBar;
+  @Bind(R.id.progress_text) TextView progressText;
   @Bind(R.id.referral_recycler_view) RecyclerView recyclerView;
-  private ReferralAdapter adapter;
-  private List<Referral> referrals;
+  private List<Referral> referrals = new ArrayList<>(1);
 
   private static final String ARG_PARAM1 = "param1";
   private static final String ARG_PARAM2 = "param2";
@@ -68,53 +75,45 @@ public class ReferralFragment extends Fragment {
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
     }
-    load();
-  }
-
-  private void load() {
-    // TODO dummy data
-    referrals = new ArrayList<>(10);
-    Referral referral1 = new Referral();
-    referral1.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
-    referrals.add(referral1);
-    Referral referral2 = new Referral();
-    referral2.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
-    referrals.add(referral2);
-    Referral referral3 = new Referral();
-    referral3.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
-    referrals.add(referral3);
-    Referral referral4 = new Referral();
-    referral4.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
-    referrals.add(referral4);
-    Referral referral5 = new Referral();
-    referral5.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
-    referrals.add(referral5);
-    Referral referral6 = new Referral();
-    referral6.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
-    referrals.add(referral6);
-    Referral referral7 = new Referral();
-    referral7.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
-    referrals.add(referral7);
-    Referral referral8 = new Referral();
-    referral8.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
-    referrals.add(referral8);
-    Referral referral9 = new Referral();
-    referral9.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
-    referrals.add(referral9);
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_referral, container, false);
-
     ButterKnife.bind(this, view);
+    load();
+
     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     recyclerView.setItemAnimator(new DefaultItemAnimator());
     recyclerView.setHasFixedSize(true);
     recyclerView.setAdapter(new ReferralAdapter(referrals));
 
     return view;
+  }
+
+  private void load() {
+    showProgress();
+    ParseQuery<Referral> query = ParseQuery.getQuery("Referral");
+    query.whereEqualTo("lead", ParseUser.getCurrentUser().getUsername());
+    query.findInBackground(new FindCallback<Referral>() {
+      @Override
+      public void done(List<Referral> objects, ParseException exception) {
+        hideProgress();
+        if (exception == null) {
+          if (objects == null) {
+            new Builder(getActivity()).setTitle(R.string.error_title).setMessage("Unable to Load Referral").setPositiveButton(android.R.string.ok, null).create().show();
+          } else {
+            referrals = new ArrayList<>(objects);
+            final ReferralAdapter videoAdapter = new ReferralAdapter(referrals);
+            recyclerView.setAdapter(videoAdapter);
+            videoAdapter.notifyDataSetChanged();
+          }
+        } else {
+          new Builder(getActivity()).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
+        }
+      }
+    });
   }
 
   // TODO: Rename method, update argument and hook method into UI event
@@ -154,5 +153,19 @@ public class ReferralFragment extends Fragment {
   public interface OnFragmentInteractionListener {
     // TODO: Update argument type and name
     void onFragmentInteraction(Uri uri);
+  }
+
+  protected void hideProgress() {
+    progressBar.setIndeterminate(false);
+    progressBar.setVisibility(View.INVISIBLE);
+    progressText.setVisibility(View.INVISIBLE);
+    recyclerView.setVisibility(View.VISIBLE);
+  }
+
+  protected void showProgress() {
+    progressBar.setIndeterminate(true);
+    progressBar.setVisibility(View.VISIBLE);
+    progressText.setVisibility(View.VISIBLE);
+    recyclerView.setVisibility(View.INVISIBLE);
   }
 }

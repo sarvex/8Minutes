@@ -4,9 +4,11 @@ import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
+import com.eightmins.eightminutes.advocate.dash.Dash;
 import com.eightmins.eightminutes.advocate.refer.Referral;
 import com.eightmins.eightminutes.advocate.team.Member;
 import com.eightmins.eightminutes.advocate.video.Video;
+import com.eightmins.eightminutes.login.User;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseInstallation;
@@ -28,6 +30,8 @@ public class MainApplication extends Application {
     ParseObject.registerSubclass(Member.class);
     ParseObject.registerSubclass(Referral.class);
     ParseObject.registerSubclass(Video.class);
+    ParseObject.registerSubclass(User.class);
+    ParseObject.registerSubclass(Dash.class);
     Parse.enableLocalDatastore(this);
     Parse.initialize(this, BuildConfig.PARSE_APP_ID, BuildConfig.PARSE_API_KEY);
 

@@ -42,8 +42,7 @@ public class ReferralAdapter extends RecyclerView.Adapter<ReferralAdapter.ViewHo
   public class ViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.referral_photo) ImageView photo;
     @Bind(R.id.referral_name) TextView name;
-    @Bind(R.id.referral_description) TextView description;
-    @Bind(R.id.referral_status) ImageView status;
+    @Bind(R.id.referral_status) TextView description;
 
     public ViewHolder(View view) {
       super(view);
@@ -53,9 +52,7 @@ public class ReferralAdapter extends RecyclerView.Adapter<ReferralAdapter.ViewHo
     public void bind(Referral referral) {
       photo.setImageResource(referral.getImage());
       name.setText(referral.getName());
-      description.setText(referral.getDescription());
-      status.setImageResource(referral.getStatus());
+      description.setText(referral.getStatus());
     }
   }
-
 }

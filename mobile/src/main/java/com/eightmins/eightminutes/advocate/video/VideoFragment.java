@@ -1,5 +1,6 @@
 package com.eightmins.eightminutes.advocate.video;
 
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,8 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +34,12 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class VideoFragment extends Fragment {
+  @Bind(R.id.progress_bar) ProgressBar progressBar;
+  @Bind(R.id.progress_text) TextView progressText;
   @Bind(R.id.video_recycler_view)
+
   RecyclerView recyclerView;
-  private VideoAdapter adapter;
-  private List<Video> videos;
+  protected List<Video> videos = new ArrayList<>(1);
 
   private static final String ARG_PARAM1 = "param1";
   private static final String ARG_PARAM2 = "param2";
@@ -71,52 +79,44 @@ public class VideoFragment extends Fragment {
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
     }
-    load();
-
-
-  }
-
-  private void load() {
-    // TODO dummy data
-    videos = new ArrayList<>(10);
-
-    Video video1 = new Video();
-    video1.load("Solar Energy", "Solar Energy", "4uPVZUTLAvA");
-    videos.add(video1);
-
-    Video video2 = new Video();
-    video2.load("How Solar Energy Panels Work", "How Solar Energy Panels Work", "x4CTceusK9I");
-    videos.add(video2);
-
-    Video video3 = new Video();
-    video3.load("How We Turn Solar Energy Into Electricity", "How We Turn Solar Energy Into Electricity", "EnYjlsGXugo");
-    videos.add(video3);
-
-    Video video4 = new Video();
-    video4.load("Why aren't we only using solar power?", "Why aren't we only using solar power?", "k8d5Pf7VIiU");
-    videos.add(video4);
-
-    Video video5 = new Video();
-    video5.load("The future of solar power", "The future of solar power", "umyvqxDOIhs");
-    videos.add(video5);
-
-    Video video6 = new Video();
-    video6.load("Why solar power is spreading so fast in Africa", "Why solar power is spreading so fast in Africa", "tkvbZ0ADmz0");
-    videos.add(video6);
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_video, container, false);
-
     ButterKnife.bind(this, view);
+    load();
+
     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     recyclerView.setItemAnimator(new DefaultItemAnimator());
     recyclerView.setHasFixedSize(true);
     recyclerView.setAdapter(new VideoAdapter(getContext(), videos));
 
     return view;
+  }
+
+  public void load() {
+    showProgress();
+    ParseQuery<Video> query = ParseQuery.getQuery("Video");
+    query.findInBackground(new FindCallback<Video>() {
+      @Override
+      public void done(List<Video> objects, ParseException exception) {
+        hideProgress();
+        if (exception == null) {
+          if (objects == null) {
+            new Builder(getActivity()).setTitle(R.string.error_title).setMessage("Unable to Load Videos").setPositiveButton(android.R.string.ok, null).create().show();
+          } else {
+            videos = new ArrayList<>(objects);
+            final VideoAdapter videoAdapter = new VideoAdapter(getContext(), videos);
+            recyclerView.setAdapter(videoAdapter);
+            videoAdapter.notifyDataSetChanged();
+          }
+        } else {
+          new Builder(getActivity()).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
+        }
+      }
+    });
   }
 
   public void onButtonPressed(Uri uri) {
@@ -147,12 +147,26 @@ public class VideoFragment extends Fragment {
    * fragment to allow an interaction in this fragment to be communicated
    * to the activity and potentially other fragments contained in that
    * activity.
-   * <p/>
+   * <p>
    * See the Android Training lesson <a href=
    * "http://developer.android.com/training/basics/fragments/communicating.html"
    * >Communicating with Other Fragments</a> for more information.
    */
   public interface OnFragmentInteractionListener {
     void onFragmentInteraction(Uri uri);
+  }
+
+  protected void hideProgress() {
+    progressBar.setIndeterminate(false);
+    progressBar.setVisibility(View.INVISIBLE);
+    progressText.setVisibility(View.INVISIBLE);
+    recyclerView.setVisibility(View.VISIBLE);
+  }
+
+  protected void showProgress() {
+    progressBar.setIndeterminate(true);
+    progressBar.setVisibility(View.VISIBLE);
+    progressText.setVisibility(View.VISIBLE);
+    recyclerView.setVisibility(View.INVISIBLE);
   }
 }

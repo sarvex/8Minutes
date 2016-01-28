@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.utility.Utils;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -43,8 +44,8 @@ import butterknife.OnEditorAction;
 
 public class LoginActivity extends AppCompatActivity implements Validator.ValidationListener {
   @Bind(R.id.username) @NotEmpty EditText username;
-  @Bind(R.id.password) @Password(scheme = Scheme.ALPHA_NUMERIC, message = "Password should be more than 6 alphanumeric characters") @NotEmpty EditText password;
-
+  @Bind(R.id.password) @Password(scheme = Scheme.ALPHA_NUMERIC,
+      message = "Password should be more than 6 alphanumeric characters") @NotEmpty EditText password;
   @Bind(R.id.facebook_login) FloatingActionButton facebook;
   @Bind(R.id.twitter_login) FloatingActionButton twitter;
   @Bind(R.id.google_login) FloatingActionButton google;
@@ -152,6 +153,11 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
     }
   }
 
+  @OnClick(R.id.forgot)
+  public void forgot(View view) {
+    startActivity(new Intent(this, ForgotActivity.class));
+  }
+
   private void showProgressBar() {
     progress = new ProgressDialog(this);
     progress.setMessage("Logging In...");
@@ -167,6 +173,8 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
   @OnClick(R.id.expand)
   public void onExpand(View view) {
+    Utils.hideKeyboard(this);
+
     if (isFabOpen) {
       expand.startAnimation(rotateBackward);
       facebook.startAnimation(fabClose);
@@ -241,8 +249,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
             } else {
 //            if (user.getBoolean("authenticated")) {
 
-              new Builder(LoginActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage())
-                  .setPositiveButton(android.R.string.ok, null).create().show();
+              new Builder(LoginActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
 //            } else {
 //              Toast.makeText(LoginActivity.this, "Please wait for proper authentication!", Toast.LENGTH_SHORT).show();
 //            }
