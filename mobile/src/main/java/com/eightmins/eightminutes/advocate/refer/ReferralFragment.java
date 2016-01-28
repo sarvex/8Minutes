@@ -68,18 +68,39 @@ public class ReferralFragment extends Fragment {
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
     }
+    load();
+  }
 
+  private void load() {
     // TODO dummy data
     referrals = new ArrayList<>(10);
-    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 1", "Referral One Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 2", "Referral Two Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 3", "Referral Three Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 4", "Referral Four Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 5", "Referral Five Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 6", "Referral Six Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 7", "Referral Seven Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 8", "Referral Eight Description", R.mipmap.ic_done));
-    referrals.add(new Referral(R.mipmap.ic_account_circle, "Referral 9", "Referral Nine Description", R.mipmap.ic_done));
+    Referral referral1 = new Referral();
+    referral1.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
+    referrals.add(referral1);
+    Referral referral2 = new Referral();
+    referral2.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
+    referrals.add(referral2);
+    Referral referral3 = new Referral();
+    referral3.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
+    referrals.add(referral3);
+    Referral referral4 = new Referral();
+    referral4.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
+    referrals.add(referral4);
+    Referral referral5 = new Referral();
+    referral5.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
+    referrals.add(referral5);
+    Referral referral6 = new Referral();
+    referral6.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
+    referrals.add(referral6);
+    Referral referral7 = new Referral();
+    referral7.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
+    referrals.add(referral7);
+    Referral referral8 = new Referral();
+    referral8.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
+    referrals.add(referral8);
+    Referral referral9 = new Referral();
+    referral9.load(R.mipmap.ic_account_circle, "Referral Name", "Referral Description", R.mipmap.ic_done);
+    referrals.add(referral9);
   }
 
   @Override

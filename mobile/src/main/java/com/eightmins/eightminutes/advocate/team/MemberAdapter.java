@@ -1,4 +1,4 @@
-package com.eightmins.eightminutes.advocate.member;
+package com.eightmins.eightminutes.advocate.team;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,26 +16,26 @@ import butterknife.ButterKnife;
 /**
  * Created by nabhilax on 14/01/16.
  */
-public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
-  private final List<Team> teams;
+public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
+  private final List<Member> members;
 
-  public TeamAdapter(List<Team> teams) {
-    this.teams = teams;
+  public MemberAdapter(List<Member> members) {
+    this.members = members;
   }
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.team_list_item, parent, false));
+    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_member, parent, false));
   }
 
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
-    holder.bind(teams.get(position));
+    holder.bind(members.get(position));
   }
 
   @Override
   public int getItemCount() {
-    return teams.size();
+    return members.size();
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
@@ -55,17 +55,17 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
       ButterKnife.bind(this, view);
     }
 
-    public void bind(Team team) {
-      name.setText(team.getName());
-      members.setText(String.valueOf(team.getMembers()));
+    public void bind(Member member) {
+      name.setText(member.getName());
+      members.setText(String.valueOf(member.getMembers()));
       membersLabel.setText(" Members");
-      installed.setText(String.valueOf(team.getInstalled()));
+      installed.setText(String.valueOf(member.getInstalled()));
       installedLabel.setText(" Installed");
-      progress.setText(String.valueOf(team.getInstalled()));
+      progress.setText(String.valueOf(member.getInstalled()));
       progressLabel.setText(" Progress");
-      pending.setText(String.valueOf(team.getInstalled()));
+      pending.setText(String.valueOf(member.getInstalled()));
       pendingLabel.setText(" Pending");
-      earnings.setText("Rs. " + String.valueOf(team.getEarnings()));
+      earnings.setText("Rs. " + String.valueOf(member.getEarnings()));
     }
   }
 }

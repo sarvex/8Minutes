@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-  package="com.eightmins.eightminutes"
-  xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest package="com.eightmins.eightminutes"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
   <uses-permission android:name="android.permission.WAKE_LOCK"/>
   <uses-permission android:name="android.permission.INTERNET"/>
@@ -32,6 +31,7 @@
       android:theme="@style/AppTheme.NoActionBar">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
+
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
@@ -54,10 +54,10 @@
       android:name=".login.SignUpActivity"
       android:parentActivityName=".login.LoginActivity"/>
     <activity
-      android:name=".advocate.AddReferralActivity"
+      android:name=".advocate.refer.AddActivity"
       android:parentActivityName=".MainActivity"/>
     <activity
-      android:name=".advocate.AddMemberActivity"
+      android:name=".advocate.team.AddActivity"
       android:parentActivityName=".MainActivity"/>
     <activity
       android:name=".login.ProfileActivity"
@@ -103,6 +103,11 @@
       android:name="com.facebook.FacebookContentProvider"
       android:authorities="com.facebook.app.FacebookContentProvider464032287120780"
       android:exported="true"/>
+
+    <activity android:name=".advocate.refer.DetailActivity">
+    </activity>
+    <activity android:name=".advocate.team.DetailActivity">
+    </activity>
   </application>
 
 </manifest>

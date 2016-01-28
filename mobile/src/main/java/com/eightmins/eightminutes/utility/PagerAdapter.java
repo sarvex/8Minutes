@@ -1,4 +1,4 @@
-package com.eightmins.eightminutes;
+package com.eightmins.eightminutes.utility;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,8 +14,8 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
   private final List<Fragment> fragments = new ArrayList<>();
   private final List<String> titles = new ArrayList<>();
 
-  public PagerAdapter(FragmentManager fm) {
-    super(fm);
+  public PagerAdapter(FragmentManager fragmentManager) {
+    super(fragmentManager);
   }
 
   public void addFragment(Fragment fragment, String title) {

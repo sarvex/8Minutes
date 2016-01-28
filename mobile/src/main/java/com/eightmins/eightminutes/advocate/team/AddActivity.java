@@ -1,4 +1,4 @@
-package com.eightmins.eightminutes.login;
+package com.eightmins.eightminutes.advocate.team;
 
 import android.R.string;
 import android.app.AlertDialog.Builder;
@@ -17,13 +17,11 @@ import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Password;
 import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -32,14 +30,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 
-public class SignUpActivity extends AppCompatActivity implements Validator.ValidationListener {
+public class AddActivity extends AppCompatActivity implements Validator.ValidationListener {
+
   @Bind(R.id.name) @NotEmpty EditText name;
-  @Bind(R.id.username) @NotEmpty EditText username;
-  @Bind(R.id.password) @Password(scheme = Password.Scheme.ALPHA_NUMERIC, message = "Password should be more than 6 alphanumeric characters") EditText password;
-  @Bind(R.id.confirm) @ConfirmPassword EditText confirm;
   @Bind(R.id.email) @NotEmpty @Email EditText email;
   @Bind(R.id.phone) @NotEmpty EditText phone;
-  @Bind(R.id.sign_up) FloatingActionButton signUp;
+  @Bind(R.id.add_member) FloatingActionButton addMember;
 
   private ProgressDialog progress;
   private Validator validator;
@@ -48,25 +44,25 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_sign_up);
+    setContentView(R.layout.activity_member_add);
     ButterKnife.bind(this);
 
     validator = new Validator(this);
     validator.setValidationListener(this);
   }
 
-  @OnClick(R.id.sign_up)
-  public void signUpClicked(final View view) {
-    validator.validate();
-  }
-
   @OnEditorAction(R.id.phone)
   boolean password(int actionId) {
     if (actionId == EditorInfo.IME_ACTION_DONE) {
-      signUp.performClick();
+      addMember.performClick();
       return true;
     }
     return false;
+  }
+
+  @OnClick(R.id.add_member)
+  public void addMemberClicked(final View view) {
+    validator.validate();
   }
 
   private void hideProgressBar() {
@@ -77,7 +73,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
 
   private void showProgressBar() {
     progress = new ProgressDialog(this);
-    progress.setMessage("Signing Up...");
+    progress.setMessage("Adding Member...");
     progress.setIndeterminate(true);
     progress.setProgress(0);
     progress.show();
@@ -86,22 +82,19 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
   @Override
   public void onValidationSucceeded() {
     showProgressBar();
-
-    ParseUser user = new ParseUser();
-    user.setUsername(username.getText().toString().trim());
-    user.setPassword(password.getText().toString().trim());
-    user.setEmail(email.getText().toString().trim());
-    user.put("phone", phone.getText().toString().trim());
-    user.put("name", name.getText().toString().trim());
-    user.signUpInBackground(new SignUpCallback() {
+    ParseObject member = new ParseObject("Member");
+    member.put("name", name.getText().toString().trim());
+    member.put("email", email.getText().toString().trim());
+    member.put("phone", phone.getText().toString().trim());
+    member.saveInBackground(new SaveCallback() {
       @Override
       public void done(ParseException exception) {
         hideProgressBar();
         if (exception == null) {
-          Toast.makeText(SignUpActivity.this, "Sign up done successfully", Toast.LENGTH_SHORT).show();
-          startActivity(new Intent(SignUpActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+          Toast.makeText(AddActivity.this, "Member added sucessfully", Toast.LENGTH_SHORT).show();
+          startActivity(new Intent(AddActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         } else {
-          new Builder(SignUpActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(string.ok, null).create().show();
+          new Builder(AddActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(string.ok, null).create().show();
         }
       }
     });

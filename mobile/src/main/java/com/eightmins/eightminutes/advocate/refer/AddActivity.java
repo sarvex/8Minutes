@@ -1,6 +1,5 @@
-package com.eightmins.eightminutes.login;
+package com.eightmins.eightminutes.advocate.refer;
 
-import android.R.string;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,13 +16,12 @@ import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Password;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -32,14 +30,18 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 
-public class SignUpActivity extends AppCompatActivity implements Validator.ValidationListener {
+public class AddActivity extends AppCompatActivity implements Validator.ValidationListener {
   @Bind(R.id.name) @NotEmpty EditText name;
-  @Bind(R.id.username) @NotEmpty EditText username;
-  @Bind(R.id.password) @Password(scheme = Password.Scheme.ALPHA_NUMERIC, message = "Password should be more than 6 alphanumeric characters") EditText password;
-  @Bind(R.id.confirm) @ConfirmPassword EditText confirm;
   @Bind(R.id.email) @NotEmpty @Email EditText email;
   @Bind(R.id.phone) @NotEmpty EditText phone;
-  @Bind(R.id.sign_up) FloatingActionButton signUp;
+  @Bind(R.id.address1) @NotEmpty EditText address1;
+  @Bind(R.id.address2) @NotEmpty EditText address2;
+  @Bind(R.id.locality) @NotEmpty EditText locality;
+  @Bind(R.id.city) @NotEmpty EditText city;
+  @Bind(R.id.pincode) @NotEmpty EditText pincode;
+  @Bind(R.id.average_bill) @NotEmpty EditText averageBill;
+  @Bind(R.id.notes) EditText notes;
+  @Bind(R.id.refer) FloatingActionButton refer;
 
   private ProgressDialog progress;
   private Validator validator;
@@ -48,25 +50,25 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_sign_up);
+    setContentView(R.layout.activity_referral_add);
     ButterKnife.bind(this);
 
     validator = new Validator(this);
     validator.setValidationListener(this);
   }
 
-  @OnClick(R.id.sign_up)
-  public void signUpClicked(final View view) {
-    validator.validate();
-  }
-
-  @OnEditorAction(R.id.phone)
+  @OnEditorAction(R.id.notes)
   boolean password(int actionId) {
     if (actionId == EditorInfo.IME_ACTION_DONE) {
-      signUp.performClick();
+      refer.performClick();
       return true;
     }
     return false;
+  }
+
+  @OnClick(R.id.refer)
+  public void onReferClicked(final View view) {
+    validator.validate();
   }
 
   private void hideProgressBar() {
@@ -77,7 +79,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
 
   private void showProgressBar() {
     progress = new ProgressDialog(this);
-    progress.setMessage("Signing Up...");
+    progress.setMessage("Referring...");
     progress.setIndeterminate(true);
     progress.setProgress(0);
     progress.show();
@@ -85,23 +87,30 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
 
   @Override
   public void onValidationSucceeded() {
-    showProgressBar();
+    hideProgressBar();
 
-    ParseUser user = new ParseUser();
-    user.setUsername(username.getText().toString().trim());
-    user.setPassword(password.getText().toString().trim());
-    user.setEmail(email.getText().toString().trim());
-    user.put("phone", phone.getText().toString().trim());
-    user.put("name", name.getText().toString().trim());
-    user.signUpInBackground(new SignUpCallback() {
-      @Override
+    ParseObject referral = new ParseObject("Referral");
+    referral.put("name", name.getText().toString().trim());
+    referral.put("email", email.getText().toString().trim());
+    referral.put("phone", phone.getText().toString().trim());
+    referral.put("address1", address1.getText().toString().trim());
+    referral.put("address2", address2.getText().toString().trim());
+    referral.put("locality", locality.getText().toString().trim());
+    referral.put("city", city.getText().toString().trim());
+    referral.put("pincode", pincode.getText().toString().trim());
+    referral.put("averageBill", averageBill.getText().toString().trim());
+    referral.put("notes", notes.getText().toString().trim());
+    referral.put("status", "referred");
+    referral.put("lead", ParseUser.getCurrentUser().getUsername());
+
+    referral.saveInBackground(new SaveCallback() {
       public void done(ParseException exception) {
-        hideProgressBar();
+        showProgressBar();
         if (exception == null) {
-          Toast.makeText(SignUpActivity.this, "Sign up done successfully", Toast.LENGTH_SHORT).show();
-          startActivity(new Intent(SignUpActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+          Toast.makeText(AddActivity.this, "Referral done successfully", Toast.LENGTH_SHORT).show();
+          startActivity(new Intent(AddActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         } else {
-          new Builder(SignUpActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(string.ok, null).create().show();
+          new Builder(AddActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
         }
       }
     });
@@ -113,7 +122,6 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
       View view = error.getView();
       String message = error.getCollatedErrorMessage(this);
 
-      // Display error messages ;)
       if (view instanceof EditText) {
         ((EditText) view).setError(message);
       } else {

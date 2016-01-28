@@ -26,7 +26,7 @@ public class ReferralAdapter extends RecyclerView.Adapter<ReferralAdapter.ViewHo
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.referral_list_item, parent, false));
+    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_referral, parent, false));
   }
 
   @Override

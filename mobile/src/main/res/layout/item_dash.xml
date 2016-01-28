@@ -15,7 +15,7 @@
     android:background="@drawable/gradient">
 
   <com.github.glomadrian.dashedcircularprogress.DashedCircularProgress
-    android:id="@+id/team"
+    android:id="@+id/member"
     android:layout_width="match_parent"
     android:layout_height="200sp"
     custom:external_color="@color/secondary_text"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/primary_text"
         android:layout_centerInParent="true"
-        android:text="@string/team"
+        android:text="@string/member"
         android:textSize="18sp"/>
 
       <TextView

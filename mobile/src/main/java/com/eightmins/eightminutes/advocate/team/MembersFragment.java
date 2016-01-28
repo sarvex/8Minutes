@@ -1,4 +1,4 @@
-package com.eightmins.eightminutes.advocate.member;
+package com.eightmins.eightminutes.advocate.team;
 
 import android.content.Context;
 import android.net.Uri;
@@ -22,16 +22,16 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TeamFragment.OnFragmentInteractionListener} interface
+ * {@link MembersFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TeamFragment#newInstance} factory method to
+ * Use the {@link MembersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TeamFragment extends Fragment {
+public class MembersFragment extends Fragment {
 
   @Bind(R.id.team_recycler_view) RecyclerView recyclerView;
-  private TeamAdapter adapter;
-  private List<Team> teams;
+  private MemberAdapter adapter;
+  private List<Member> members;
 
   private static final String ARG_PARAM1 = "param1";
   private static final String ARG_PARAM2 = "param2";
@@ -47,17 +47,17 @@ public class TeamFragment extends Fragment {
    *
    * @param param1 Parameter 1.
    * @param param2 Parameter 2.
-   * @return A new instance of fragment TeamFragment.
+   * @return A new instance of fragment MembersFragment.
    */
   // TODO: Rename and change types and number of parameters
-  public static TeamFragment newInstance(String param1, String param2) {
-    TeamFragment fragment = new TeamFragment();
+  public static MembersFragment newInstance(String param1, String param2) {
+    MembersFragment fragment = new MembersFragment();
     Bundle args = new Bundle();
     args.putString(ARG_PARAM1, param1);
     args.putString(ARG_PARAM2, param2);
     fragment.setArguments(args);
     return fragment;
-  }  public TeamFragment() {
+  }  public MembersFragment() {
     // Required empty public constructor
   }
 
@@ -68,18 +68,39 @@ public class TeamFragment extends Fragment {
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
     }
+    load();
+  }
 
+  private void load() {
     // TODO dummy data
-    teams = new ArrayList<>(10);
-    teams.add(new Team(R.mipmap.ic_account_circle, "Member 1", 11, 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_account_circle, "Member 2", 11, 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_account_circle, "Member 3", 11, 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_account_circle, "Member 4", 11, 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_account_circle, "Member 5", 11, 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_account_circle, "Member 6", 11, 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_account_circle, "Member 7", 11, 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_account_circle, "Member 8", 11, 2, 4, 6, 10000));
-    teams.add(new Team(R.mipmap.ic_account_circle, "Member 9", 11, 2, 4, 6, 10000));
+    members = new ArrayList<>(10);
+    Member member1 = new Member();
+    member1.load(R.mipmap.ic_account_circle, "Member 1", 11, 2, 4, 6, 10000);
+    members.add(member1);
+    Member member2 = new Member();
+    member2.load(R.mipmap.ic_account_circle, "Member 1", 11, 2, 4, 6, 10000);
+    members.add(member2);
+    Member member3 = new Member();
+    member3.load(R.mipmap.ic_account_circle, "Member 1", 11, 2, 4, 6, 10000);
+    members.add(member3);
+    Member member4 = new Member();
+    member4.load(R.mipmap.ic_account_circle, "Member 1", 11, 2, 4, 6, 10000);
+    members.add(member4);
+    Member member5 = new Member();
+    member5.load(R.mipmap.ic_account_circle, "Member 1", 11, 2, 4, 6, 10000);
+    members.add(member5);
+    Member member6 = new Member();
+    member6.load(R.mipmap.ic_account_circle, "Member 1", 11, 2, 4, 6, 10000);
+    members.add(member6);
+    Member member7 = new Member();
+    member7.load(R.mipmap.ic_account_circle, "Member 1", 11, 2, 4, 6, 10000);
+    members.add(member7);
+    Member member8 = new Member();
+    member8.load(R.mipmap.ic_account_circle, "Member 1", 11, 2, 4, 6, 10000);
+    members.add(member8);
+    Member member9 = new Member();
+    member9.load(R.mipmap.ic_account_circle, "Member 1", 11, 2, 4, 6, 10000);
+    members.add(member9);
   }
 
   @Override
@@ -92,7 +113,7 @@ public class TeamFragment extends Fragment {
     recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
     recyclerView.setItemAnimator(new DefaultItemAnimator());
     recyclerView.setHasFixedSize(true);
-    recyclerView.setAdapter(new TeamAdapter(teams));
+    recyclerView.setAdapter(new MemberAdapter(members));
 
     return view;
   }

@@ -23,14 +23,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
-import com.eightmins.eightminutes.advocate.AddMemberActivity;
-import com.eightmins.eightminutes.advocate.AddReferralActivity;
+import com.eightmins.eightminutes.advocate.team.AddActivity;
 import com.eightmins.eightminutes.advocate.dash.DashFragment;
-import com.eightmins.eightminutes.advocate.member.TeamFragment;
+import com.eightmins.eightminutes.advocate.team.MembersFragment;
 import com.eightmins.eightminutes.advocate.refer.ReferralFragment;
 import com.eightmins.eightminutes.advocate.video.VideoFragment;
 import com.eightmins.eightminutes.login.LoginActivity;
 import com.eightmins.eightminutes.login.ProfileActivity;
+import com.eightmins.eightminutes.utility.PagerAdapter;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial.Icon;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -50,7 +50,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements ReferralFragment.OnFragmentInteractionListener,
-    TeamFragment.OnFragmentInteractionListener, VideoFragment.OnFragmentInteractionListener,
+    MembersFragment.OnFragmentInteractionListener, VideoFragment.OnFragmentInteractionListener,
     DashFragment.OnFragmentInteractionListener {
 
   @Bind(R.id.toolbar) Toolbar toolbar;
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
       PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
       adapter.addFragment(new DashFragment(), "Home");
       adapter.addFragment(new ReferralFragment(), "Referrals");
-      adapter.addFragment(new TeamFragment(), "Team");
+      adapter.addFragment(new MembersFragment(), "Team");
       adapter.addFragment(new VideoFragment(), "Videos");
       viewPager.setAdapter(adapter);
     }
@@ -282,10 +282,10 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   public void onAddButtonClicked(View view) {
     switch (viewPager.getCurrentItem()) {
       case 1:
-        startActivity(new Intent(this, AddReferralActivity.class));
+        startActivity(new Intent(this, com.eightmins.eightminutes.advocate.refer.AddActivity.class));
         break;
       case 2:
-        startActivity(new Intent(this, AddMemberActivity.class));
+        startActivity(new Intent(this, AddActivity.class));
         break;
       default:
         break;

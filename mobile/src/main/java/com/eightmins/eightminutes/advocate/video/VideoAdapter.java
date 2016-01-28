@@ -40,7 +40,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.video_list_item, parent, false));  }
+    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_video, parent, false));  }
 
   @Override
   public void onBindViewHolder(final ViewHolder holder, final int position) {
@@ -69,7 +69,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     @OnClick(R.id.youtube_play)
     public void onClick(View v) {
 
-      Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, BuildConfig.YOUTUBE_DATA_KEY, videos.get(getLayoutPosition()).getUrl());
+      Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, BuildConfig.YOUTUBE_DATA_KEY, videos.get(getLayoutPosition()).getId());
       context.startActivity(intent);
     }
 
@@ -94,7 +94,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         @Override
         public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
 
-          youTubeThumbnailLoader.setVideo(videos.get(position).getUrl());
+          youTubeThumbnailLoader.setVideo(videos.get(position).getId());
           youTubeThumbnailLoader.setOnThumbnailLoadedListener(onThumbnailLoadedListener);
         }
 
