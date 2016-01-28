@@ -35,6 +35,7 @@ import com.parse.ParseFacebookUtils;
 import com.parse.ParseTwitterUtils;
 import com.parse.ParseUser;
 
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
@@ -198,7 +199,8 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
   @OnClick(R.id.facebook_login)
   public void onFacebookLogin(View view) {
-    ParseFacebookUtils.logInWithReadPermissionsInBackground(this, null, new LogInCallback() {
+    List<String> permissions = Arrays.asList("user_photos", "friends_photos", "email", "user_birthday", "user_friends");
+    ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
       @Override
       public void done(ParseUser user, ParseException err) {
         if (user == null) {

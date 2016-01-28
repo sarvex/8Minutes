@@ -32,11 +32,11 @@ public class Video extends ParseObject {
     put("description", description);
   }
 
-  public String getId() {
+  public String getUrl() {
     return getString("id");
   }
 
-  public void setId(String id) {
+  public void setUrl(String id) {
     put("id", id);
   }
 

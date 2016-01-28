@@ -19,7 +19,6 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -32,6 +31,7 @@ import butterknife.OnEditorAction;
 
 public class AddActivity extends AppCompatActivity implements Validator.ValidationListener {
   @Bind(R.id.name) @NotEmpty EditText name;
+  @Bind(R.id.organization) EditText organization;
   @Bind(R.id.email) @NotEmpty @Email EditText email;
   @Bind(R.id.phone) @NotEmpty EditText phone;
   @Bind(R.id.address1) @NotEmpty EditText address1;
@@ -89,19 +89,20 @@ public class AddActivity extends AppCompatActivity implements Validator.Validati
   public void onValidationSucceeded() {
     hideProgressBar();
 
-    ParseObject referral = new ParseObject("Referral");
-    referral.put("name", name.getText().toString().trim());
-    referral.put("email", email.getText().toString().trim());
-    referral.put("phone", phone.getText().toString().trim());
-    referral.put("address1", address1.getText().toString().trim());
-    referral.put("address2", address2.getText().toString().trim());
-    referral.put("locality", locality.getText().toString().trim());
-    referral.put("city", city.getText().toString().trim());
-    referral.put("pincode", pincode.getText().toString().trim());
-    referral.put("averageBill", averageBill.getText().toString().trim());
-    referral.put("notes", notes.getText().toString().trim());
-    referral.put("status", "referred");
-    referral.put("lead", ParseUser.getCurrentUser().getUsername());
+    Referral referral = new Referral();
+    referral.setName(name.getText().toString().trim());
+    referral.setOrganization(organization.getText().toString().trim());
+    referral.setEmail(email.getText().toString().trim());
+    referral.setPhone(phone.getText().toString().trim());
+    referral.setAddress1(address1.getText().toString().trim());
+    referral.setAddress2(address2.getText().toString().trim());
+    referral.setLocality(locality.getText().toString().trim());
+    referral.setCity(city.getText().toString().trim());
+    referral.setPincode(pincode.getText().toString().trim());
+    referral.setAverageBill(averageBill.getText().toString().trim());
+    referral.setNotes(notes.getText().toString().trim());
+    referral.setStatus("referred");
+    referral.setLead(ParseUser.getCurrentUser().getUsername());
 
     referral.saveInBackground(new SaveCallback() {
       public void done(ParseException exception) {

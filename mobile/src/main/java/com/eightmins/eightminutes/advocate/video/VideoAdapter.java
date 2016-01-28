@@ -69,7 +69,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     @OnClick(R.id.youtube_play)
     public void onClick(View v) {
 
-      Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, BuildConfig.YOUTUBE_DATA_KEY, videos.get(getLayoutPosition()).getId());
+      Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, BuildConfig.YOUTUBE_DATA_KEY, videos.get(getLayoutPosition()).getUrl());
       context.startActivity(intent);
     }
 
@@ -94,7 +94,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         @Override
         public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
 
-          youTubeThumbnailLoader.setVideo(videos.get(position).getId());
+          youTubeThumbnailLoader.setVideo(videos.get(position).getUrl());
           youTubeThumbnailLoader.setOnThumbnailLoadedListener(onThumbnailLoadedListener);
         }
 

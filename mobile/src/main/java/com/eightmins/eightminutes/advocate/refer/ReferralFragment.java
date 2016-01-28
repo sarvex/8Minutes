@@ -93,27 +93,30 @@ public class ReferralFragment extends Fragment {
   }
 
   private void load() {
-    showProgress();
-    ParseQuery<Referral> query = ParseQuery.getQuery("Referral");
-    query.whereEqualTo("lead", ParseUser.getCurrentUser().getUsername());
-    query.findInBackground(new FindCallback<Referral>() {
-      @Override
-      public void done(List<Referral> objects, ParseException exception) {
-        hideProgress();
-        if (exception == null) {
-          if (objects == null) {
-            new Builder(getActivity()).setTitle(R.string.error_title).setMessage("Unable to Load Referral").setPositiveButton(android.R.string.ok, null).create().show();
+
+    if (ParseUser.getCurrentUser() != null) {
+      showProgress();
+      ParseQuery<Referral> query = ParseQuery.getQuery("Referral");
+      query.whereEqualTo("lead", ParseUser.getCurrentUser().getUsername());
+      query.findInBackground(new FindCallback<Referral>() {
+        @Override
+        public void done(List<Referral> objects, ParseException exception) {
+          hideProgress();
+          if (exception == null) {
+            if (objects == null) {
+              new Builder(getActivity()).setTitle(R.string.error_title).setMessage("Unable to Load Referral").setPositiveButton(android.R.string.ok, null).create().show();
+            } else {
+              referrals = new ArrayList<>(objects);
+              final ReferralAdapter videoAdapter = new ReferralAdapter(referrals);
+              recyclerView.setAdapter(videoAdapter);
+              videoAdapter.notifyDataSetChanged();
+            }
           } else {
-            referrals = new ArrayList<>(objects);
-            final ReferralAdapter videoAdapter = new ReferralAdapter(referrals);
-            recyclerView.setAdapter(videoAdapter);
-            videoAdapter.notifyDataSetChanged();
+            new Builder(getActivity()).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
           }
-        } else {
-          new Builder(getActivity()).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
         }
-      }
-    });
+      });
+    }
   }
 
   // TODO: Rename method, update argument and hook method into UI event

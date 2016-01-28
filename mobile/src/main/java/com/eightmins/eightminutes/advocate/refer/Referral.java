@@ -9,10 +9,12 @@ import com.parse.ParseObject;
 @ParseClassName("Referral")
 public class Referral extends ParseObject {
 
-  public void load(int image, String name, String email, String phone, String address1, String address2,
-                   String locality, String city, String pincode, String averageBill, String notes, String lead, String status) {
+  public void load(int image, String name, String organization, String email, String phone, String address1,
+                   String address2, String locality, String city, String pincode, String averageBill, String notes,
+                   String lead, String status) {
     put("image", image);
     put("name", name);
+    put("organizaiton", organization);
     put("email", email);
     put("phone", phone);
     put("address1", address1);
@@ -125,13 +127,20 @@ public class Referral extends ParseObject {
     put("name", name);
   }
 
-  public int getStatus() {
-    return getInt("status");
+  public String getStatus() {
+    return getString("status");
   }
 
-  public void setStatus(int status) {
+  public void setStatus(String status) {
     put("status", status);
   }
 
 
+  public void setOrganization(String organization) {
+    put("organization", organization);
+  }
+
+  public String getOrganization() {
+    return getString("organization");
+  }
 }

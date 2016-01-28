@@ -32,6 +32,7 @@ public class MainApplication extends Application {
     ParseObject.registerSubclass(Video.class);
     ParseObject.registerSubclass(User.class);
     ParseObject.registerSubclass(Dash.class);
+
     Parse.enableLocalDatastore(this);
     Parse.initialize(this, BuildConfig.PARSE_APP_ID, BuildConfig.PARSE_API_KEY);
 
