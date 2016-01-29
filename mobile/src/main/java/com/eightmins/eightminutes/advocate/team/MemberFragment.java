@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.login.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -39,7 +40,7 @@ public class MemberFragment extends Fragment {
   @Bind(R.id.progress_text) TextView progressText;
   @Bind(R.id.team_recycler_view) RecyclerView recyclerView;
 
-  private List<Member> members = new ArrayList<>(1);
+  private List<User> members = new ArrayList<>(1);
 
   private static final String ARG_PARAM1 = "param1";
   private static final String ARG_PARAM2 = "param2";
@@ -65,7 +66,9 @@ public class MemberFragment extends Fragment {
     args.putString(ARG_PARAM2, param2);
     fragment.setArguments(args);
     return fragment;
-  }  public MemberFragment() {
+  }
+
+  public MemberFragment() {
     // Required empty public constructor
   }
 
@@ -96,26 +99,28 @@ public class MemberFragment extends Fragment {
 
   private void load() {
     showProgress();
-    ParseQuery<Member> query = ParseQuery.getQuery("Member");
-    query.whereEqualTo("owner", ParseUser.getCurrentUser().getUsername());
-    query.findInBackground(new FindCallback<Member>() {
-      @Override
-      public void done(List<Member> objects, ParseException exception) {
-        hideProgress();
-        if (exception == null) {
-          if (objects == null) {
-            new Builder(getActivity()).setTitle(R.string.error_title).setMessage("Unable to Load Members").setPositiveButton(android.R.string.ok, null).create().show();
+    if (ParseUser.getCurrentUser() != null) {
+      ParseQuery<User> query = ParseQuery.getQuery("_User");
+      query.whereEqualTo("owner", ParseUser.getCurrentUser().getUsername());
+      query.findInBackground(new FindCallback<User>() {
+        @Override
+        public void done(List<User> objects, ParseException exception) {
+          hideProgress();
+          if (exception == null) {
+            if (objects == null) {
+              new Builder(getActivity()).setTitle(R.string.error_title).setMessage("Unable to Load Members").setPositiveButton(android.R.string.ok, null).create().show();
+            } else {
+              members = new ArrayList<>(objects);
+              final MemberAdapter videoAdapter = new MemberAdapter(members);
+              recyclerView.setAdapter(videoAdapter);
+              videoAdapter.notifyDataSetChanged();
+            }
           } else {
-            members = new ArrayList<>(objects);
-            final MemberAdapter videoAdapter = new MemberAdapter(members);
-            recyclerView.setAdapter(videoAdapter);
-            videoAdapter.notifyDataSetChanged();
+            new Builder(getActivity()).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
           }
-        } else {
-          new Builder(getActivity()).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
         }
-      }
-    });
+      });
+    }
   }
 
   // TODO: Rename method, update argument and hook method into UI event

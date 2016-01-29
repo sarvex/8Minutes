@@ -24,8 +24,8 @@ import android.view.View;
 import android.view.Window;
 
 import com.eightmins.eightminutes.advocate.dash.DashFragment;
+import com.eightmins.eightminutes.advocate.refer.Referral;
 import com.eightmins.eightminutes.advocate.refer.ReferralFragment;
-import com.eightmins.eightminutes.advocate.team.AddActivity;
 import com.eightmins.eightminutes.advocate.team.MemberFragment;
 import com.eightmins.eightminutes.advocate.video.VideoFragment;
 import com.eightmins.eightminutes.login.LoginActivity;
@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     MemberFragment.OnFragmentInteractionListener, VideoFragment.OnFragmentInteractionListener,
     DashFragment.OnFragmentInteractionListener {
 
+  private static final int ADD_REFERRAL = 12834;
+  private static final int ADD_MEMBER = 12835;
   @Bind(R.id.toolbar) Toolbar toolbar;
   @Bind(R.id.viewpager) ViewPager viewPager;
   @Bind(R.id.tabs) TabLayout tabLayout;
@@ -110,16 +112,16 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
         super.onTabSelected(tab);
         switch (tab.getText().toString()) {
           case "Home":
-            addButton.setVisibility(View.INVISIBLE);
+            addButton.hide();
             break;
           case "Referrals":
-            addButton.setVisibility(View.VISIBLE);
+            addButton.show();
             break;
           case "Team":
-            addButton.setVisibility(View.VISIBLE);
+            addButton.show();
             break;
           case "Videos":
-            addButton.setVisibility(View.INVISIBLE);
+            addButton.hide();
             break;
         }
       }
@@ -134,6 +136,36 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
         super.onTabReselected(tab);
       }
     });
+  }
+
+  @OnClick(R.id.add_button)
+  public void onAddButtonClicked(View view) {
+    switch (viewPager.getCurrentItem()) {
+      case 1:
+        startActivityForResult(new Intent(this, com.eightmins.eightminutes.advocate.refer.AddActivity.class), ADD_REFERRAL);
+        break;
+      case 2:
+        startActivityForResult(new Intent(this, com.eightmins.eightminutes.advocate.team.AddActivity.class), ADD_MEMBER);
+        break;
+      default:
+        break;
+    }
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+
+    if (requestCode == ADD_REFERRAL && resultCode == RESULT_OK) {
+      Referral referral = (Referral) data.getExtras().get("passed_item");
+      // deal with the item yourself
+    }
+
+    if (requestCode == ADD_MEMBER && resultCode == RESULT_OK) {
+      Referral referral = (Referral) data.getExtras().get("passed_item");
+      // deal with the item yourself
+    }
+
   }
 
   private void setupToolbar() {
@@ -276,21 +308,6 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     }
 
     return result || super.onOptionsItemSelected(item);
-  }
-
-  @OnClick(R.id.add_button)
-  public void onAddButtonClicked(View view) {
-    switch (viewPager.getCurrentItem()) {
-      case 1:
-        startActivity(new Intent(this, com.eightmins.eightminutes.advocate.refer.AddActivity.class));
-        break;
-      case 2:
-        startActivity(new Intent(this, AddActivity.class));
-        break;
-      default:
-        break;
-    }
-
   }
 
   @Override

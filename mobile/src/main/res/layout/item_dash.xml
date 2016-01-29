@@ -47,7 +47,7 @@
         android:textColor="@color/secondary_text"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24sp"
-        android:text="5 Members"/>
+        android:text="@string/member_placeholder"/>
     </RelativeLayout>
   </com.github.glomadrian.dashedcircularprogress.DashedCircularProgress>
   </RelativeLayout>

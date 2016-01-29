@@ -35,7 +35,10 @@
   <string name="organization_placeholder">Organization</string>
   <string name="fabric_api_key">5bbbd945453d1879bfc1afe8f3d4d400cc8bff89</string>
   <string name="com.optimizely.api_key" translatable="false">AANLA4kBtQUVD8GJfR9P2bs5w64wr0xS~4550320643</string>
-  <string name="parse_application_id">dJDm7ykUrDyWwRxvRuwxPVwM4Wf9aMr3mugB2Sey</string>
-  <string name="parse_client_key">c9VA3tjWCkUVwDnEdfS35N1FmJ8DLmY20C69L9Ud</string>
-  <string name="facebook_application_id">464032287120780</string>
+  <string name="parse_application_id" translatable="false">dJDm7ykUrDyWwRxvRuwxPVwM4Wf9aMr3mugB2Sey</string>
+  <string name="parse_client_key" translatable="false">c9VA3tjWCkUVwDnEdfS35N1FmJ8DLmY20C69L9Ud</string>
+  <string name="facebook_application_id" translatable="false">464032287120780</string>
+  <string name="title">Title</string>
+  <string name="member_placeholder">5 Members</string>
+  <string name="description_placeholder">Description</string>
 </resources>

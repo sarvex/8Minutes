@@ -93,7 +93,6 @@ public class ReferralFragment extends Fragment {
   }
 
   private void load() {
-
     if (ParseUser.getCurrentUser() != null) {
       showProgress();
       ParseQuery<Referral> query = ParseQuery.getQuery("Referral");

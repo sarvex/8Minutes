@@ -17,8 +17,10 @@ import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Password;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
@@ -35,6 +37,9 @@ public class AddActivity extends AppCompatActivity implements Validator.Validati
   @Bind(R.id.name) @NotEmpty EditText name;
   @Bind(R.id.email) @NotEmpty @Email EditText email;
   @Bind(R.id.phone) @NotEmpty EditText phone;
+  @Bind(R.id.username) @NotEmpty EditText username;
+  @Bind(R.id.password) @NotEmpty @Password(scheme = Password.Scheme.ALPHA_NUMERIC, message = "Password should be more than 6 alphanumeric characters") EditText password;
+  @Bind(R.id.confirm) @NotEmpty @ConfirmPassword EditText confirm;
   @Bind(R.id.add_member) FloatingActionButton addMember;
 
   private ProgressDialog progress;
@@ -51,8 +56,8 @@ public class AddActivity extends AppCompatActivity implements Validator.Validati
     validator.setValidationListener(this);
   }
 
-  @OnEditorAction(R.id.phone)
-  boolean password(int actionId) {
+  @OnEditorAction(R.id.confirm)
+  boolean editionAction(int actionId) {
     if (actionId == EditorInfo.IME_ACTION_DONE) {
       addMember.performClick();
       return true;

@@ -80,17 +80,17 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
     user.setEmail(email.getText().toString().trim());
     user.setPhone(phone.getText().toString().trim());
     user.setName(name.getText().toString().trim());
-    user.setAuthenticated(false);
+    user.setVerified(false);
     user.signUpInBackground(new SignUpCallback() {
       @Override
       public void done(ParseException exception) {
         Utils.hideProgressBar(progress);
         if (exception == null) {
           Toast.makeText(getApplicationContext(), "Sign up done successfully", Toast.LENGTH_SHORT).show();
-          startActivity(new Intent(SignUpActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         } else {
           new Builder(SignUpActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(string.ok, null).create().show();
         }
+        startActivity(new Intent(SignUpActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
       }
     });
   }

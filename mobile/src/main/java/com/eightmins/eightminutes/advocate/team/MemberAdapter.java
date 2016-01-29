@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.login.User;
 
 import java.util.List;
 
@@ -17,9 +18,9 @@ import butterknife.ButterKnife;
  * Created by nabhilax on 14/01/16.
  */
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
-  private final List<Member> members;
+  private final List<User> members;
 
-  public MemberAdapter(List<Member> members) {
+  public MemberAdapter(List<User> members) {
     this.members = members;
   }
 
@@ -55,17 +56,17 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
       ButterKnife.bind(this, view);
     }
 
-    public void bind(Member member) {
-      name.setText(member.getName());
-      members.setText(String.valueOf(member.getMembers()));
+    public void bind(User user) {
+      name.setText(user.getName());
+      members.setText(String.valueOf(user.getMembers()));
       membersLabel.setText(" Members");
-      installed.setText(String.valueOf(member.getInstalled()));
+      installed.setText(String.valueOf(user.getInstalled()));
       installedLabel.setText(" Installed");
-      progress.setText(String.valueOf(member.getInstalled()));
+      progress.setText(String.valueOf(user.getInstalled()));
       progressLabel.setText(" Progress");
-      pending.setText(String.valueOf(member.getInstalled()));
+      pending.setText(String.valueOf(user.getInstalled()));
       pendingLabel.setText(" Pending");
-      earnings.setText("Rs. " + String.valueOf(member.getEarnings()));
+      earnings.setText("Rs. " + String.valueOf(user.getEarnings()));
     }
   }
 }

@@ -6,7 +6,6 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.eightmins.eightminutes.advocate.dash.Dash;
 import com.eightmins.eightminutes.advocate.refer.Referral;
-import com.eightmins.eightminutes.advocate.team.Member;
 import com.eightmins.eightminutes.advocate.video.Video;
 import com.eightmins.eightminutes.login.User;
 import com.parse.Parse;
@@ -27,7 +26,6 @@ public class MainApplication extends Application {
   public void onCreate() {
     super.onCreate();
 
-    ParseObject.registerSubclass(Member.class);
     ParseObject.registerSubclass(Referral.class);
     ParseObject.registerSubclass(Video.class);
     ParseObject.registerSubclass(User.class);
