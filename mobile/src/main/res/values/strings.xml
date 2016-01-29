@@ -15,7 +15,7 @@
   <string name="progress">Progress</string>
   <string name="search">Search</string>
   <string name="share">Share</string>
-  <string name="facebook">Facebook</string> 
+  <string name="facebook">Facebook</string>
   <string name="twitter">Twitter</string>
   <string name="google">Google</string>
   <string name="username_placeholder">Username</string>
@@ -31,7 +31,7 @@
   <string name="pincode_placeholder">Pincode</string>
   <string name="locality_placeholder">Locality</string>
   <string name="confirm_placeholder">Confirm Password</string>
-  <string name="loading">Loading...</string>
+  <string name="loading">Loading…</string>
   <string name="organization_placeholder">Organization</string>
   <string name="fabric_api_key">5bbbd945453d1879bfc1afe8f3d4d400cc8bff89</string>
   <string name="com.optimizely.api_key" translatable="false">AANLA4kBtQUVD8GJfR9P2bs5w64wr0xS~4550320643</string>
