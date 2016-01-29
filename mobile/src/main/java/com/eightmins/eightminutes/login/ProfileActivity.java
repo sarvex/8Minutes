@@ -49,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         public void done(ParseException ex) {
           if (ex == null) {
-            Toast.makeText(ProfileActivity.this, "The user is no longer associated with their Facebook account.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "The user is no longer associated with their Facebook account.", Toast.LENGTH_SHORT).show();
           }
         }
       });
@@ -58,7 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         public void done(ParseException ex) {
           if (ParseFacebookUtils.isLinked(user)) {
-            Toast.makeText(ProfileActivity.this, "Woohoo, user logged in with Facebook!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Woohoo, user logged in with Facebook!", Toast.LENGTH_SHORT).show();
           }
         }
       });
@@ -73,7 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         public void done(ParseException ex) {
           if (ex == null) {
-            Toast.makeText(ProfileActivity.this, "The user is no longer associated with their Twitter account.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "The user is no longer associated with their Twitter account.", Toast.LENGTH_SHORT).show();
           }
         }
       });
@@ -82,7 +82,7 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         public void done(ParseException ex) {
           if (ParseTwitterUtils.isLinked(user)) {
-            Toast.makeText(ProfileActivity.this, "Woohoo, user logged in with Twitter!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Woohoo, user logged in with Twitter!", Toast.LENGTH_SHORT).show();
           }
         }
       });

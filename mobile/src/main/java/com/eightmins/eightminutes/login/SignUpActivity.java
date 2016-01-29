@@ -86,7 +86,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
       public void done(ParseException exception) {
         Utils.hideProgressBar(progress);
         if (exception == null) {
-          Toast.makeText(SignUpActivity.this, "Sign up done successfully", Toast.LENGTH_SHORT).show();
+          Toast.makeText(getApplicationContext(), "Sign up done successfully", Toast.LENGTH_SHORT).show();
           startActivity(new Intent(SignUpActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         } else {
           new Builder(SignUpActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(string.ok, null).create().show();
@@ -105,7 +105,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
       if (view instanceof EditText) {
         ((EditText) view).setError(message);
       } else {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
       }
     }
   }

@@ -46,13 +46,13 @@
       android:value="5bbbd945453d1879bfc1afe8f3d4d400cc8bff89"/>
     <meta-data
       android:name="com.parse.APPLICATION_ID"
-      android:value="dJDm7ykUrDyWwRxvRuwxPVwM4Wf9aMr3mugB2Sey"/>
+      android:value="@string/parse_application_id"/>
     <meta-data
       android:name="com.parse.CLIENT_KEY"
-      android:value="c9VA3tjWCkUVwDnEdfS35N1FmJ8DLmY20C69L9Ud"/>
+      android:value="@string/parse_client_key"/>
     <meta-data
       android:name="com.facebook.sdk.ApplicationId"
-      android:value="464032287120780"/>
+      android:value="@string/facebook_application_id"/>
     <meta-data
       android:name="com.google.android.gms.version"
       android:value="@integer/google_play_services_version"/>
@@ -98,9 +98,6 @@
       android:parentActivityName=".MainActivity"/>
     <activity
       android:name=".login.ProfileActivity"
-      android:parentActivityName=".MainActivity"/>
-    <activity
-      android:name=".login.SettingsActivity"
       android:parentActivityName=".MainActivity"/>
     <activity
       android:name=".advocate.refer.DetailActivity"

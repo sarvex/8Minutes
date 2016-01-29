@@ -1,7 +1,7 @@
 package com.eightmins.eightminutes.login;
 
-import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
 import com.eightmins.eightminutes.utility.Utils;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -68,10 +69,11 @@ public class ForgotActivity extends AppCompatActivity implements Validator.Valid
     ParseUser.requestPasswordResetInBackground(email.getText().toString().trim(), new RequestPasswordResetCallback() {
       public void done(ParseException exception) {
         if (exception == null) {
-          Toast.makeText(ForgotActivity.this, "Reset Password Email successfully sent.", Toast.LENGTH_SHORT).show();
+          Toast.makeText(getApplicationContext(), "Reset Password Email successfully sent.", Toast.LENGTH_SHORT).show();
         } else {
-          new Builder(ForgotActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
+          Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
         }
+        startActivity(new Intent(ForgotActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
       }
     });
   }
@@ -86,7 +88,7 @@ public class ForgotActivity extends AppCompatActivity implements Validator.Valid
       if (view instanceof EditText) {
         ((EditText) view).setError(message);
       } else {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
       }
     }
   }

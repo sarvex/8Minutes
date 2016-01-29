@@ -1,38 +1,13 @@
 <resources>
   <string name="app_name">8Minutes</string>
   <string name="action_settings">Settings</string>
-  <string name="password_hint">P@ssword</string>
-  <string name="username_hint">UserName</string>
   <string name="sign_up">Sign Up</string>
   <string name="sign_in">Sign In</string>
   <string name="email_hint">email@server.com</string>
   <string name="phone_hint">+919911223344</string>
-  <string name="com.optimizely.api_key" translatable="false">AANLA4kBtQUVD8GJfR9P2bs5w64wr0xS~4550320643</string>
   <string name="action_logout">Logout</string>
   <string name="error_title">Oops!</string>
-  <string name="username_cannot_be_empty">Username cannot be empty</string>
-  <string name="password_cannot_be_empty">Password cannot be empty</string>
-  <string name="email_cannot_be_empty">Email cannot be empty</string>
-  <string name="phone_cannot_be_empty">Phone number cannot be empty</string>
   <string name="hello_blank_fragment">Hello blank fragment</string>
-  <string name="name_hint">First Last name</string>
-  <string name="address1_hint">Address Line 1</string>
-  <string name="address2_hint">Address Line 2</string>
-  <string name="notes_hint">Supplementary Notes</string>
-  <string name="average_bill_hint">Rs. 12314.56</string>
-  <string name="city_hint">New Delhi</string>
-  <string name="pincode_hint">110076</string>
-  <string name="locality_hint">Dwarka</string>
-  <string name="refer">Refer Customer</string>
-  <string name="name_cannot_be_empty">Name cannot be empty</string>
-  <string name="address1_cannot_be_empty">Address Line 1 cannot be empty</string>
-  <string name="address2_cannot_be_empty">Address Line 2 cannot be empty</string>
-  <string name="locality_cannot_be_empty">Locality cannot be empty</string>
-  <string name="city_cannot_be_empty">City cannot be empty</string>
-  <string name="pincode_cannot_be_empty">PinCode cannot be empty</string>
-  <string name="average_bill_cannot_be_empty">Average Bill cannot be empty</string>
-  <string name="notes_cannot_be_empty">Notes cannot be empty</string>
-  <string name="add_member">Add Member</string>
   <string name="stars">Stars</string>
   <string name="member">Team</string>
   <string name="project">Project</string>
@@ -40,68 +15,9 @@
   <string name="progress">Progress</string>
   <string name="search">Search</string>
   <string name="share">Share</string>
-  <string name="facebook">Facebook</string>
+  <string name="facebook">Facebook</string> 
   <string name="twitter">Twitter</string>
   <string name="google">Google</string>
-  <string name="title_activity_settings">Settings</string>
-
-  <!-- Strings related to Settings -->
-
-  <!-- Example General settings -->
-  <string name="pref_header_general">General</string>
-
-  <string name="pref_title_social_recommendations">Enable social recommendations</string>
-  <string name="pref_description_social_recommendations">Recommendations for people to contact based on your message
-    history
-  </string>
-
-  <string name="pref_title_display_name">Display name</string>
-  <string name="pref_default_display_name">John Smith</string>
-
-  <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-  <string-array name="pref_example_list_titles">
-    <item>Always</item>
-    <item>When possible</item>
-    <item>Never</item>
-  </string-array>
-  <string-array name="pref_example_list_values">
-    <item>1</item>
-    <item>0</item>
-    <item>-1</item>
-  </string-array>
-
-  <!-- Example settings for Data & Sync -->
-  <string name="pref_header_data_sync">Data &amp; sync</string>
-
-  <string name="pref_title_sync_frequency">Sync frequency</string>
-  <string-array name="pref_sync_frequency_titles">
-    <item>15 minutes</item>
-    <item>30 minutes</item>
-    <item>1 hour</item>
-    <item>3 hours</item>
-    <item>6 hours</item>
-    <item>Never</item>
-  </string-array>
-  <string-array name="pref_sync_frequency_values">
-    <item>15</item>
-    <item>30</item>
-    <item>60</item>
-    <item>180</item>
-    <item>360</item>
-    <item>-1</item>
-  </string-array>
-
-  <string name="pref_title_system_sync_settings">System sync settings</string>
-
-  <!-- Example settings for Notifications -->
-  <string name="pref_header_notifications">Notifications</string>
-
-  <string name="pref_title_new_message_notifications">New message notifications</string>
-
-  <string name="pref_title_ringtone">Ringtone</string>
-  <string name="pref_ringtone_silent">Silent</string>
-
-  <string name="pref_title_vibrate">Vibrate</string>
   <string name="username_placeholder">Username</string>
   <string name="name_placeholder">Name</string>
   <string name="password_placeholder">Password</string>
@@ -117,4 +33,9 @@
   <string name="confirm_placeholder">Confirm Password</string>
   <string name="loading">Loading...</string>
   <string name="organization_placeholder">Organization</string>
+  <string name="fabric_api_key">5bbbd945453d1879bfc1afe8f3d4d400cc8bff89</string>
+  <string name="com.optimizely.api_key" translatable="false">AANLA4kBtQUVD8GJfR9P2bs5w64wr0xS~4550320643</string>
+  <string name="parse_application_id">dJDm7ykUrDyWwRxvRuwxPVwM4Wf9aMr3mugB2Sey</string>
+  <string name="parse_client_key">c9VA3tjWCkUVwDnEdfS35N1FmJ8DLmY20C69L9Ud</string>
+  <string name="facebook_application_id">464032287120780</string>
 </resources>

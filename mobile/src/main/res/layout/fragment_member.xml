@@ -8,8 +8,8 @@
   <ProgressBar
     android:id="@+id/progress_bar"
     style="?android:attr/progressBarStyleLargeInverse"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_centerInParent="true"
     android:indeterminate="true"
     android:visibility="invisible"/>
@@ -18,14 +18,8 @@
     android:id="@+id/progress_text"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_alignBottom="@id/progress_bar"
-    android:layout_alignEnd="@id/progress_bar"
-    android:layout_alignLeft="@id/progress_bar"
-    android:layout_alignRight="@id/progress_bar"
-    android:layout_alignStart="@id/progress_bar"
-    android:layout_alignTop="@id/progress_bar"
     android:background="@android:color/transparent"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:text="@string/loading"
     android:textSize="24sp"/>
 

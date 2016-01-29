@@ -108,7 +108,7 @@ public class AddActivity extends AppCompatActivity implements Validator.Validati
       public void done(ParseException exception) {
         showProgressBar();
         if (exception == null) {
-          Toast.makeText(AddActivity.this, "Referral done successfully", Toast.LENGTH_SHORT).show();
+          Toast.makeText(getApplicationContext(), "Referral done successfully", Toast.LENGTH_SHORT).show();
           startActivity(new Intent(AddActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         } else {
           new Builder(AddActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
@@ -126,7 +126,7 @@ public class AddActivity extends AppCompatActivity implements Validator.Validati
       if (view instanceof EditText) {
         ((EditText) view).setError(message);
       } else {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
       }
     }
   }

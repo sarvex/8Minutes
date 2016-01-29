@@ -29,7 +29,6 @@
           android:id="@+id/name_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          app:counterEnabled="true"
           app:errorEnabled="true"
           app:hintAnimationEnabled="true">
 
@@ -58,7 +57,6 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:hint="@string/username_placeholder"
-          app:counterEnabled="true"
           app:errorEnabled="true"
           app:hintAnimationEnabled="true">
 
@@ -85,7 +83,6 @@
           android:id="@+id/password_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          app:counterEnabled="true"
           app:errorEnabled="true"
           app:hintAnimationEnabled="true">
 
@@ -113,7 +110,6 @@
           android:id="@+id/confirm_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          app:counterEnabled="true"
           app:errorEnabled="true"
           app:hintAnimationEnabled="true">
 
@@ -141,7 +137,6 @@
           android:id="@+id/email_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          app:counterEnabled="true"
           app:errorEnabled="true"
           app:hintAnimationEnabled="true">
 
@@ -170,7 +165,6 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:hint="@string/phone_placeholder"
-          app:counterEnabled="true"
           app:errorEnabled="true"
           app:hintAnimationEnabled="true">
 

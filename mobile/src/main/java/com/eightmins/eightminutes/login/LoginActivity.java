@@ -19,10 +19,7 @@ import android.widget.Toast;
 import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
 import com.eightmins.eightminutes.utility.Utils;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -49,7 +46,6 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
       message = "Password should be more than 6 alphanumeric characters") @NotEmpty EditText password;
   @Bind(R.id.facebook_login) FloatingActionButton facebook;
   @Bind(R.id.twitter_login) FloatingActionButton twitter;
-  @Bind(R.id.google_login) FloatingActionButton google;
   @Bind(R.id.sign_up) FloatingActionButton signUp;
   @Bind(R.id.expand) FloatingActionButton expand;
   @Bind(R.id.login) FloatingActionButton login;
@@ -76,22 +72,6 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
     validator = new Validator(this);
     validator.setValidationListener(this);
 
-    googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-        .requestEmail()
-        .requestId()
-        .requestProfile()
-        .build();
-
-    googleApiClient = new GoogleApiClient.Builder(this)
-        .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
-          @Override
-          public void onConnectionFailed(ConnectionResult connectionResult) {
-
-          }
-        })
-        .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
-        .build();
-
     fabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
     fabClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
     rotateForward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
@@ -109,15 +89,6 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
-
-    if (requestCode == RC_SIGN_IN) {
-      GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-      if (result.isSuccess()) {
-        result.getSignInAccount().getDisplayName();
-      } else {
-        // Signed out, show unauthenticated UI.
-      }
-    }
   }
 
   @Override
@@ -180,20 +151,17 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
       expand.startAnimation(rotateBackward);
       facebook.startAnimation(fabClose);
       twitter.startAnimation(fabClose);
-      google.startAnimation(fabClose);
       signUp.startAnimation(fabClose);
     } else {
       expand.startAnimation(rotateForward);
       facebook.startAnimation(fabOpen);
       twitter.startAnimation(fabOpen);
-      google.startAnimation(fabOpen);
       signUp.startAnimation(fabOpen);
     }
 
     isFabOpen = !isFabOpen;
     facebook.setClickable(isFabOpen);
     twitter.setClickable(isFabOpen);
-    google.setClickable(isFabOpen);
     signUp.setClickable(isFabOpen);
   }
 
@@ -204,11 +172,11 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
       @Override
       public void done(ParseUser user, ParseException err) {
         if (user == null) {
-          Toast.makeText(LoginActivity.this, "Uh oh. The user cancelled the Facebook login.", Toast.LENGTH_SHORT).show();
+          Toast.makeText(getApplicationContext(), "Uh oh. The user cancelled the Facebook login.", Toast.LENGTH_SHORT).show();
         } else if (user.isNew()) {
-          Toast.makeText(LoginActivity.this, "User signed up and logged in through Facebook!", Toast.LENGTH_SHORT).show();
+          Toast.makeText(getApplicationContext(), "User signed up and logged in through Facebook!", Toast.LENGTH_SHORT).show();
         } else {
-          Toast.makeText(LoginActivity.this, "User logged in through Facebook!", Toast.LENGTH_SHORT).show();
+          Toast.makeText(getApplicationContext(), "User logged in through Facebook!", Toast.LENGTH_SHORT).show();
         }
       }
     });
@@ -220,20 +188,14 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
       @Override
       public void done(ParseUser user, ParseException err) {
         if (user == null) {
-          Toast.makeText(LoginActivity.this, "Uh oh. The user cancelled the Twitter login.", Toast.LENGTH_SHORT).show();
+          Toast.makeText(getApplicationContext(), "Uh oh. The user cancelled the Twitter login.", Toast.LENGTH_SHORT).show();
         } else if (user.isNew()) {
-          Toast.makeText(LoginActivity.this, "User signed up and logged in through Twitter!", Toast.LENGTH_SHORT).show();
+          Toast.makeText(getApplicationContext(), "User signed up and logged in through Twitter!", Toast.LENGTH_SHORT).show();
         } else {
-          Toast.makeText(LoginActivity.this, "User logged in through Twitter!", Toast.LENGTH_SHORT).show();
+          Toast.makeText(getApplicationContext(), "User logged in through Twitter!", Toast.LENGTH_SHORT).show();
         }
       }
     });
-  }
-
-  @OnClick(R.id.google_login)
-  public void onGoogleLogin(View view) {
-    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-    startActivityForResult(signInIntent, RC_SIGN_IN);
   }
 
   @Override
@@ -253,7 +215,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
               new Builder(LoginActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
 //            } else {
-//              Toast.makeText(LoginActivity.this, "Please wait for proper authentication!", Toast.LENGTH_SHORT).show();
+//              Toast.makeText(getApplicationContext(), "Please wait for proper authentication!", Toast.LENGTH_SHORT).show();
 //            }
             }
           }
@@ -270,7 +232,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
       if (view instanceof EditText) {
         ((EditText) view).setError(message);
       } else {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
       }
     }
   }
