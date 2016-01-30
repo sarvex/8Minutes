@@ -3,7 +3,8 @@ package com.eightmins.eightminutes.advocate.team;
 import android.R.string;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
-import android.content.Intent;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -13,17 +14,16 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.login.User;
+import com.eightmins.eightminutes.utility.Utils;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Password;
 import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.SaveCallback;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 import java.util.List;
 
@@ -38,10 +38,9 @@ public class AddActivity extends AppCompatActivity implements Validator.Validati
   @Bind(R.id.email) @NotEmpty @Email EditText email;
   @Bind(R.id.phone) @NotEmpty EditText phone;
   @Bind(R.id.username) @NotEmpty EditText username;
-  @Bind(R.id.password) @NotEmpty @Password(scheme = Password.Scheme.ALPHA_NUMERIC, message = "Password should be more than 6 alphanumeric characters") EditText password;
-  @Bind(R.id.confirm) @NotEmpty @ConfirmPassword EditText confirm;
   @Bind(R.id.add_member) FloatingActionButton addMember;
 
+  protected int result = RESULT_OK;
   private ProgressDialog progress;
   private Validator validator;
 
@@ -56,8 +55,8 @@ public class AddActivity extends AppCompatActivity implements Validator.Validati
     validator.setValidationListener(this);
   }
 
-  @OnEditorAction(R.id.confirm)
-  boolean editionAction(int actionId) {
+  @OnEditorAction(R.id.username)
+  boolean editorAction(int actionId) {
     if (actionId == EditorInfo.IME_ACTION_DONE) {
       addMember.performClick();
       return true;
@@ -78,7 +77,7 @@ public class AddActivity extends AppCompatActivity implements Validator.Validati
 
   private void showProgressBar() {
     progress = new ProgressDialog(this);
-    progress.setMessage("Adding Member...");
+    progress.setMessage(getString(R.string.adding_member));
     progress.setIndeterminate(true);
     progress.setProgress(0);
     progress.show();
@@ -87,22 +86,48 @@ public class AddActivity extends AppCompatActivity implements Validator.Validati
   @Override
   public void onValidationSucceeded() {
     showProgressBar();
-    ParseObject member = new ParseObject("Member");
-    member.put("name", name.getText().toString().trim());
-    member.put("email", email.getText().toString().trim());
-    member.put("phone", phone.getText().toString().trim());
-    member.saveInBackground(new SaveCallback() {
+    final String token = ParseUser.getCurrentUser().getSessionToken();
+    User user = new User();
+    user.setDefaults();
+    user.setUsername(username.getText().toString().trim());
+    user.setEmail(email.getText().toString().trim());
+    user.setPhone(phone.getText().toString().trim());
+    user.setName(name.getText().toString().trim());
+    user.signUpInBackground(new SignUpCallback() {
       @Override
       public void done(ParseException exception) {
         hideProgressBar();
         if (exception == null) {
-          Toast.makeText(getApplicationContext(), "Member added sucessfully", Toast.LENGTH_SHORT).show();
-          startActivity(new Intent(AddActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+          Toast.makeText(getApplicationContext(), "User added successfully", Toast.LENGTH_SHORT).show();
+          try {
+            ParseUser.become(token);
+          } catch (ParseException e) {
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+          }
+          finish();
         } else {
-          new Builder(AddActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(string.ok, null).create().show();
+          new Builder(AddActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage())
+              .setPositiveButton(string.ok, new OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                  result = RESULT_CANCELED;
+                  finish();
+                }
+              }).create().show();
         }
       }
     });
+  }
+
+  @Override
+  public void finish() {
+    Utils.hideKeyboard(this);
+    setResult(result);
+    if (result == RESULT_OK) {
+      ParseUser.getCurrentUser().increment("members");
+      ParseUser.getCurrentUser().saveEventually();
+    }
+    super.finish();
   }
 
   @Override

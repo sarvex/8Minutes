@@ -2,7 +2,8 @@ package com.eightmins.eightminutes.advocate.refer;
 
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
-import android.content.Intent;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +13,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.login.User;
+import com.eightmins.eightminutes.utility.Utils;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -30,6 +32,8 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 
 public class AddActivity extends AppCompatActivity implements Validator.ValidationListener {
+  protected int result = RESULT_OK;
+
   @Bind(R.id.name) @NotEmpty EditText name;
   @Bind(R.id.organization) EditText organization;
   @Bind(R.id.email) @NotEmpty @Email EditText email;
@@ -79,7 +83,7 @@ public class AddActivity extends AppCompatActivity implements Validator.Validati
 
   private void showProgressBar() {
     progress = new ProgressDialog(this);
-    progress.setMessage("Referring...");
+    progress.setMessage(getString(R.string.referring));
     progress.setIndeterminate(true);
     progress.setProgress(0);
     progress.show();
@@ -102,19 +106,33 @@ public class AddActivity extends AppCompatActivity implements Validator.Validati
     referral.setAverageBill(averageBill.getText().toString().trim());
     referral.setNotes(notes.getText().toString().trim());
     referral.setStatus("referred");
-    referral.setLead(ParseUser.getCurrentUser().getUsername());
+    referral.setLead((User) ParseUser.getCurrentUser());
 
     referral.saveInBackground(new SaveCallback() {
       public void done(ParseException exception) {
         showProgressBar();
         if (exception == null) {
           Toast.makeText(getApplicationContext(), "Referral done successfully", Toast.LENGTH_SHORT).show();
+          finish();
         } else {
-          new Builder(AddActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
+          new Builder(AddActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage())
+              .setPositiveButton(android.R.string.ok, new OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                  result = RESULT_CANCELED;
+                  finish();
+                }
+              }).create().show();
         }
-        startActivity(new Intent(AddActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
       }
     });
+  }
+
+  @Override
+  public void finish() {
+    Utils.hideKeyboard(this);
+    setResult(result);
+    super.finish();
   }
 
   @Override

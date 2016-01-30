@@ -18,10 +18,10 @@ import butterknife.ButterKnife;
  * Created by nabhilax on 14/01/16.
  */
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
-  private final List<User> members;
+  private final List<User> users;
 
-  public MemberAdapter(List<User> members) {
-    this.members = members;
+  public MemberAdapter(List<User> users) {
+    this.users = users;
   }
 
   @Override
@@ -31,25 +31,25 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
 
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
-    holder.bind(members.get(position));
+    holder.bind(users.get(position));
   }
 
   @Override
   public int getItemCount() {
-    return members.size();
+    return users.size();
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
-    @Bind(R.id.team_name) TextView name;
-    @Bind(R.id.team_members) TextView members;
-    @Bind(R.id.team_members_label) TextView membersLabel;
-    @Bind(R.id.team_installed) TextView installed;
-    @Bind(R.id.team_installed_label) TextView installedLabel;
-    @Bind(R.id.team_progress) TextView progress;
-    @Bind(R.id.team_progress_label) TextView progressLabel;
-    @Bind(R.id.team_pending) TextView pending;
-    @Bind(R.id.team_pending_label) TextView pendingLabel;
-    @Bind(R.id.team_earnings) TextView earnings;
+    @Bind(R.id.name) TextView name;
+    @Bind(R.id.members) TextView members;
+    @Bind(R.id.members_label) TextView membersLabel;
+    @Bind(R.id.installed) TextView installed;
+    @Bind(R.id.installed_label) TextView installedLabel;
+    @Bind(R.id.progress) TextView progress;
+    @Bind(R.id.progress_label) TextView progressLabel;
+    @Bind(R.id.pending) TextView pending;
+    @Bind(R.id.pending_label) TextView pendingLabel;
+    @Bind(R.id.earnings) TextView earnings;
 
     public ViewHolder(View view) {
       super(view);

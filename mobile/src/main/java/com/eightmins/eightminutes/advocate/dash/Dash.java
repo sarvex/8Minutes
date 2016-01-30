@@ -1,29 +1,30 @@
 package com.eightmins.eightminutes.advocate.dash;
 
-import com.parse.ParseClassName;
-import com.parse.ParseObject;
-
 /**
  * Created by nabhilax on 20/01/16.
  */
-@ParseClassName("Dash")
-public class Dash extends ParseObject {
+public class Dash {
   private String title;
   private String description;
 
+  public Dash(String title, String description) {
+    this.title = title;
+    this.description = description;
+  }
+
   public String getTitle() {
-    return getString("title");
+    return title;
   }
 
   public void setTitle(String title) {
-    put("title", title);
+    this.title = title;
   }
 
   public String getDescription() {
-    return getString("description");
+    return description;
   }
 
   public void setDescription(String description) {
-    put("description", description);
+    this.description = description;
   }
 }

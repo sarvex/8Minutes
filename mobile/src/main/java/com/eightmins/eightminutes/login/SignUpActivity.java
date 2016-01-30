@@ -75,12 +75,12 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
     Utils.showProgressBar(this, progress, "Signing Up...");
 
     User user = new User();
+    user.setSuperDefaults();
     user.setUsername(username.getText().toString().trim());
     user.setPassword(password.getText().toString().trim());
     user.setEmail(email.getText().toString().trim());
     user.setPhone(phone.getText().toString().trim());
     user.setName(name.getText().toString().trim());
-    user.setVerified(false);
     user.signUpInBackground(new SignUpCallback() {
       @Override
       public void done(ParseException exception) {

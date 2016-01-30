@@ -1,5 +1,6 @@
 package com.eightmins.eightminutes.advocate.refer;
 
+import com.eightmins.eightminutes.login.User;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
@@ -8,28 +9,6 @@ import com.parse.ParseObject;
  */
 @ParseClassName("Referral")
 public class Referral extends ParseObject {
-
-  public void load(int image, String name, String organization, String email, String phone, String address1,
-                   String address2, String locality, String city, String pincode, String averageBill, String notes,
-                   String lead, String status) {
-    put("image", image);
-    put("name", name);
-    put("organizaiton", organization);
-    put("email", email);
-    put("phone", phone);
-    put("address1", address1);
-    put("address2", address2);
-    put("locality", locality);
-    put("city", city);
-    put("pincode", pincode);
-    put("averageBill", averageBill);
-    put("notes", notes);
-    put("lead", lead);
-    put("status", status);
-  }
-
-  public Referral () {
-  }
 
   public int getImage() {
     return getInt("image");
@@ -119,11 +98,11 @@ public class Referral extends ParseObject {
     put("notes", notes);
   }
 
-  public String getLead() {
-    return getString("lead");
+  public User getLead() {
+    return (User)get("lead");
   }
 
-  public void setLead(String name) {
+  public void setLead(User name) {
     put("name", name);
   }
 

@@ -24,7 +24,6 @@ import android.view.View;
 import android.view.Window;
 
 import com.eightmins.eightminutes.advocate.dash.DashFragment;
-import com.eightmins.eightminutes.advocate.refer.Referral;
 import com.eightmins.eightminutes.advocate.refer.ReferralFragment;
 import com.eightmins.eightminutes.advocate.team.MemberFragment;
 import com.eightmins.eightminutes.advocate.video.VideoFragment;
@@ -55,6 +54,11 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
 
   private static final int ADD_REFERRAL = 12834;
   private static final int ADD_MEMBER = 12835;
+  private static final String HOME = "Home";
+  private static final String REFERRALS = "Referrals";
+  private static final String TEAM = "Team";
+  private static final String VIDEOS = "Videos";
+
   @Bind(R.id.toolbar) Toolbar toolbar;
   @Bind(R.id.viewpager) ViewPager viewPager;
   @Bind(R.id.tabs) TabLayout tabLayout;
@@ -64,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   private Drawer drawer;
   private ShareActionProvider shareActionProvider;
   private ProgressDialog progress;
+  private DashFragment dashFragment;
+  private ReferralFragment referralFragment;
+  private MemberFragment memberFragment;
+  private VideoFragment videoFragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -98,10 +106,15 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   private void setupViewPager() {
     if (viewPager != null) {
       PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
-      adapter.addFragment(new DashFragment(), "Home");
-      adapter.addFragment(new ReferralFragment(), "Referrals");
-      adapter.addFragment(new MemberFragment(), "Team");
-      adapter.addFragment(new VideoFragment(), "Videos");
+
+      dashFragment = new DashFragment();
+      adapter.addFragment(dashFragment, HOME);
+      referralFragment = new ReferralFragment();
+      adapter.addFragment(referralFragment, REFERRALS);
+      memberFragment = new MemberFragment();
+      adapter.addFragment(memberFragment, TEAM);
+      videoFragment = new VideoFragment();
+      adapter.addFragment(videoFragment, VIDEOS);
       viewPager.setAdapter(adapter);
     }
 
@@ -111,16 +124,16 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
       public void onTabSelected(Tab tab) {
         super.onTabSelected(tab);
         switch (tab.getText().toString()) {
-          case "Home":
+          case HOME:
             addButton.hide();
             break;
-          case "Referrals":
+          case REFERRALS:
             addButton.show();
             break;
-          case "Team":
+          case TEAM:
             addButton.show();
             break;
-          case "Videos":
+          case VIDEOS:
             addButton.hide();
             break;
         }
@@ -157,12 +170,12 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     super.onActivityResult(requestCode, resultCode, data);
 
     if (requestCode == ADD_REFERRAL && resultCode == RESULT_OK) {
-      Referral referral = (Referral) data.getExtras().get("passed_item");
+      referralFragment.load();
       // deal with the item yourself
     }
 
     if (requestCode == ADD_MEMBER && resultCode == RESULT_OK) {
-      Referral referral = (Referral) data.getExtras().get("passed_item");
+      memberFragment.load();
       // deal with the item yourself
     }
 
@@ -207,13 +220,13 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
         .addDrawerItems(
             new PrimaryDrawerItem().withName("Order T-Shirts").withIcon(Icon.gmd_local_florist),
             new PrimaryDrawerItem().withName("Profile").withIcon(Icon.gmd_person)
-            .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-              @Override
-              public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                toProfileActivity();
-                return true;
-              }
-            }),
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                  @Override
+                  public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                    toProfileActivity();
+                    return true;
+                  }
+                }),
             new PrimaryDrawerItem().withName("Settings").withIcon(Icon.gmd_settings),
             new PrimaryDrawerItem().withName("Logout").withIcon(Icon.gmd_android)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -247,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
 
   protected void showProgressBar() {
     progress = new ProgressDialog(this);
-    progress.setMessage("Logging in...");
+    progress.setMessage(getString(R.string.logging_out));
     progress.setIndeterminate(true);
     progress.setProgress(0);
     progress.show();

@@ -44,10 +44,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
   @Override
   public void onBindViewHolder(final ViewHolder holder, final int position) {
-    holder.bind(position);
+    holder.bind(videos.get(position));
   }
-
-
 
   @Override
   public int getItemCount() {
@@ -73,9 +71,9 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
       context.startActivity(intent);
     }
 
-    public void bind(final int position) {
-      title.setText(videos.get(position).getName());
-      description.setText(videos.get(position).getDescription());
+    public void bind(final Video video) {
+      title.setText(video.getTitle());
+      description.setText(video.getDescription());
 
       final OnThumbnailLoadedListener onThumbnailLoadedListener = new OnThumbnailLoadedListener(){
         @Override
@@ -94,7 +92,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         @Override
         public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
 
-          youTubeThumbnailLoader.setVideo(videos.get(position).getUrl());
+          youTubeThumbnailLoader.setVideo(video.getUrl());
           youTubeThumbnailLoader.setOnThumbnailLoadedListener(onThumbnailLoadedListener);
         }
 

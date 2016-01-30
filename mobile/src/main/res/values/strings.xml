@@ -41,4 +41,7 @@
   <string name="title">Title</string>
   <string name="member_placeholder">5 Members</string>
   <string name="description_placeholder">Description</string>
+  <string name="logging_out">Logging out…</string>
+  <string name="referring">Referring…</string>
+  <string name="adding_member">Adding Member…</string>
 </resources>

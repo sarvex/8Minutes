@@ -1,7 +1,6 @@
 package com.eightmins.eightminutes.login;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
 import com.eightmins.eightminutes.utility.Utils;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -73,7 +71,7 @@ public class ForgotActivity extends AppCompatActivity implements Validator.Valid
         } else {
           Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
         }
-        startActivity(new Intent(ForgotActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        finish();
       }
     });
   }

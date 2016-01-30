@@ -22,7 +22,7 @@
       android:src="@mipmap/ic_account_circle"/>
 
     <TextView
-      android:id="@+id/team_name"
+      android:id="@+id/name"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignParentTop="true"
@@ -31,79 +31,79 @@
       tools:text="Name"/>
 
     <TextView
-      android:id="@+id/team_members"
+      android:id="@+id/members"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_below="@id/team_name"
-      android:layout_toLeftOf="@+id/team_members_label"
-      android:layout_toStartOf="@+id/team_members_label"
+      android:layout_below="@id/name"
+      android:layout_toLeftOf="@+id/members_label"
+      android:layout_toStartOf="@+id/members_label"
       tools:text="7"/>
 
     <TextView
-      android:id="@+id/team_members_label"
+      android:id="@+id/members_label"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_below="@id/team_name"
+      android:layout_below="@id/name"
       android:layout_centerHorizontal="true"
       tools:text=" Members"/>
 
     <TextView
-      android:id="@+id/team_earnings"
+      android:id="@+id/earnings"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_below="@id/team_members"
+      android:layout_below="@id/members"
       android:layout_centerHorizontal="true"
       android:textSize="18sp"
       tools:text="Rs. 1000"/>
 
     <TextView
-      android:id="@+id/team_installed"
+      android:id="@+id/installed"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_below="@id/team_earnings"
-      android:layout_toLeftOf="@+id/team_installed_label"
-      android:layout_toStartOf="@+id/team_installed_label"
+      android:layout_below="@id/earnings"
+      android:layout_toLeftOf="@+id/installed_label"
+      android:layout_toStartOf="@+id/installed_label"
       tools:text="2"/>
 
     <TextView
-      android:id="@+id/team_installed_label"
+      android:id="@+id/installed_label"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_below="@id/team_earnings"
+      android:layout_below="@id/earnings"
       android:layout_centerHorizontal="true"
       tools:text=" Installed"/>
 
     <TextView
-      android:id="@+id/team_progress"
+      android:id="@+id/progress"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_below="@id/team_installed"
-      android:layout_toLeftOf="@+id/team_progress_label"
-      android:layout_toStartOf="@+id/team_progress_label"
+      android:layout_below="@id/installed"
+      android:layout_toLeftOf="@+id/progress_label"
+      android:layout_toStartOf="@+id/progress_label"
       tools:text="5"/>
 
     <TextView
-      android:id="@+id/team_progress_label"
+      android:id="@+id/progress_label"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_below="@id/team_installed_label"
+      android:layout_below="@id/installed_label"
       android:layout_centerHorizontal="true"
       tools:text=" Progress"/>
 
     <TextView
-      android:id="@+id/team_pending"
+      android:id="@+id/pending"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_below="@id/team_progress"
-      android:layout_toLeftOf="@+id/team_pending_label"
-      android:layout_toStartOf="@+id/team_pending_label"
+      android:layout_below="@id/progress"
+      android:layout_toLeftOf="@+id/pending_label"
+      android:layout_toStartOf="@+id/pending_label"
       tools:text="1"/>
 
     <TextView
-      android:id="@+id/team_pending_label"
+      android:id="@+id/pending_label"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_below="@id/team_progress_label"
+      android:layout_below="@id/progress_label"
       android:layout_centerHorizontal="true"
       tools:text=" Pending"/>
   </RelativeLayout>

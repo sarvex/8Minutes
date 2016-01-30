@@ -1,6 +1,5 @@
 package com.eightmins.eightminutes.advocate.dash;
 
-import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,9 +14,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
+import com.eightmins.eightminutes.login.User;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,25 +87,13 @@ public class DashFragment extends Fragment {
 
   public void load() {
     showProgress();
-    ParseQuery<Dash> query = ParseQuery.getQuery("Dash");
-    query.findInBackground(new FindCallback<Dash>() {
-      @Override
-      public void done(List<Dash> objects, ParseException exception) {
-        hideProgress();
-        if (exception == null) {
-          if (objects == null) {
-            new Builder(getActivity()).setTitle(R.string.error_title).setMessage("Unable to Load Dashboard").setPositiveButton(android.R.string.ok, null).create().show();
-          } else {
-            dashes = new ArrayList<>(objects);
-            final DashAdapter videoAdapter = new DashAdapter(dashes);
-            recyclerView.setAdapter(videoAdapter);
-            videoAdapter.notifyDataSetChanged();
-          }
-        } else {
-          new Builder(getActivity()).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
-        }
-      }
-    });
+    User user = (User)ParseUser.getCurrentUser();
+
+    dashes = new ArrayList<>(3);
+    dashes.add(new Dash("Progress", user.getInstalled() + " Completed"));
+    dashes.add(new Dash("Team", user.getMembers() + " Members"));
+    dashes.add(new Dash("Earnings",  "Rs " + user.getEarnings()));
+    hideProgress();
   }
 
 

@@ -97,30 +97,28 @@ public class MemberFragment extends Fragment {
     return view;
   }
 
-  private void load() {
+  public void load() {
     showProgress();
-    if (ParseUser.getCurrentUser() != null) {
-      ParseQuery<User> query = ParseQuery.getQuery("_User");
-      query.whereEqualTo("owner", ParseUser.getCurrentUser().getUsername());
-      query.findInBackground(new FindCallback<User>() {
-        @Override
-        public void done(List<User> objects, ParseException exception) {
-          hideProgress();
-          if (exception == null) {
-            if (objects == null) {
-              new Builder(getActivity()).setTitle(R.string.error_title).setMessage("Unable to Load Members").setPositiveButton(android.R.string.ok, null).create().show();
-            } else {
-              members = new ArrayList<>(objects);
-              final MemberAdapter videoAdapter = new MemberAdapter(members);
-              recyclerView.setAdapter(videoAdapter);
-              videoAdapter.notifyDataSetChanged();
-            }
+    ParseQuery<User> query = ParseQuery.getQuery("_User");
+    query.whereEqualTo("owner", ParseUser.getCurrentUser());
+    query.findInBackground(new FindCallback<User>() {
+      @Override
+      public void done(List<User> objects, ParseException exception) {
+        hideProgress();
+        if (exception == null) {
+          if (objects == null) {
+            new Builder(getActivity()).setTitle(R.string.error_title).setMessage("Unable to Load Members").setPositiveButton(android.R.string.ok, null).create().show();
           } else {
-            new Builder(getActivity()).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
+            members = new ArrayList<>(objects);
+            final MemberAdapter videoAdapter = new MemberAdapter(members);
+            recyclerView.setAdapter(videoAdapter);
+            videoAdapter.notifyDataSetChanged();
           }
+        } else {
+          new Builder(getActivity()).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
         }
-      });
-    }
+      }
+    });
   }
 
   // TODO: Rename method, update argument and hook method into UI event

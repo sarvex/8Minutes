@@ -9,19 +9,12 @@ import com.parse.ParseObject;
 @ParseClassName("Video")
 public class Video extends ParseObject {
 
-  public void load(String name, String description, String url) {
-
-    put("name", name);
-    put("description", description);
-    put("url", url);
+  public String getTitle() {
+    return getString("title");
   }
 
-  public String getName() {
-    return getString("name");
-  }
-
-  public void setName(String name) {
-    put("name", name);
+  public void setTitle(String name) {
+    put("title", name);
   }
 
   public String getDescription() {
@@ -33,11 +26,11 @@ public class Video extends ParseObject {
   }
 
   public String getUrl() {
-    return getString("id");
+    return getString("url");
   }
 
   public void setUrl(String id) {
-    put("id", id);
+    put("url", id);
   }
 
 }
