@@ -15,7 +15,11 @@ public class User extends ParseUser {
   }
 
   public int getImage() {
-    return getInt("image");
+    int image = getInt("image");
+    if (image == 0) {
+      image = R.mipmap.ic_account_circle;
+    }
+    return image;
   }
 
   public void setImage(int image) {
@@ -95,7 +99,6 @@ public class User extends ParseUser {
   }
 
   public void setSuperDefaults() {
-    setImage(R.mipmap.ic_account_circle);
     setPassword("Password123");
     setMembers(0);
     setInstalled(0);

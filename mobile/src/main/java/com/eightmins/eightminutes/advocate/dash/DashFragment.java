@@ -89,10 +89,12 @@ public class DashFragment extends Fragment {
     showProgress();
     User user = (User)ParseUser.getCurrentUser();
 
-    dashes = new ArrayList<>(3);
-    dashes.add(new Dash("Progress", user.getInstalled() + " Completed"));
-    dashes.add(new Dash("Team", user.getMembers() + " Members"));
-    dashes.add(new Dash("Earnings",  "Rs " + user.getEarnings()));
+    if (user != null) {
+      dashes = new ArrayList<>(3);
+      dashes.add(new Dash("Progress", user.getInstalled() + " Completed"));
+      dashes.add(new Dash("Team", user.getMembers() + " Members"));
+      dashes.add(new Dash("Earnings", "Rs " + user.getEarnings()));
+    }
     hideProgress();
   }
 

@@ -202,6 +202,10 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
   public void onValidationSucceeded() {
 
     showProgressBar();
+    if (username.getText().toString().contains("@")) {
+
+    }
+
     ParseUser.logInInBackground(username.getText().toString().trim(),
         password.getText().toString().trim(), new LogInCallback() {
           @Override
