@@ -40,7 +40,8 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:scaleType="center"
-      android:src="@mipmap/ic_play_circle"/>
+      app:ico_size="48dp"
+      app:ico_icon="gmd-play-circle"/>
 
     <TextView
       android:id="@+id/youtube_description"

@@ -19,7 +19,8 @@
       android:layout_width="match_parent"
       android:layout_height="128sp"
       android:scaleType="fitCenter"
-      android:src="@mipmap/ic_account_circle"/>
+      app:ico_size="48dp"
+      app:ico_icon="gmd-account-circle"/>
 
     <TextView
       android:id="@+id/name"

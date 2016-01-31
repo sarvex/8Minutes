@@ -30,6 +30,7 @@ import com.eightmins.eightminutes.advocate.video.VideoFragment;
 import com.eightmins.eightminutes.login.LoginActivity;
 import com.eightmins.eightminutes.login.ProfileActivity;
 import com.eightmins.eightminutes.utility.PagerAdapter;
+import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial.Icon;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -228,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
                   }
                 }),
             new PrimaryDrawerItem().withName("Settings").withIcon(Icon.gmd_settings),
-            new PrimaryDrawerItem().withName("Logout").withIcon(Icon.gmd_android)
+            new PrimaryDrawerItem().withName("Logout").withIcon(FontAwesome.Icon.faw_sign_out)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                   @Override
                   public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {

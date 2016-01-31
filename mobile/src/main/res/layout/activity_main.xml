@@ -75,7 +75,8 @@
     app:tabMode="scrollable"
     app:tabGravity="fill"
     android:visibility="invisible"
-    android:src="@mipmap/ic_person_add"
+    app:ico_icon="gmd-person-add"
+    app:ico_size="48dp"
     app:borderWidth="0dp"/>
 
 </android.support.design.widget.CoordinatorLayout>
