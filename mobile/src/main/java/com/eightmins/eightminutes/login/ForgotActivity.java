@@ -1,6 +1,7 @@
 package com.eightmins.eightminutes.login;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.eightmins.eightminutes.R;
 import com.eightmins.eightminutes.utility.Utils;
+import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -74,6 +76,11 @@ public class ForgotActivity extends AppCompatActivity implements Validator.Valid
         finish();
       }
     });
+  }
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
   }
 
   @Override

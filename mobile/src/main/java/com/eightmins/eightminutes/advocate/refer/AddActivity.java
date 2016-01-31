@@ -2,6 +2,7 @@ package com.eightmins.eightminutes.advocate.refer;
 
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.eightmins.eightminutes.R;
 import com.eightmins.eightminutes.login.User;
 import com.eightmins.eightminutes.utility.Utils;
+import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -49,6 +51,11 @@ public class AddActivity extends AppCompatActivity implements Validator.Validati
 
   private ProgressDialog progress;
   private Validator validator;
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

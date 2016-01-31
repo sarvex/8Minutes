@@ -1,5 +1,6 @@
 package com.eightmins.eightminutes.login;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.eightmins.eightminutes.R;
+import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseTwitterUtils;
@@ -23,6 +25,11 @@ public class ProfileActivity extends AppCompatActivity {
   @Bind(R.id.password) EditText password;
   @Bind(R.id.email) EditText email;
   @Bind(R.id.phone) EditText phone;
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

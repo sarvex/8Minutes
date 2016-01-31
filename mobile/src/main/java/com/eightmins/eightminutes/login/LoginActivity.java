@@ -2,6 +2,7 @@ package com.eightmins.eightminutes.login;
 
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,11 +17,12 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.eightmins.eightminutes.BuildConfig;
 import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
 import com.eightmins.eightminutes.utility.Utils;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -53,7 +55,12 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
   private ProgressDialog progress;
 
   private static final int RC_SIGN_IN = 9001;
-  private GoogleSignInOptions googleSignInOptions;
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
+  }
+
   private GoogleApiClient googleApiClient;
   private boolean isFabOpen;
   private Animation fabOpen;
@@ -76,6 +83,12 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
     fabClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
     rotateForward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
     rotateBackward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_backward);
+
+    if (BuildConfig.SIGN_UP_ENABLED) {
+      expand.setVisibility(View.VISIBLE);
+    } else {
+      expand.setVisibility(View.GONE);
+    }
   }
 
   @Override

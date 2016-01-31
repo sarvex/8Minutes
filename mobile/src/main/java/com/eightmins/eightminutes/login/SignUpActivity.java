@@ -3,6 +3,7 @@ package com.eightmins.eightminutes.login;
 import android.R.string;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
 import com.eightmins.eightminutes.utility.Utils;
+import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
@@ -43,6 +45,11 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
 
   private ProgressDialog progress;
   private Validator validator;
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

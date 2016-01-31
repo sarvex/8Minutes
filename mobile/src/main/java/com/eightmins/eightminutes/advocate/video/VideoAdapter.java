@@ -1,8 +1,9 @@
 package com.eightmins.eightminutes.advocate.video;
 
+import android.R.string;
 import android.app.Activity;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 
 import com.eightmins.eightminutes.BuildConfig;
 import com.eightmins.eightminutes.R;
+import com.google.android.youtube.player.YouTubeApiServiceUtil;
 import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubeIntents;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailLoader.ErrorReason;
@@ -30,7 +33,7 @@ import butterknife.OnClick;
  * Created by nabhilax on 23/01/16.
  */
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
-  private final List<Video> videos;
+  protected final List<Video> videos;
   private Context context;
 
   public VideoAdapter(Context context, List<Video> videos) {
@@ -67,8 +70,19 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     @OnClick(R.id.youtube_play)
     public void onClick(View v) {
 
-      Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, BuildConfig.YOUTUBE_DATA_KEY, videos.get(getLayoutPosition()).getUrl());
-      context.startActivity(intent);
+      if(YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS)){
+        //This means that your device has the Youtube API Service (the app) and you are safe to launch it.
+        context.startActivity(YouTubeStandalonePlayer.createVideoIntent((Activity) context, BuildConfig.YOUTUBE_DATA_KEY, videos.get(getLayoutPosition()).getUrl()));
+
+      } else if(YouTubeIntents.canResolvePlayVideoIntent(context)) {
+        // Start an intent to the YouTube app
+        context.startActivity(
+            YouTubeIntents.createPlayVideoIntent(context, videos.get(getLayoutPosition()).getUrl()));
+      } else {
+        new Builder(context).setTitle(R.string.error_title).setMessage("Kindly install YouTube player to view the videos").setPositiveButton(string.ok, null).create().show();
+
+      }
+
     }
 
     public void bind(final Video video) {
