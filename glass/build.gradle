@@ -9,7 +9,7 @@ repositories {
 
 android {
   compileSdkVersion "Google Inc.:Glass Development Kit Preview:19"
-  buildToolsVersion "23.0.2"
+  buildToolsVersion project.BUILD_TOOLS
 
   defaultConfig {
     applicationId "com.eightmins.eightminutes"

@@ -24,13 +24,12 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
 
-      <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
+      <ImageView
         android:id="@+id/photo"
         android:layout_width="match_parent"
         android:layout_height="192sp"
         app:ico_icon="gmd-account-circle"
-        app:ico_size="48dp"
-        app:siSquare="true"/>
+        app:ico_size="48dp"/>
 
       <android.support.v7.widget.CardView
         android:id="@+id/username_card"
