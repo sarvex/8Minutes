@@ -13,33 +13,35 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.MainApplication;
 import com.eightmins.eightminutes.R.id;
 import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.login.User;
 import com.parse.ParseUser;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import icepick.Icepick;
 
 public class DashFragment extends Fragment {
+  private static final String ARG_PARAM1 = "param1";
+  private static final String ARG_PARAM2 = "param2";
   @Bind(id.progress_bar) ProgressBar progressBar;
   @Bind(id.progress_text) TextView progressText;
   @Bind(id.dash_recycler_view) RecyclerView recyclerView;
-
   private List<Dash> dashes = new ArrayList<>(1);
-
-  private static final String ARG_PARAM1 = "param1";
-  private static final String ARG_PARAM2 = "param2";
-
-  // TODO: Rename and change types of parameters
   private String mParam1;
   private String mParam2;
 
   private OnFragmentInteractionListener mListener;
+
+  public DashFragment() {
+    // Required empty public constructor
+  }
 
   /**
    * Use this factory method to create a new instance of
@@ -59,8 +61,24 @@ public class DashFragment extends Fragment {
     return fragment;
   }
 
-  public DashFragment() {
-    // Required empty public constructor
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    ButterKnife.unbind(this);
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+
+    RefWatcher refWatcher = MainApplication.getRefWatcher(getActivity());
+    refWatcher.watch(this);
+  }
+
+  @Override
+  public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    Icepick.saveInstanceState(this, outState);
   }
 
   @Override
@@ -70,6 +88,8 @@ public class DashFragment extends Fragment {
       mParam1 = getArguments().getString(DashFragment.ARG_PARAM1);
       mParam2 = getArguments().getString(DashFragment.ARG_PARAM2);
     }
+
+    Icepick.restoreInstanceState(this, savedInstanceState);
   }
 
   @Override
@@ -125,6 +145,20 @@ public class DashFragment extends Fragment {
     mListener = null;
   }
 
+  protected void hideProgress() {
+    progressBar.setIndeterminate(false);
+    progressBar.setVisibility(View.INVISIBLE);
+    progressText.setVisibility(View.INVISIBLE);
+    recyclerView.setVisibility(View.VISIBLE);
+  }
+
+  protected void showProgress() {
+    progressBar.setIndeterminate(true);
+    progressBar.setVisibility(View.VISIBLE);
+    progressText.setVisibility(View.VISIBLE);
+    recyclerView.setVisibility(View.INVISIBLE);
+  }
+
   /**
    * This interface must be implemented by activities that contain this
    * fragment to allow an interaction in this fragment to be communicated
@@ -138,19 +172,5 @@ public class DashFragment extends Fragment {
   public interface OnFragmentInteractionListener {
     // TODO: Update argument type and name
     void onFragmentInteraction(Uri uri);
-  }
-
-  protected void hideProgress() {
-    progressBar.setIndeterminate(false);
-    progressBar.setVisibility(View.INVISIBLE);
-    progressText.setVisibility(View.INVISIBLE);
-    recyclerView.setVisibility(View.VISIBLE);
-  }
-
-  protected void showProgress() {
-    progressBar.setIndeterminate(true);
-    progressBar.setVisibility(View.VISIBLE);
-    progressText.setVisibility(View.VISIBLE);
-    recyclerView.setVisibility(View.INVISIBLE);
   }
 }

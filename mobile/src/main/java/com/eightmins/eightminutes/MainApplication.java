@@ -1,6 +1,7 @@
 package com.eightmins.eightminutes;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
@@ -16,6 +17,7 @@ import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseTwitterUtils;
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -23,6 +25,13 @@ import io.fabric.sdk.android.Fabric;
  * Created by nabhilax on 12/01/16.
  */
 public class MainApplication extends Application {
+
+  public static RefWatcher getRefWatcher(Context context) {
+    MainApplication application = (MainApplication) context.getApplicationContext();
+    return application.refWatcher;
+  }
+
+  private RefWatcher refWatcher;
 
   @Override
   public void onCreate() {

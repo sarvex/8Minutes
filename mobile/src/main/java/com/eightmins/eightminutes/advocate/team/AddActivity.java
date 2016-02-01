@@ -28,6 +28,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import icepick.Icepick;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -40,9 +41,17 @@ public class AddActivity extends AppCompatActivity {
   private ProgressDialog progress;
 
   @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    Icepick.saveInstanceState(this, outState);
+  }
+
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
+    Icepick.restoreInstanceState(this, savedInstanceState);
+
     setContentView(R.layout.activity_member_add);
     ButterKnife.bind(this);
   }

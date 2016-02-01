@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.eightmins.eightminutes.R;
 import com.eightmins.eightminutes.R.id;
 import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.advocate.dash.DashAdapter.ViewHolder;
@@ -22,11 +21,11 @@ import butterknife.ButterKnife;
  */
 public class DashAdapter extends Adapter<ViewHolder> {
 
+  private final List<Dash> dashes;
+
   public DashAdapter(List<Dash> dashes) {
     this.dashes = dashes;
   }
-
-  private final List<Dash> dashes;
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

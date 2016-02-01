@@ -23,6 +23,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import icepick.Icepick;
 
 public class ForgotActivity extends AppCompatActivity {
   @Bind(id.email) EditText email;
@@ -35,8 +36,15 @@ public class ForgotActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
+    Icepick.restoreInstanceState(this, savedInstanceState);
     setContentView(R.layout.activity_forgot);
     ButterKnife.bind(this);
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    Icepick.saveInstanceState(this, outState);
   }
 
   @OnClick(id.forgot)

@@ -15,16 +15,19 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.eightmins.eightminutes.MainApplication;
 import com.eightmins.eightminutes.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import icepick.Icepick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +49,14 @@ public class VideoFragment extends Fragment {
   // TODO: Rename and change types of parameters
   private String mParam1;
   private String mParam2;
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+
+    RefWatcher refWatcher = MainApplication.getRefWatcher(getActivity());
+    refWatcher.watch(this);
+  }
 
   private OnFragmentInteractionListener mListener;
 
@@ -89,12 +100,26 @@ public class VideoFragment extends Fragment {
   }
 
   @Override
+  public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    Icepick.saveInstanceState(this, outState);
+  }
+
+  @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) {
       mParam1 = getArguments().getString(VideoFragment.ARG_PARAM1);
       mParam2 = getArguments().getString(VideoFragment.ARG_PARAM2);
     }
+
+    Icepick.restoreInstanceState(this, savedInstanceState);
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    ButterKnife.unbind(this);
   }
 
   @Override

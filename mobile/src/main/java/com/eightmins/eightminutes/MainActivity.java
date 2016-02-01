@@ -54,6 +54,7 @@ import com.parse.ParseUser;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import icepick.Icepick;
 
 public class MainActivity extends AppCompatActivity implements ReferralFragment.OnFragmentInteractionListener,
     MemberFragment.OnFragmentInteractionListener, VideoFragment.OnFragmentInteractionListener,
@@ -82,9 +83,17 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   private OnFilterChangedListener onFilterChangedListener;
 
   @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    Icepick.saveInstanceState(this, outState);
+  }
+
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
+
+    Icepick.restoreInstanceState(this, savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
