@@ -15,18 +15,21 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.eightmins.eightminutes.MainApplication;
 import com.eightmins.eightminutes.R;
 import com.eightmins.eightminutes.login.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import icepick.Icepick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,12 +92,26 @@ public class MemberFragment extends Fragment {
   }
 
   @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    ButterKnife.unbind(this);
+  }
+
+  @Override
+  public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    Icepick.saveInstanceState(this, outState);
+  }
+
+  @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) {
       mParam1 = getArguments().getString(MemberFragment.ARG_PARAM1);
       mParam2 = getArguments().getString(MemberFragment.ARG_PARAM2);
     }
+
+    Icepick.restoreInstanceState(this, savedInstanceState);
   }
 
   @Override
@@ -149,6 +166,14 @@ public class MemberFragment extends Fragment {
     progressBar.setVisibility(View.INVISIBLE);
     progressText.setVisibility(View.INVISIBLE);
     recyclerView.setVisibility(View.VISIBLE);
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+
+    RefWatcher refWatcher = MainApplication.getRefWatcher(getActivity());
+    refWatcher.watch(this);
   }
 
   @Override

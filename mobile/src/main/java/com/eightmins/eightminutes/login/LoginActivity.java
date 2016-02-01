@@ -37,6 +37,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import icepick.Icepick;
 
 public class LoginActivity extends AppCompatActivity {
   private static final int RC_SIGN_IN = 9001;
@@ -61,9 +62,17 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    Icepick.saveInstanceState(this, outState);
+  }
+
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
+    Icepick.restoreInstanceState(this, savedInstanceState);
+
     setContentView(R.layout.activity_login);
     ButterKnife.bind(this);
 

@@ -28,6 +28,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import icepick.Icepick;
 
 public class AddActivity extends AppCompatActivity {
   protected int result = Activity.RESULT_OK;
@@ -53,9 +54,17 @@ public class AddActivity extends AppCompatActivity {
   }
 
   @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    Icepick.saveInstanceState(this, outState);
+  }
+
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
+    Icepick.restoreInstanceState(this, savedInstanceState);
+
     setContentView(R.layout.activity_referral_add);
     ButterKnife.bind(this);
   }

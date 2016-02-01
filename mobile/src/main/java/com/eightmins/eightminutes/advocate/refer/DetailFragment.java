@@ -8,7 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.eightmins.eightminutes.MainApplication;
 import com.eightmins.eightminutes.R;
+import com.squareup.leakcanary.RefWatcher;
+
+import butterknife.ButterKnife;
+import icepick.Icepick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,12 +76,25 @@ public class DetailFragment extends Fragment {
   }
 
   @Override
+  public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    Icepick.saveInstanceState(this, outState);
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    ButterKnife.unbind(this);
+  }
+
+  @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) {
       mParam1 = getArguments().getString(DetailFragment.ARG_PARAM1);
       mParam2 = getArguments().getString(DetailFragment.ARG_PARAM2);
     }
+    Icepick.restoreInstanceState(this, savedInstanceState);
   }
 
   @Override
@@ -84,6 +102,14 @@ public class DetailFragment extends Fragment {
                            Bundle savedInstanceState) {
     // Inflate the layout for this fragment
     return inflater.inflate(R.layout.fragment_referral_detail, container, false);
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+
+    RefWatcher refWatcher = MainApplication.getRefWatcher(getActivity());
+    refWatcher.watch(this);
   }
 
   @Override

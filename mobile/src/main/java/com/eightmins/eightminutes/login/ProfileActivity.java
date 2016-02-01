@@ -18,6 +18,7 @@ import com.parse.SaveCallback;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import icepick.Icepick;
 
 public class ProfileActivity extends AppCompatActivity {
   @Bind(R.id.username) EditText username;
@@ -32,8 +33,16 @@ public class ProfileActivity extends AppCompatActivity {
   }
 
   @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    Icepick.saveInstanceState(this, outState);
+  }
+
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    Icepick.restoreInstanceState(this, savedInstanceState);
+
     setContentView(R.layout.activity_profile);
     ButterKnife.bind(this);
 
