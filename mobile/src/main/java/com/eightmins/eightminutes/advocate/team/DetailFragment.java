@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.eightmins.eightminutes.R;
-import com.eightmins.eightminutes.R.layout;
-import com.eightmins.eightminutes.advocate.team.DetailFragment.OnFragmentInteractionListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,22 +52,6 @@ public class DetailFragment extends Fragment {
     return fragment;
   }
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    if (getArguments() != null) {
-      mParam1 = getArguments().getString(DetailFragment.ARG_PARAM1);
-      mParam2 = getArguments().getString(DetailFragment.ARG_PARAM2);
-    }
-  }
-
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-    return inflater.inflate(layout.fragment_member_detail, container, false);
-  }
-
   // TODO: Rename method, update argument and hook method into UI event
   public void onButtonPressed(Uri uri) {
     if (mListener != null) {
@@ -86,6 +68,22 @@ public class DetailFragment extends Fragment {
       throw new RuntimeException(context
           + " must implement OnFragmentInteractionListener");
     }
+  }
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (getArguments() != null) {
+      mParam1 = getArguments().getString(DetailFragment.ARG_PARAM1);
+      mParam2 = getArguments().getString(DetailFragment.ARG_PARAM2);
+    }
+  }
+
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                           Bundle savedInstanceState) {
+    // Inflate the layout for this fragment
+    return inflater.inflate(R.layout.fragment_member_detail, container, false);
   }
 
   @Override

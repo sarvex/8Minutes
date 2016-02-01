@@ -16,9 +16,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
-import com.eightmins.eightminutes.R.id;
-import com.eightmins.eightminutes.R.layout;
-import com.eightmins.eightminutes.advocate.refer.ReferralFragment.OnFragmentInteractionListener;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -39,18 +36,20 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class ReferralFragment extends Fragment {
-  @Bind(id.progress_bar) ProgressBar progressBar;
-  @Bind(id.progress_text) TextView progressText;
-  @Bind(id.referral_recycler_view) RecyclerView recyclerView;
-  private List<Referral> referrals = new ArrayList<>(1);
-
   private static final String ARG_PARAM1 = "param1";
   private static final String ARG_PARAM2 = "param2";
-
+  @Bind(R.id.progress_bar) ProgressBar progressBar;
+  @Bind(R.id.progress_text) TextView progressText;
+  @Bind(R.id.referral_recycler_view) RecyclerView recyclerView;
+  private List<Referral> referrals = new ArrayList<>(1);
   private String mParam1;
   private String mParam2;
 
   private OnFragmentInteractionListener mListener;
+
+  public ReferralFragment() {
+    // Required empty public constructor
+  }
 
   /**
    * Use this factory method to create a new instance of
@@ -68,8 +67,24 @@ public class ReferralFragment extends Fragment {
     args.putString(ReferralFragment.ARG_PARAM2, param2);
     fragment.setArguments(args);
     return fragment;
-  }  public ReferralFragment() {
-    // Required empty public constructor
+  }
+
+  // TODO: Rename method, update argument and hook method into UI event
+  public void onButtonPressed(Uri uri) {
+    if (mListener != null) {
+      mListener.onFragmentInteraction(uri);
+    }
+  }
+
+  @Override
+  public void onAttach(Context context) {
+    super.onAttach(context);
+    if (context instanceof OnFragmentInteractionListener) {
+      mListener = (OnFragmentInteractionListener) context;
+    } else {
+      throw new RuntimeException(context
+          + " must implement OnFragmentInteractionListener");
+    }
   }
 
   @Override
@@ -84,7 +99,7 @@ public class ReferralFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    View view = inflater.inflate(layout.fragment_referral, container, false);
+    View view = inflater.inflate(R.layout.fragment_referral, container, false);
     ButterKnife.bind(this, view);
     load();
 
@@ -122,22 +137,18 @@ public class ReferralFragment extends Fragment {
     }
   }
 
-  // TODO: Rename method, update argument and hook method into UI event
-  public void onButtonPressed(Uri uri) {
-    if (mListener != null) {
-      mListener.onFragmentInteraction(uri);
-    }
+  protected void showProgress() {
+    progressBar.setIndeterminate(true);
+    progressBar.setVisibility(View.VISIBLE);
+    progressText.setVisibility(View.VISIBLE);
+    recyclerView.setVisibility(View.INVISIBLE);
   }
 
-  @Override
-  public void onAttach(Context context) {
-    super.onAttach(context);
-    if (context instanceof OnFragmentInteractionListener) {
-      mListener = (OnFragmentInteractionListener) context;
-    } else {
-      throw new RuntimeException(context
-          + " must implement OnFragmentInteractionListener");
-    }
+  protected void hideProgress() {
+    progressBar.setIndeterminate(false);
+    progressBar.setVisibility(View.INVISIBLE);
+    progressText.setVisibility(View.INVISIBLE);
+    recyclerView.setVisibility(View.VISIBLE);
   }
 
   @Override
@@ -159,19 +170,5 @@ public class ReferralFragment extends Fragment {
   public interface OnFragmentInteractionListener {
     // TODO: Update argument type and name
     void onFragmentInteraction(Uri uri);
-  }
-
-  protected void hideProgress() {
-    progressBar.setIndeterminate(false);
-    progressBar.setVisibility(View.INVISIBLE);
-    progressText.setVisibility(View.INVISIBLE);
-    recyclerView.setVisibility(View.VISIBLE);
-  }
-
-  protected void showProgress() {
-    progressBar.setIndeterminate(true);
-    progressBar.setVisibility(View.VISIBLE);
-    progressText.setVisibility(View.VISIBLE);
-    recyclerView.setVisibility(View.INVISIBLE);
   }
 }

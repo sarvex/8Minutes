@@ -17,15 +17,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.eightmins.eightminutes.R;
-import com.eightmins.eightminutes.R.id;
-import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.login.User;
 import com.eightmins.eightminutes.utility.Utils;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,18 +32,18 @@ import butterknife.OnEditorAction;
 public class AddActivity extends AppCompatActivity {
   protected int result = Activity.RESULT_OK;
 
-  @Bind(id.name) EditText name;
-  @Bind(id.organization) EditText organization;
-  @Bind(id.email) EditText email;
-  @Bind(id.phone) EditText phone;
-  @Bind(id.address1) EditText address1;
-  @Bind(id.address2) EditText address2;
-  @Bind(id.locality) EditText locality;
-  @Bind(id.city) EditText city;
-  @Bind(id.pincode) EditText pincode;
-  @Bind(id.average_bill) EditText averageBill;
-  @Bind(id.notes) EditText notes;
-  @Bind(id.refer) FloatingActionButton refer;
+  @Bind(R.id.name) EditText name;
+  @Bind(R.id.organization) EditText organization;
+  @Bind(R.id.email) EditText email;
+  @Bind(R.id.phone) EditText phone;
+  @Bind(R.id.address1) EditText address1;
+  @Bind(R.id.address2) EditText address2;
+  @Bind(R.id.locality) EditText locality;
+  @Bind(R.id.city) EditText city;
+  @Bind(R.id.pincode) EditText pincode;
+  @Bind(R.id.average_bill) EditText averageBill;
+  @Bind(R.id.notes) EditText notes;
+  @Bind(R.id.refer) FloatingActionButton refer;
 
   private ProgressDialog progress;
 
@@ -59,11 +56,11 @@ public class AddActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
-    setContentView(layout.activity_referral_add);
+    setContentView(R.layout.activity_referral_add);
     ButterKnife.bind(this);
   }
 
-  @OnEditorAction(id.notes)
+  @OnEditorAction(R.id.notes)
   boolean password(int actionId) {
     if (actionId == EditorInfo.IME_ACTION_DONE) {
       refer.performClick();
@@ -72,7 +69,7 @@ public class AddActivity extends AppCompatActivity {
     return false;
   }
 
-  @OnClick(id.refer)
+  @OnClick(R.id.refer)
   public void onReferClicked(View view) {
     Utils.hideKeyboard(this);
 

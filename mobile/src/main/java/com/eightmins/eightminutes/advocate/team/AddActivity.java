@@ -17,8 +17,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.eightmins.eightminutes.R;
-import com.eightmins.eightminutes.R.id;
-import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.login.User;
 import com.eightmins.eightminutes.utility.Utils;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
@@ -33,24 +31,23 @@ import butterknife.OnEditorAction;
 
 public class AddActivity extends AppCompatActivity {
 
-  @Bind(id.name) EditText name;
-  @Bind(id.email) EditText email;
-  @Bind(id.phone) EditText phone;
-  @Bind(id.username) EditText username;
-  @Bind(id.add_member) FloatingActionButton addMember;
-
   protected int result = Activity.RESULT_OK;
+  @Bind(R.id.name) EditText name;
+  @Bind(R.id.email) EditText email;
+  @Bind(R.id.phone) EditText phone;
+  @Bind(R.id.username) EditText username;
+  @Bind(R.id.add_member) FloatingActionButton addMember;
   private ProgressDialog progress;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
-    setContentView(layout.activity_member_add);
+    setContentView(R.layout.activity_member_add);
     ButterKnife.bind(this);
   }
 
-  @OnEditorAction(id.username)
+  @OnEditorAction(R.id.username)
   boolean editorAction(int actionId) {
     if (actionId == EditorInfo.IME_ACTION_DONE) {
       addMember.performClick();
@@ -59,7 +56,7 @@ public class AddActivity extends AppCompatActivity {
     return false;
   }
 
-  @OnClick(id.add_member)
+  @OnClick(R.id.add_member)
   public void addMemberClicked(View view) {
     Utils.showProgressBar(this, progress, getString(R.string.adding_member));
     final String token = ParseUser.getCurrentUser().getSessionToken();

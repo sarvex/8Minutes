@@ -1,7 +1,6 @@
 package com.eightmins.eightminutes.login;
 
 import com.eightmins.eightminutes.R;
-import com.eightmins.eightminutes.R.mipmap;
 import com.parse.ParseClassName;
 import com.parse.ParseUser;
 
@@ -15,10 +14,20 @@ public class User extends ParseUser {
     setOwner((User) ParseUser.getCurrentUser());
   }
 
+  public void setSuperDefaults() {
+    setPassword("Password123");
+    setMembers(0);
+    setInstalled(0);
+    setPending(0);
+    setProgress(0);
+    setEarnings(0L);
+    setVerified(false);
+  }
+
   public int getImage() {
     int image = getInt("image");
     if (image == 0) {
-      image = mipmap.ic_account_circle;
+      image = R.mipmap.ic_account_circle;
     }
     return image;
   }
@@ -27,28 +36,28 @@ public class User extends ParseUser {
     put("image", image);
   }
 
-  public void setName(String name) {
-    put("name", name);
-  }
-
   public String getName() {
     return getString("name");
   }
 
-  public void setOwner(User owner) {
-    put("owner", owner);
+  public void setName(String name) {
+    put("name", name);
   }
 
   public User getOwner() {
     return (User)get("owner");
   }
 
-  public void setPhone(String phone) {
-    put("phone", phone);
+  public void setOwner(User owner) {
+    put("owner", owner);
   }
 
   public String getPhone() {
     return getString("phone");
+  }
+
+  public void setPhone(String phone) {
+    put("phone", phone);
   }
 
   public int getMembers() {
@@ -91,21 +100,11 @@ public class User extends ParseUser {
     put("earnings", earnings);
   }
 
-  public void setVerified(boolean verified) {
-    put("verified", verified);
-  }
-
   public boolean isVerified() {
     return getBoolean("verified");
   }
 
-  public void setSuperDefaults() {
-    setPassword("Password123");
-    setMembers(0);
-    setInstalled(0);
-    setPending(0);
-    setProgress(0);
-    setEarnings(0L);
-    setVerified(false);
+  public void setVerified(boolean verified) {
+    put("verified", verified);
   }
 }

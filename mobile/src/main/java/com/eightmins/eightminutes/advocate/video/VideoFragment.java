@@ -16,9 +16,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
-import com.eightmins.eightminutes.R.id;
-import com.eightmins.eightminutes.R.layout;
-import com.eightmins.eightminutes.advocate.video.VideoFragment.OnFragmentInteractionListener;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -38,21 +35,23 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class VideoFragment extends Fragment {
-  @Bind(id.progress_bar) ProgressBar progressBar;
-  @Bind(id.progress_text) TextView progressText;
-  @Bind(id.video_recycler_view)
-
-  RecyclerView recyclerView;
-  protected List<Video> videos = new ArrayList<>(1);
-
   private static final String ARG_PARAM1 = "param1";
   private static final String ARG_PARAM2 = "param2";
+  protected List<Video> videos = new ArrayList<>(1);
+  @Bind(R.id.progress_bar) ProgressBar progressBar;
+  @Bind(R.id.progress_text) TextView progressText;
+  @Bind(R.id.video_recycler_view)
 
+  RecyclerView recyclerView;
   // TODO: Rename and change types of parameters
   private String mParam1;
   private String mParam2;
 
   private OnFragmentInteractionListener mListener;
+
+  public VideoFragment() {
+    // Required empty public constructor
+  }
 
   /**
    * Use this factory method to create a new instance of
@@ -72,8 +71,21 @@ public class VideoFragment extends Fragment {
     return fragment;
   }
 
-  public VideoFragment() {
-    // Required empty public constructor
+  public void onButtonPressed(Uri uri) {
+    if (mListener != null) {
+      mListener.onFragmentInteraction(uri);
+    }
+  }
+
+  @Override
+  public void onAttach(Context context) {
+    super.onAttach(context);
+    if (context instanceof OnFragmentInteractionListener) {
+      mListener = (OnFragmentInteractionListener) context;
+    } else {
+      throw new RuntimeException(context
+          + " must implement OnFragmentInteractionListener");
+    }
   }
 
   @Override
@@ -88,7 +100,7 @@ public class VideoFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    View view = inflater.inflate(layout.fragment_video, container, false);
+    View view = inflater.inflate(R.layout.fragment_video, container, false);
     ButterKnife.bind(this, view);
     load();
 
@@ -123,21 +135,18 @@ public class VideoFragment extends Fragment {
     });
   }
 
-  public void onButtonPressed(Uri uri) {
-    if (mListener != null) {
-      mListener.onFragmentInteraction(uri);
-    }
+  protected void showProgress() {
+    progressBar.setIndeterminate(true);
+    progressBar.setVisibility(View.VISIBLE);
+    progressText.setVisibility(View.VISIBLE);
+    recyclerView.setVisibility(View.INVISIBLE);
   }
 
-  @Override
-  public void onAttach(Context context) {
-    super.onAttach(context);
-    if (context instanceof OnFragmentInteractionListener) {
-      mListener = (OnFragmentInteractionListener) context;
-    } else {
-      throw new RuntimeException(context
-          + " must implement OnFragmentInteractionListener");
-    }
+  protected void hideProgress() {
+    progressBar.setIndeterminate(false);
+    progressBar.setVisibility(View.INVISIBLE);
+    progressText.setVisibility(View.INVISIBLE);
+    recyclerView.setVisibility(View.VISIBLE);
   }
 
   @Override
@@ -158,19 +167,5 @@ public class VideoFragment extends Fragment {
    */
   public interface OnFragmentInteractionListener {
     void onFragmentInteraction(Uri uri);
-  }
-
-  protected void hideProgress() {
-    progressBar.setIndeterminate(false);
-    progressBar.setVisibility(View.INVISIBLE);
-    progressText.setVisibility(View.INVISIBLE);
-    recyclerView.setVisibility(View.VISIBLE);
-  }
-
-  protected void showProgress() {
-    progressBar.setIndeterminate(true);
-    progressBar.setVisibility(View.VISIBLE);
-    progressText.setVisibility(View.VISIBLE);
-    recyclerView.setVisibility(View.INVISIBLE);
   }
 }

@@ -14,8 +14,6 @@ import android.widget.TextView;
 
 import com.eightmins.eightminutes.BuildConfig;
 import com.eightmins.eightminutes.R;
-import com.eightmins.eightminutes.R.id;
-import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.advocate.video.VideoAdapter.ViewHolder;
 import com.google.android.youtube.player.YouTubeApiServiceUtil;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -47,7 +45,8 @@ public class VideoAdapter extends Adapter<ViewHolder> {
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(layout.item_video, parent, false));  }
+    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_video, parent, false));
+  }
 
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
@@ -61,17 +60,17 @@ public class VideoAdapter extends Adapter<ViewHolder> {
 
   public class ViewHolder extends RecyclerView.ViewHolder {
 
-    @Bind(id.youtube_title) TextView title;
-    @Bind(id.youtube_description) TextView description;
-    @Bind(id.youtube_layout) RelativeLayout relativeLayout;
-    @Bind(id.youtube_thumbnail) YouTubeThumbnailView youTubeThumbnailView;
+    @Bind(R.id.youtube_title) TextView title;
+    @Bind(R.id.youtube_description) TextView description;
+    @Bind(R.id.youtube_layout) RelativeLayout relativeLayout;
+    @Bind(R.id.youtube_thumbnail) YouTubeThumbnailView youTubeThumbnailView;
 
     public ViewHolder(View view) {
       super(view);
       ButterKnife.bind(this, view);
     }
 
-    @OnClick(id.youtube_play)
+    @OnClick(R.id.youtube_play)
     public void onClick(View v) {
 
       if(YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS)){

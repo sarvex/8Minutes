@@ -21,9 +21,6 @@ import android.widget.Toast;
 import com.eightmins.eightminutes.BuildConfig;
 import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
-import com.eightmins.eightminutes.R.anim;
-import com.eightmins.eightminutes.R.id;
-import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.utility.Utils;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
@@ -42,23 +39,15 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 
 public class LoginActivity extends AppCompatActivity {
-  @Bind(id.username) EditText username;
-  @Bind(id.password) EditText password;
-  @Bind(id.facebook_login) FloatingActionButton facebook;
-  @Bind(id.twitter_login) FloatingActionButton twitter;
-  @Bind(id.sign_up) FloatingActionButton signUp;
-  @Bind(id.expand) FloatingActionButton expand;
-  @Bind(id.login) FloatingActionButton login;
-
-  private ProgressDialog progress;
-
   private static final int RC_SIGN_IN = 9001;
-
-  @Override
-  protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
-  }
-
+  @Bind(R.id.username) EditText username;
+  @Bind(R.id.password) EditText password;
+  @Bind(R.id.facebook_login) FloatingActionButton facebook;
+  @Bind(R.id.twitter_login) FloatingActionButton twitter;
+  @Bind(R.id.sign_up) FloatingActionButton signUp;
+  @Bind(R.id.expand) FloatingActionButton expand;
+  @Bind(R.id.login) FloatingActionButton login;
+  private ProgressDialog progress;
   private GoogleApiClient googleApiClient;
   private boolean isFabOpen;
   private Animation fabOpen;
@@ -67,16 +56,21 @@ public class LoginActivity extends AppCompatActivity {
   private Animation rotateBackward;
 
   @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
+  }
+
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
-    setContentView(layout.activity_login);
+    setContentView(R.layout.activity_login);
     ButterKnife.bind(this);
 
-    fabOpen = AnimationUtils.loadAnimation(getApplicationContext(), anim.fab_open);
-    fabClose = AnimationUtils.loadAnimation(getApplicationContext(), anim.fab_close);
-    rotateForward = AnimationUtils.loadAnimation(getApplicationContext(), anim.rotate_forward);
-    rotateBackward = AnimationUtils.loadAnimation(getApplicationContext(), anim.rotate_backward);
+    fabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+    fabClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+    rotateForward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
+    rotateBackward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_backward);
 
     if (BuildConfig.SIGN_UP_ENABLED) {
       expand.setVisibility(View.VISIBLE);
@@ -93,12 +87,6 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
-  }
-
-  @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     // Handle action bar item clicks here. The action bar will
     // automatically handle clicks on the Home/Up button, so long
@@ -112,7 +100,13 @@ public class LoginActivity extends AppCompatActivity {
     return super.onOptionsItemSelected(item);
   }
 
-  @OnEditorAction(id.password)
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
+  }
+
+  @OnEditorAction(R.id.password)
   boolean password(int actionId) {
     if (actionId == EditorInfo.IME_ACTION_DONE) {
       login.performClick();
@@ -121,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
     return false;
   }
 
-  @OnClick(id.login)
+  @OnClick(R.id.login)
   public void login(View view) {
     Utils.showProgressBar(this, progress, getString(R.string.logging_in));
     if (username.getText().toString().contains("@")) {
@@ -148,17 +142,17 @@ public class LoginActivity extends AppCompatActivity {
         });
   }
 
-  @OnClick(id.forgot)
+  @OnClick(R.id.forgot)
   public void forgot(View view) {
     startActivity(new Intent(this, ForgotActivity.class));
   }
 
-  @OnClick(id.sign_up)
+  @OnClick(R.id.sign_up)
   public void signUp(View view) {
     startActivity(new Intent(this, SignUpActivity.class));
   }
 
-  @OnClick(id.expand)
+  @OnClick(R.id.expand)
   public void onExpand(View view) {
     Utils.hideKeyboard(this);
 
@@ -180,7 +174,7 @@ public class LoginActivity extends AppCompatActivity {
     signUp.setClickable(isFabOpen);
   }
 
-  @OnClick(id.facebook_login)
+  @OnClick(R.id.facebook_login)
   public void onFacebookLogin(View view) {
     List<String> permissions = Arrays.asList("user_photos", "friends_photos", "email", "user_birthday", "user_friends");
     ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
@@ -197,7 +191,7 @@ public class LoginActivity extends AppCompatActivity {
     });
   }
 
-  @OnClick(id.twitter_login)
+  @OnClick(R.id.twitter_login)
   public void onTwitterLogin(View view) {
     ParseTwitterUtils.logIn(this, new LogInCallback() {
       @Override

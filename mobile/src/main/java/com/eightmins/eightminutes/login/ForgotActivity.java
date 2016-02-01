@@ -11,8 +11,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.eightmins.eightminutes.R;
 import com.eightmins.eightminutes.R.id;
-import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.utility.Utils;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.parse.ParseException;
@@ -35,7 +35,7 @@ public class ForgotActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
-    setContentView(layout.activity_forgot);
+    setContentView(R.layout.activity_forgot);
     ButterKnife.bind(this);
   }
 

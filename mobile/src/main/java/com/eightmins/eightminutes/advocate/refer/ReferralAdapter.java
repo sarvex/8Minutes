@@ -9,8 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
-import com.eightmins.eightminutes.R.id;
-import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.advocate.refer.ReferralAdapter.ViewHolder;
 
 import java.util.List;
@@ -30,7 +28,7 @@ public class ReferralAdapter extends Adapter<ViewHolder>{
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(layout.item_referral, parent, false));
+    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_referral, parent, false));
   }
 
   @Override
@@ -44,9 +42,9 @@ public class ReferralAdapter extends Adapter<ViewHolder>{
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
-    @Bind(id.referral_photo) ImageView photo;
-    @Bind(id.referral_name) TextView name;
-    @Bind(id.referral_status) TextView description;
+    @Bind(R.id.referral_photo) ImageView photo;
+    @Bind(R.id.referral_name) TextView name;
+    @Bind(R.id.referral_status) TextView description;
 
     public ViewHolder(View view) {
       super(view);

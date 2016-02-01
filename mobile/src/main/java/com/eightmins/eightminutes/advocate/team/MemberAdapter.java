@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
-import com.eightmins.eightminutes.R.id;
-import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.advocate.team.MemberAdapter.ViewHolder;
 import com.eightmins.eightminutes.login.User;
 
@@ -30,7 +28,7 @@ public class MemberAdapter extends Adapter<ViewHolder> {
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(layout.item_member, parent, false));
+    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_member, parent, false));
   }
 
   @Override
@@ -44,16 +42,16 @@ public class MemberAdapter extends Adapter<ViewHolder> {
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
-    @Bind(id.name) TextView name;
-    @Bind(id.members) TextView members;
-    @Bind(id.members_label) TextView membersLabel;
-    @Bind(id.installed) TextView installed;
-    @Bind(id.installed_label) TextView installedLabel;
-    @Bind(id.progress) TextView progress;
-    @Bind(id.progress_label) TextView progressLabel;
-    @Bind(id.pending) TextView pending;
-    @Bind(id.pending_label) TextView pendingLabel;
-    @Bind(id.earnings) TextView earnings;
+    @Bind(R.id.name) TextView name;
+    @Bind(R.id.members) TextView members;
+    @Bind(R.id.members_label) TextView membersLabel;
+    @Bind(R.id.installed) TextView installed;
+    @Bind(R.id.installed_label) TextView installedLabel;
+    @Bind(R.id.progress) TextView progress;
+    @Bind(R.id.progress_label) TextView progressLabel;
+    @Bind(R.id.pending) TextView pending;
+    @Bind(R.id.pending_label) TextView pendingLabel;
+    @Bind(R.id.earnings) TextView earnings;
 
     public ViewHolder(View view) {
       super(view);

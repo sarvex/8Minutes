@@ -24,10 +24,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
-import com.eightmins.eightminutes.R.color;
-import com.eightmins.eightminutes.R.drawable;
-import com.eightmins.eightminutes.R.id;
-import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.advocate.dash.DashFragment;
 import com.eightmins.eightminutes.advocate.dash.DashFragment.OnFragmentInteractionListener;
 import com.eightmins.eightminutes.advocate.refer.ReferralFragment;
@@ -70,10 +66,10 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   private static final String TEAM = "Team";
   private static final String VIDEOS = "Videos";
 
-  @Bind(id.toolbar) Toolbar toolbar;
-  @Bind(id.viewpager) ViewPager viewPager;
-  @Bind(id.tabs) TabLayout tabLayout;
-  @Bind(id.add_button) FloatingActionButton addButton;
+  @Bind(R.id.toolbar) Toolbar toolbar;
+  @Bind(R.id.viewpager) ViewPager viewPager;
+  @Bind(R.id.tabs) TabLayout tabLayout;
+  @Bind(R.id.add_button) FloatingActionButton addButton;
 
   private AccountHeader accountHeader;
   private Drawer drawer;
@@ -83,12 +79,13 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   private ReferralFragment referralFragment;
   private MemberFragment memberFragment;
   private VideoFragment videoFragment;
+  private OnFilterChangedListener onFilterChangedListener;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
-    setContentView(layout.activity_main);
+    setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
     setupToolbar();
@@ -105,13 +102,75 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     }
   }
 
-  private void setupCollapsingToolbar() {
-    CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(id.collapse_toolbar);
+  private void setupToolbar() {
+    setSupportActionBar(toolbar);
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) {
+      actionBar.setDisplayHomeAsUpEnabled(true);
+      actionBar.setDisplayShowTitleEnabled(false);
+    }
+  }
 
-    collapsingToolbar.setTitleEnabled(false);
-    collapsingToolbar.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
-    collapsingToolbar.setContentScrimColor(getResources().getColor(color.primary));
-    collapsingToolbar.setStatusBarScrimColor(getResources().getColor(color.primary));
+  private void setupDrawer() {
+
+    String username = "";
+    String email = "";
+
+    if (ParseUser.getCurrentUser() != null) {
+      username = ParseUser.getCurrentUser().getUsername();
+      email = ParseUser.getCurrentUser().getEmail();
+    }
+
+    accountHeader = new AccountHeaderBuilder()
+        .withActivity(this)
+        .withHeaderBackground(R.drawable.header)
+        .addProfiles(new ProfileDrawerItem().withName(username).withEmail(email))
+        .withOnAccountHeaderListener(new OnAccountHeaderListener() {
+          @Override
+          public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+            return false;
+          }
+        })
+        .build();
+
+    drawer = new DrawerBuilder()
+        .withActivity(this)
+        .withToolbar(toolbar)
+        .withAccountHeader(accountHeader)
+        .withHeader(R.layout.header)
+        .addDrawerItems(
+            new PrimaryDrawerItem().withName("Order T-Shirts").withIcon(Icon.gmd_local_florist),
+            new PrimaryDrawerItem().withName("Profile").withIcon(Icon.gmd_person)
+                .withOnDrawerItemClickListener(new OnDrawerItemClickListener() {
+                  @Override
+                  public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                    toProfileActivity();
+                    return true;
+                  }
+                }),
+            new PrimaryDrawerItem().withName("Settings").withIcon(Icon.gmd_settings),
+            new PrimaryDrawerItem().withName("Logout").withIcon(FontAwesome.Icon.faw_sign_out)
+                .withOnDrawerItemClickListener(new OnDrawerItemClickListener() {
+                  @Override
+                  public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                    if (ParseUser.getCurrentUser() != null) {
+                      Utils.showProgressBar(getParent(), progress, getString(R.string.logging_out));
+                      ParseUser.logOutInBackground(new LogOutCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                          Utils.hideProgressBar(progress);
+                          if (e == null) {
+                            toLoginActivity();
+                          }
+                        }
+                      });
+                    }
+                    return true;
+                  }
+                }))
+        .build();
+
+    drawer.getRecyclerView().setVerticalScrollBarEnabled(false);
   }
 
   private void setupViewPager() {
@@ -162,7 +221,26 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     });
   }
 
-  @OnClick(id.add_button)
+  private void setupCollapsingToolbar() {
+    CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
+
+    collapsingToolbar.setTitleEnabled(false);
+    collapsingToolbar.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+    collapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
+    collapsingToolbar.setStatusBarScrimColor(getResources().getColor(R.color.primary));
+  }
+
+  protected void toLoginActivity() {
+    startActivity(new Intent(this, LoginActivity.class)
+        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+  }
+
+  private void toProfileActivity() {
+    startActivity(new Intent(this, ProfileActivity.class)
+        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+  }
+
+  @OnClick(R.id.add_button)
   public void onAddButtonClicked(View view) {
     switch (viewPager.getCurrentItem()) {
       case 1:
@@ -192,92 +270,8 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
 
   }
 
-  private void setupToolbar() {
-    setSupportActionBar(toolbar);
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setDisplayHomeAsUpEnabled(true);
-      actionBar.setDisplayShowTitleEnabled(false);
-    }
-  }
-
-  private void setupDrawer() {
-
-    String username = "";
-    String email = "";
-
-    if (ParseUser.getCurrentUser() != null) {
-      username = ParseUser.getCurrentUser().getUsername();
-      email = ParseUser.getCurrentUser().getEmail();
-    }
-
-    accountHeader = new AccountHeaderBuilder()
-        .withActivity(this)
-        .withHeaderBackground(drawable.header)
-        .addProfiles(new ProfileDrawerItem().withName(username).withEmail(email))
-        .withOnAccountHeaderListener(new OnAccountHeaderListener() {
-          @Override
-          public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-            return false;
-          }
-        })
-        .build();
-
-    drawer = new DrawerBuilder()
-        .withActivity(this)
-        .withToolbar(toolbar)
-        .withAccountHeader(accountHeader)
-        .withHeader(layout.header)
-        .addDrawerItems(
-            new PrimaryDrawerItem().withName("Order T-Shirts").withIcon(Icon.gmd_local_florist),
-            new PrimaryDrawerItem().withName("Profile").withIcon(Icon.gmd_person)
-                .withOnDrawerItemClickListener(new OnDrawerItemClickListener() {
-                  @Override
-                  public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                    toProfileActivity();
-                    return true;
-                  }
-                }),
-            new PrimaryDrawerItem().withName("Settings").withIcon(Icon.gmd_settings),
-            new PrimaryDrawerItem().withName("Logout").withIcon(FontAwesome.Icon.faw_sign_out)
-                .withOnDrawerItemClickListener(new OnDrawerItemClickListener() {
-                  @Override
-                  public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                    if (ParseUser.getCurrentUser() != null) {
-                      Utils.showProgressBar(getParent(), progress, getString(R.string.logging_out));
-                      ParseUser.logOutInBackground(new LogOutCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                          Utils.hideProgressBar(progress);
-                          if (e == null) {
-                            toLoginActivity();
-                          }
-                        }
-                      });
-                    }
-                    return true;
-                  }
-                }))
-        .build();
-
-    drawer.getRecyclerView().setVerticalScrollBarEnabled(false);
-  }
-
-  private void toProfileActivity() {
-    startActivity(new Intent(this, ProfileActivity.class)
-        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-  }
-
-  private OnFilterChangedListener onFilterChangedListener;
-
   public void setOnFilterChangedListener(OnFilterChangedListener onFilterChangedListener) {
     this.onFilterChangedListener = onFilterChangedListener;
-  }
-
-
-  protected void toLoginActivity() {
-    startActivity(new Intent(this, LoginActivity.class)
-        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
   }
 
   @Override
@@ -285,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     getMenuInflater().inflate(R.menu.menu_main, menu);
 
     SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-    MenuItem searchItem = menu.findItem(id.action_search);
+    MenuItem searchItem = menu.findItem(R.id.action_search);
     SearchView searchView = null;
     if (searchItem != null) {
       searchView = (SearchView) searchItem.getActionView();
@@ -294,7 +288,7 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
       searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
     }
 
-    MenuItem shareItem = menu.findItem(id.action_share);
+    MenuItem shareItem = menu.findItem(R.id.action_share);
     shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
     shareActionProvider.setShareIntent(doShare());
     return super.onCreateOptionsMenu(menu);

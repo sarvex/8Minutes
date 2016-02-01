@@ -16,8 +16,6 @@ import android.widget.Toast;
 
 import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
-import com.eightmins.eightminutes.R.id;
-import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.utility.Utils;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.parse.ParseException;
@@ -29,13 +27,13 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 
 public class SignUpActivity extends AppCompatActivity {
-  @Bind(id.name) EditText name;
-  @Bind(id.username) EditText username;
-  @Bind(id.password) EditText password;
-  @Bind(id.confirm) EditText confirm;
-  @Bind(id.email) EditText email;
-  @Bind(id.phone) EditText phone;
-  @Bind(id.sign_up) FloatingActionButton signUp;
+  @Bind(R.id.name) EditText name;
+  @Bind(R.id.username) EditText username;
+  @Bind(R.id.password) EditText password;
+  @Bind(R.id.confirm) EditText confirm;
+  @Bind(R.id.email) EditText email;
+  @Bind(R.id.phone) EditText phone;
+  @Bind(R.id.sign_up) FloatingActionButton signUp;
 
   private ProgressDialog progress;
 
@@ -48,11 +46,11 @@ public class SignUpActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
-    setContentView(layout.activity_sign_up);
+    setContentView(R.layout.activity_sign_up);
     ButterKnife.bind(this);
   }
 
-  @OnClick(id.sign_up)
+  @OnClick(R.id.sign_up)
   public void signUpClicked(View view) {
     Utils.hideKeyboard(this);
     Utils.showProgressBar(this, progress, "Signing Up...");
@@ -78,7 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
     });
   }
 
-  @OnEditorAction(id.phone)
+  @OnEditorAction(R.id.phone)
   boolean password(int actionId) {
     if (actionId == EditorInfo.IME_ACTION_DONE) {
       signUp.performClick();
