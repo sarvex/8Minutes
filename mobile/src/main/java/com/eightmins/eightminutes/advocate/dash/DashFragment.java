@@ -14,6 +14,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.R.id;
+import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.login.User;
 import com.parse.ParseUser;
 
@@ -24,9 +26,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class DashFragment extends Fragment {
-  @Bind(R.id.progress_bar) ProgressBar progressBar;
-  @Bind(R.id.progress_text) TextView progressText;
-  @Bind(R.id.dash_recycler_view) RecyclerView recyclerView;
+  @Bind(id.progress_bar) ProgressBar progressBar;
+  @Bind(id.progress_text) TextView progressText;
+  @Bind(id.dash_recycler_view) RecyclerView recyclerView;
 
   private List<Dash> dashes = new ArrayList<>(1);
 
@@ -51,8 +53,8 @@ public class DashFragment extends Fragment {
   public static DashFragment newInstance(String param1, String param2) {
     DashFragment fragment = new DashFragment();
     Bundle args = new Bundle();
-    args.putString(ARG_PARAM1, param1);
-    args.putString(ARG_PARAM2, param2);
+    args.putString(DashFragment.ARG_PARAM1, param1);
+    args.putString(DashFragment.ARG_PARAM2, param2);
     fragment.setArguments(args);
     return fragment;
   }
@@ -65,15 +67,15 @@ public class DashFragment extends Fragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) {
-      mParam1 = getArguments().getString(ARG_PARAM1);
-      mParam2 = getArguments().getString(ARG_PARAM2);
+      mParam1 = getArguments().getString(DashFragment.ARG_PARAM1);
+      mParam2 = getArguments().getString(DashFragment.ARG_PARAM2);
     }
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_dash, container, false);
+    View view = inflater.inflate(layout.fragment_dash, container, false);
     ButterKnife.bind(this, view);
     load();
 
@@ -112,7 +114,7 @@ public class DashFragment extends Fragment {
     if (context instanceof OnFragmentInteractionListener) {
       mListener = (OnFragmentInteractionListener) context;
     } else {
-      throw new RuntimeException(context.toString()
+      throw new RuntimeException(context
           + " must implement OnFragmentInteractionListener");
     }
   }

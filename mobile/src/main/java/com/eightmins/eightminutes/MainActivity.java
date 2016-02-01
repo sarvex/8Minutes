@@ -1,5 +1,6 @@
 package com.eightmins.eightminutes;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -23,18 +24,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
+import com.eightmins.eightminutes.R.color;
+import com.eightmins.eightminutes.R.drawable;
+import com.eightmins.eightminutes.R.id;
+import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.advocate.dash.DashFragment;
+import com.eightmins.eightminutes.advocate.dash.DashFragment.OnFragmentInteractionListener;
 import com.eightmins.eightminutes.advocate.refer.ReferralFragment;
+import com.eightmins.eightminutes.advocate.team.AddActivity;
 import com.eightmins.eightminutes.advocate.team.MemberFragment;
 import com.eightmins.eightminutes.advocate.video.VideoFragment;
 import com.eightmins.eightminutes.login.LoginActivity;
 import com.eightmins.eightminutes.login.ProfileActivity;
 import com.eightmins.eightminutes.utility.PagerAdapter;
+import com.eightmins.eightminutes.utility.Utils;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial.Icon;
 import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeader.OnAccountHeaderListener;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.Drawer.OnDrawerItemClickListener;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
@@ -51,7 +61,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements ReferralFragment.OnFragmentInteractionListener,
     MemberFragment.OnFragmentInteractionListener, VideoFragment.OnFragmentInteractionListener,
-    DashFragment.OnFragmentInteractionListener {
+    OnFragmentInteractionListener {
 
   private static final int ADD_REFERRAL = 12834;
   private static final int ADD_MEMBER = 12835;
@@ -60,10 +70,10 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   private static final String TEAM = "Team";
   private static final String VIDEOS = "Videos";
 
-  @Bind(R.id.toolbar) Toolbar toolbar;
-  @Bind(R.id.viewpager) ViewPager viewPager;
-  @Bind(R.id.tabs) TabLayout tabLayout;
-  @Bind(R.id.add_button) FloatingActionButton addButton;
+  @Bind(id.toolbar) Toolbar toolbar;
+  @Bind(id.viewpager) ViewPager viewPager;
+  @Bind(id.tabs) TabLayout tabLayout;
+  @Bind(id.add_button) FloatingActionButton addButton;
 
   private AccountHeader accountHeader;
   private Drawer drawer;
@@ -78,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(layout.activity_main);
     ButterKnife.bind(this);
 
     setupToolbar();
@@ -96,12 +106,12 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   }
 
   private void setupCollapsingToolbar() {
-    final CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
+    CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(id.collapse_toolbar);
 
     collapsingToolbar.setTitleEnabled(false);
     collapsingToolbar.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
-    collapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
-    collapsingToolbar.setStatusBarScrimColor(getResources().getColor(R.color.primary));
+    collapsingToolbar.setContentScrimColor(getResources().getColor(color.primary));
+    collapsingToolbar.setStatusBarScrimColor(getResources().getColor(color.primary));
   }
 
   private void setupViewPager() {
@@ -109,13 +119,13 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
       PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
 
       dashFragment = new DashFragment();
-      adapter.addFragment(dashFragment, HOME);
+      adapter.addFragment(dashFragment, MainActivity.HOME);
       referralFragment = new ReferralFragment();
-      adapter.addFragment(referralFragment, REFERRALS);
+      adapter.addFragment(referralFragment, MainActivity.REFERRALS);
       memberFragment = new MemberFragment();
-      adapter.addFragment(memberFragment, TEAM);
+      adapter.addFragment(memberFragment, MainActivity.TEAM);
       videoFragment = new VideoFragment();
-      adapter.addFragment(videoFragment, VIDEOS);
+      adapter.addFragment(videoFragment, MainActivity.VIDEOS);
       viewPager.setAdapter(adapter);
     }
 
@@ -125,16 +135,16 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
       public void onTabSelected(Tab tab) {
         super.onTabSelected(tab);
         switch (tab.getText().toString()) {
-          case HOME:
+          case MainActivity.HOME:
             addButton.hide();
             break;
-          case REFERRALS:
+          case MainActivity.REFERRALS:
             addButton.show();
             break;
-          case TEAM:
+          case MainActivity.TEAM:
             addButton.show();
             break;
-          case VIDEOS:
+          case MainActivity.VIDEOS:
             addButton.hide();
             break;
         }
@@ -152,14 +162,14 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     });
   }
 
-  @OnClick(R.id.add_button)
+  @OnClick(id.add_button)
   public void onAddButtonClicked(View view) {
     switch (viewPager.getCurrentItem()) {
       case 1:
-        startActivityForResult(new Intent(this, com.eightmins.eightminutes.advocate.refer.AddActivity.class), ADD_REFERRAL);
+        startActivityForResult(new Intent(this, AddActivity.class), MainActivity.ADD_REFERRAL);
         break;
       case 2:
-        startActivityForResult(new Intent(this, com.eightmins.eightminutes.advocate.team.AddActivity.class), ADD_MEMBER);
+        startActivityForResult(new Intent(this, AddActivity.class), MainActivity.ADD_MEMBER);
         break;
       default:
         break;
@@ -170,12 +180,12 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
-    if (requestCode == ADD_REFERRAL && resultCode == RESULT_OK) {
+    if (requestCode == MainActivity.ADD_REFERRAL && resultCode == Activity.RESULT_OK) {
       referralFragment.load();
       // deal with the item yourself
     }
 
-    if (requestCode == ADD_MEMBER && resultCode == RESULT_OK) {
+    if (requestCode == MainActivity.ADD_MEMBER && resultCode == Activity.RESULT_OK) {
       memberFragment.load();
       // deal with the item yourself
     }
@@ -203,9 +213,9 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
 
     accountHeader = new AccountHeaderBuilder()
         .withActivity(this)
-        .withHeaderBackground(R.drawable.header)
+        .withHeaderBackground(drawable.header)
         .addProfiles(new ProfileDrawerItem().withName(username).withEmail(email))
-        .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+        .withOnAccountHeaderListener(new OnAccountHeaderListener() {
           @Override
           public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
             return false;
@@ -217,11 +227,11 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
         .withActivity(this)
         .withToolbar(toolbar)
         .withAccountHeader(accountHeader)
-        .withHeader(R.layout.header)
+        .withHeader(layout.header)
         .addDrawerItems(
             new PrimaryDrawerItem().withName("Order T-Shirts").withIcon(Icon.gmd_local_florist),
             new PrimaryDrawerItem().withName("Profile").withIcon(Icon.gmd_person)
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                .withOnDrawerItemClickListener(new OnDrawerItemClickListener() {
                   @Override
                   public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                     toProfileActivity();
@@ -230,15 +240,15 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
                 }),
             new PrimaryDrawerItem().withName("Settings").withIcon(Icon.gmd_settings),
             new PrimaryDrawerItem().withName("Logout").withIcon(FontAwesome.Icon.faw_sign_out)
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                .withOnDrawerItemClickListener(new OnDrawerItemClickListener() {
                   @Override
                   public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                     if (ParseUser.getCurrentUser() != null) {
-                      showProgressBar();
+                      Utils.showProgressBar(getParent(), progress, getString(R.string.logging_out));
                       ParseUser.logOutInBackground(new LogOutCallback() {
                         @Override
                         public void done(ParseException e) {
-                          hideProgressBar();
+                          Utils.hideProgressBar(progress);
                           if (e == null) {
                             toLoginActivity();
                           }
@@ -251,20 +261,6 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
         .build();
 
     drawer.getRecyclerView().setVerticalScrollBarEnabled(false);
-  }
-
-  protected void hideProgressBar() {
-    if ((progress != null) && progress.isShowing()) {
-      progress.dismiss();
-    }
-  }
-
-  protected void showProgressBar() {
-    progress = new ProgressDialog(this);
-    progress.setMessage(getString(R.string.logging_out));
-    progress.setIndeterminate(true);
-    progress.setProgress(0);
-    progress.show();
   }
 
   private void toProfileActivity() {
@@ -289,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
     getMenuInflater().inflate(R.menu.menu_main, menu);
 
     SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-    MenuItem searchItem = menu.findItem(R.id.action_search);
+    MenuItem searchItem = menu.findItem(id.action_search);
     SearchView searchView = null;
     if (searchItem != null) {
       searchView = (SearchView) searchItem.getActionView();
@@ -298,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
       searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
     }
 
-    MenuItem shareItem = menu.findItem(R.id.action_share);
+    MenuItem shareItem = menu.findItem(id.action_share);
     shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
     shareActionProvider.setShareIntent(doShare());
     return super.onCreateOptionsMenu(menu);
@@ -330,6 +326,6 @@ public class MainActivity extends AppCompatActivity implements ReferralFragment.
   }
 
   public interface OnFilterChangedListener {
-    public void onFilterChanged(int filter);
+    void onFilterChanged(int filter);
   }
 }

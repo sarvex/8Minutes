@@ -53,13 +53,13 @@
           android:id="@+id/username_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="@string/username_placeholder"
           app:hintAnimationEnabled="true">
 
           <EditText
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/username_placeholder"
             android:imeOptions="actionNext"
             android:inputType="textVisiblePassword|textNoSuggestions"/>
         </android.support.design.widget.TextInputLayout>
@@ -153,13 +153,13 @@
           android:id="@+id/phone_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="@string/phone_placeholder"
           app:hintAnimationEnabled="true">
 
           <EditText
             android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/phone_placeholder"
             android:imeOptions="actionDone"
             android:inputType="phone"/>
         </android.support.design.widget.TextInputLayout>

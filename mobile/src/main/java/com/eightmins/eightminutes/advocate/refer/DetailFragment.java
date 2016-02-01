@@ -9,11 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.R.layout;
+import com.eightmins.eightminutes.advocate.refer.DetailFragment.OnFragmentInteractionListener;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DetailFragment.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link DetailFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -42,8 +44,8 @@ public class DetailFragment extends Fragment {
   public static DetailFragment newInstance(String param1, String param2) {
     DetailFragment fragment = new DetailFragment();
     Bundle args = new Bundle();
-    args.putString(ARG_PARAM1, param1);
-    args.putString(ARG_PARAM2, param2);
+    args.putString(DetailFragment.ARG_PARAM1, param1);
+    args.putString(DetailFragment.ARG_PARAM2, param2);
     fragment.setArguments(args);
     return fragment;
   }
@@ -56,8 +58,8 @@ public class DetailFragment extends Fragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) {
-      mParam1 = getArguments().getString(ARG_PARAM1);
-      mParam2 = getArguments().getString(ARG_PARAM2);
+      mParam1 = getArguments().getString(DetailFragment.ARG_PARAM1);
+      mParam2 = getArguments().getString(DetailFragment.ARG_PARAM2);
     }
   }
 
@@ -65,7 +67,7 @@ public class DetailFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     // Inflate the layout for this fragment
-    return inflater.inflate(R.layout.fragment_referral_detail, container, false);
+    return inflater.inflate(layout.fragment_referral_detail, container, false);
   }
 
   // TODO: Rename method, update argument and hook method into UI event
@@ -81,7 +83,7 @@ public class DetailFragment extends Fragment {
     if (context instanceof OnFragmentInteractionListener) {
       mListener = (OnFragmentInteractionListener) context;
     } else {
-      throw new RuntimeException(context.toString()
+      throw new RuntimeException(context
           + " must implement OnFragmentInteractionListener");
     }
   }

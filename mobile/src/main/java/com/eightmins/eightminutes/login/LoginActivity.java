@@ -1,5 +1,6 @@
 package com.eightmins.eightminutes.login;
 
+import android.R.string;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,14 +21,12 @@ import android.widget.Toast;
 import com.eightmins.eightminutes.BuildConfig;
 import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.R.anim;
+import com.eightmins.eightminutes.R.id;
+import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.utility.Utils;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
-import com.mobsandgeeks.saripaar.ValidationError;
-import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Password;
-import com.mobsandgeeks.saripaar.annotation.Password.Scheme;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
@@ -42,15 +41,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 
-public class LoginActivity extends AppCompatActivity implements Validator.ValidationListener {
-  @Bind(R.id.username) @NotEmpty EditText username;
-  @Bind(R.id.password) @Password(scheme = Scheme.ALPHA_NUMERIC,
-      message = "Password should be more than 6 alphanumeric characters") @NotEmpty EditText password;
-  @Bind(R.id.facebook_login) FloatingActionButton facebook;
-  @Bind(R.id.twitter_login) FloatingActionButton twitter;
-  @Bind(R.id.sign_up) FloatingActionButton signUp;
-  @Bind(R.id.expand) FloatingActionButton expand;
-  @Bind(R.id.login) FloatingActionButton login;
+public class LoginActivity extends AppCompatActivity {
+  @Bind(id.username) EditText username;
+  @Bind(id.password) EditText password;
+  @Bind(id.facebook_login) FloatingActionButton facebook;
+  @Bind(id.twitter_login) FloatingActionButton twitter;
+  @Bind(id.sign_up) FloatingActionButton signUp;
+  @Bind(id.expand) FloatingActionButton expand;
+  @Bind(id.login) FloatingActionButton login;
 
   private ProgressDialog progress;
 
@@ -67,22 +65,18 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
   private Animation fabClose;
   private Animation rotateForward;
   private Animation rotateBackward;
-  private Validator validator;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_login);
+    setContentView(layout.activity_login);
     ButterKnife.bind(this);
 
-    validator = new Validator(this);
-    validator.setValidationListener(this);
-
-    fabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-    fabClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
-    rotateForward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
-    rotateBackward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_backward);
+    fabOpen = AnimationUtils.loadAnimation(getApplicationContext(), anim.fab_open);
+    fabClose = AnimationUtils.loadAnimation(getApplicationContext(), anim.fab_close);
+    rotateForward = AnimationUtils.loadAnimation(getApplicationContext(), anim.rotate_forward);
+    rotateBackward = AnimationUtils.loadAnimation(getApplicationContext(), anim.rotate_backward);
 
     if (BuildConfig.SIGN_UP_ENABLED) {
       expand.setVisibility(View.VISIBLE);
@@ -118,7 +112,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
     return super.onOptionsItemSelected(item);
   }
 
-  @OnEditorAction(R.id.password)
+  @OnEditorAction(id.password)
   boolean password(int actionId) {
     if (actionId == EditorInfo.IME_ACTION_DONE) {
       login.performClick();
@@ -127,36 +121,44 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
     return false;
   }
 
-  @OnClick(R.id.login)
+  @OnClick(id.login)
   public void login(View view) {
-    validator.validate();
-  }
+    Utils.showProgressBar(this, progress, getString(R.string.logging_in));
+    if (username.getText().toString().contains("@")) {
 
-  private void hideProgressBar() {
-    if ((progress != null) && progress.isShowing()) {
-      progress.dismiss();
     }
+
+    ParseUser.logInInBackground(username.getText().toString().trim(),
+        password.getText().toString().trim(), new LogInCallback() {
+          @Override
+          public void done(ParseUser user, ParseException exception) {
+            Utils.hideProgressBar(progress);
+            if (exception == null) {
+              startActivity(new Intent(LoginActivity.this, MainActivity.class)
+                  .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            } else {
+//            if (user.getBoolean("authenticated")) {
+
+              new Builder(LoginActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(string.ok, null).create().show();
+//            } else {
+//              Toast.makeText(getApplicationContext(), "Please wait for proper authentication!", Toast.LENGTH_SHORT).show();
+//            }
+            }
+          }
+        });
   }
 
-  @OnClick(R.id.forgot)
+  @OnClick(id.forgot)
   public void forgot(View view) {
     startActivity(new Intent(this, ForgotActivity.class));
   }
 
-  private void showProgressBar() {
-    progress = new ProgressDialog(this);
-    progress.setMessage("Logging In...");
-    progress.setIndeterminate(true);
-    progress.setProgress(0);
-    progress.show();
-  }
-
-  @OnClick(R.id.sign_up)
+  @OnClick(id.sign_up)
   public void signUp(View view) {
     startActivity(new Intent(this, SignUpActivity.class));
   }
 
-  @OnClick(R.id.expand)
+  @OnClick(id.expand)
   public void onExpand(View view) {
     Utils.hideKeyboard(this);
 
@@ -178,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
     signUp.setClickable(isFabOpen);
   }
 
-  @OnClick(R.id.facebook_login)
+  @OnClick(id.facebook_login)
   public void onFacebookLogin(View view) {
     List<String> permissions = Arrays.asList("user_photos", "friends_photos", "email", "user_birthday", "user_friends");
     ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
@@ -195,7 +197,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
     });
   }
 
-  @OnClick(R.id.twitter_login)
+  @OnClick(id.twitter_login)
   public void onTwitterLogin(View view) {
     ParseTwitterUtils.logIn(this, new LogInCallback() {
       @Override
@@ -209,48 +211,5 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         }
       }
     });
-  }
-
-  @Override
-  public void onValidationSucceeded() {
-
-    showProgressBar();
-    if (username.getText().toString().contains("@")) {
-
-    }
-
-    ParseUser.logInInBackground(username.getText().toString().trim(),
-        password.getText().toString().trim(), new LogInCallback() {
-          @Override
-          public void done(ParseUser user, ParseException exception) {
-            hideProgressBar();
-            if (exception == null) {
-              startActivity(new Intent(LoginActivity.this, MainActivity.class)
-                  .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-            } else {
-//            if (user.getBoolean("authenticated")) {
-
-              new Builder(LoginActivity.this).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
-//            } else {
-//              Toast.makeText(getApplicationContext(), "Please wait for proper authentication!", Toast.LENGTH_SHORT).show();
-//            }
-            }
-          }
-        });
-  }
-
-  @Override
-  public void onValidationFailed(List<ValidationError> errors) {
-    for (ValidationError error : errors) {
-      View view = error.getView();
-      String message = error.getCollatedErrorMessage(this);
-
-      // Display error messages ;)
-      if (view instanceof EditText) {
-        ((EditText) view).setError(message);
-      } else {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-      }
-    }
   }
 }

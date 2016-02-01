@@ -1,10 +1,14 @@
 package com.eightmins.eightminutes;
 
+import android.R.color;
 import android.os.Bundle;
 import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.BoxInsetLayout;
 import android.view.View;
 import android.widget.TextView;
+
+import com.eightmins.eightminutes.R.id;
+import com.eightmins.eightminutes.R.layout;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,12 +26,12 @@ public class MainActivity extends WearableActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(layout.activity_main);
         setAmbientEnabled();
 
-        mContainerView = (BoxInsetLayout) findViewById(R.id.container);
-        mTextView = (TextView) findViewById(R.id.text);
-        mClockView = (TextView) findViewById(R.id.clock);
+        mContainerView = (BoxInsetLayout) findViewById(id.container);
+        mTextView = (TextView) findViewById(id.text);
+        mClockView = (TextView) findViewById(id.clock);
     }
 
     @Override
@@ -50,14 +54,14 @@ public class MainActivity extends WearableActivity {
 
     private void updateDisplay() {
         if (isAmbient()) {
-            mContainerView.setBackgroundColor(getResources().getColor(android.R.color.black));
-            mTextView.setTextColor(getResources().getColor(android.R.color.white));
+            mContainerView.setBackgroundColor(getResources().getColor(color.black));
+            mTextView.setTextColor(getResources().getColor(color.white));
             mClockView.setVisibility(View.VISIBLE);
 
-            mClockView.setText(AMBIENT_DATE_FORMAT.format(new Date()));
+            mClockView.setText(MainActivity.AMBIENT_DATE_FORMAT.format(new Date()));
         } else {
             mContainerView.setBackground(null);
-            mTextView.setTextColor(getResources().getColor(android.R.color.black));
+            mTextView.setTextColor(getResources().getColor(color.black));
             mClockView.setVisibility(View.GONE);
         }
     }

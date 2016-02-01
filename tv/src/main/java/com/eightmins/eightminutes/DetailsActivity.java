@@ -17,6 +17,8 @@ package com.eightmins.eightminutes;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.eightmins.eightminutes.R.layout;
+
 /*
  * Details activity class that loads LeanbackDetailsFragment class
  */
@@ -30,7 +32,7 @@ public class DetailsActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
+        setContentView(layout.activity_details);
     }
 
 }

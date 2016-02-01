@@ -1,6 +1,7 @@
 package com.eightmins.eightminutes.login;
 
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.R.mipmap;
 import com.parse.ParseClassName;
 import com.parse.ParseUser;
 
@@ -17,7 +18,7 @@ public class User extends ParseUser {
   public int getImage() {
     int image = getInt("image");
     if (image == 0) {
-      image = R.mipmap.ic_account_circle;
+      image = mipmap.ic_account_circle;
     }
     return image;
   }

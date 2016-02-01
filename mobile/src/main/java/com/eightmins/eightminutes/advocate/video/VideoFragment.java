@@ -1,5 +1,6 @@
 package com.eightmins.eightminutes.advocate.video;
 
+import android.R.string;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.net.Uri;
@@ -15,6 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.R.id;
+import com.eightmins.eightminutes.R.layout;
+import com.eightmins.eightminutes.advocate.video.VideoFragment.OnFragmentInteractionListener;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -28,15 +32,15 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link VideoFragment.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link VideoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class VideoFragment extends Fragment {
-  @Bind(R.id.progress_bar) ProgressBar progressBar;
-  @Bind(R.id.progress_text) TextView progressText;
-  @Bind(R.id.video_recycler_view)
+  @Bind(id.progress_bar) ProgressBar progressBar;
+  @Bind(id.progress_text) TextView progressText;
+  @Bind(id.video_recycler_view)
 
   RecyclerView recyclerView;
   protected List<Video> videos = new ArrayList<>(1);
@@ -62,8 +66,8 @@ public class VideoFragment extends Fragment {
   public static VideoFragment newInstance(String param1, String param2) {
     VideoFragment fragment = new VideoFragment();
     Bundle args = new Bundle();
-    args.putString(ARG_PARAM1, param1);
-    args.putString(ARG_PARAM2, param2);
+    args.putString(VideoFragment.ARG_PARAM1, param1);
+    args.putString(VideoFragment.ARG_PARAM2, param2);
     fragment.setArguments(args);
     return fragment;
   }
@@ -76,15 +80,15 @@ public class VideoFragment extends Fragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) {
-      mParam1 = getArguments().getString(ARG_PARAM1);
-      mParam2 = getArguments().getString(ARG_PARAM2);
+      mParam1 = getArguments().getString(VideoFragment.ARG_PARAM1);
+      mParam2 = getArguments().getString(VideoFragment.ARG_PARAM2);
     }
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_video, container, false);
+    View view = inflater.inflate(layout.fragment_video, container, false);
     ButterKnife.bind(this, view);
     load();
 
@@ -105,15 +109,15 @@ public class VideoFragment extends Fragment {
         hideProgress();
         if (exception == null) {
           if (objects == null) {
-            new Builder(getActivity()).setTitle(R.string.error_title).setMessage("Unable to Load Videos").setPositiveButton(android.R.string.ok, null).create().show();
+            new Builder(getActivity()).setTitle(R.string.error_title).setMessage("Unable to Load Videos").setPositiveButton(string.ok, null).create().show();
           } else {
             videos = new ArrayList<>(objects);
-            final VideoAdapter videoAdapter = new VideoAdapter(getContext(), videos);
+            VideoAdapter videoAdapter = new VideoAdapter(getContext(), videos);
             recyclerView.setAdapter(videoAdapter);
             videoAdapter.notifyDataSetChanged();
           }
         } else {
-          new Builder(getActivity()).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
+          new Builder(getActivity()).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(string.ok, null).create().show();
         }
       }
     });
@@ -131,7 +135,7 @@ public class VideoFragment extends Fragment {
     if (context instanceof OnFragmentInteractionListener) {
       mListener = (OnFragmentInteractionListener) context;
     } else {
-      throw new RuntimeException(context.toString()
+      throw new RuntimeException(context
           + " must implement OnFragmentInteractionListener");
     }
   }

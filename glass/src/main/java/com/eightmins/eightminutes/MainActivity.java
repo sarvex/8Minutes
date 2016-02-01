@@ -1,7 +1,9 @@
 package com.eightmins.eightminutes;
 
+import com.eightmins.eightminutes.R.string;
 import com.google.android.glass.media.Sounds;
 import com.google.android.glass.widget.CardBuilder;
+import com.google.android.glass.widget.CardBuilder.Layout;
 import com.google.android.glass.widget.CardScrollAdapter;
 import com.google.android.glass.widget.CardScrollView;
 
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * An {@link Activity} showing a tuggable "Hello World!" card.
@@ -62,7 +65,7 @@ public class MainActivity extends Activity {
             }
         });
         // Handle the TAP event.
-        mCardScroller.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mCardScroller.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Plays disallowed sound to indicate that TAP actions are not supported.
@@ -89,9 +92,9 @@ public class MainActivity extends Activity {
      * Builds a Glass styled "Hello World!" view using the {@link CardBuilder} class.
      */
     private View buildView() {
-        CardBuilder card = new CardBuilder(this, CardBuilder.Layout.TEXT);
+        CardBuilder card = new CardBuilder(this, Layout.TEXT);
 
-        card.setText(R.string.hello_world);
+        card.setText(string.hello_world);
         return card.getView();
     }
 

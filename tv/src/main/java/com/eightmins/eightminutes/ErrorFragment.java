@@ -17,6 +17,10 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+
+import com.eightmins.eightminutes.R.drawable;
+import com.eightmins.eightminutes.R.string;
 
 /*
  * This class demonstrates how to extend ErrorFragment
@@ -27,18 +31,18 @@ public class ErrorFragment extends android.support.v17.leanback.app.ErrorFragmen
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate");
+        Log.d(ErrorFragment.TAG, "onCreate");
         super.onCreate(savedInstanceState);
-        setTitle(getResources().getString(R.string.app_name));
+        setTitle(getResources().getString(string.app_name));
     }
 
     void setErrorContent() {
-        setImageDrawable(getResources().getDrawable(R.drawable.lb_ic_sad_cloud));
-        setMessage(getResources().getString(R.string.error_fragment_message));
-        setDefaultBackground(TRANSLUCENT);
+        setImageDrawable(getResources().getDrawable(drawable.lb_ic_sad_cloud));
+        setMessage(getResources().getString(string.error_fragment_message));
+        setDefaultBackground(ErrorFragment.TRANSLUCENT);
 
-        setButtonText(getResources().getString(R.string.dismiss_error));
-        setButtonClickListener(new View.OnClickListener() {
+        setButtonText(getResources().getString(string.dismiss_error));
+        setButtonClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 getFragmentManager().beginTransaction().remove(ErrorFragment.this).commit();

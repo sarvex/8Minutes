@@ -1,6 +1,7 @@
 package com.eightmins.eightminutes.advocate.refer;
 
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.R.id;
+import com.eightmins.eightminutes.R.layout;
+import com.eightmins.eightminutes.advocate.refer.ReferralAdapter.ViewHolder;
 
 import java.util.List;
 
@@ -17,7 +21,7 @@ import butterknife.ButterKnife;
 /**
  * Created by nabhilax on 14/01/16.
  */
-public class ReferralAdapter extends RecyclerView.Adapter<ReferralAdapter.ViewHolder>{
+public class ReferralAdapter extends Adapter<ViewHolder>{
   private final List<Referral> referrals;
 
   public ReferralAdapter(List<Referral> referrals) {
@@ -26,7 +30,7 @@ public class ReferralAdapter extends RecyclerView.Adapter<ReferralAdapter.ViewHo
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_referral, parent, false));
+    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(layout.item_referral, parent, false));
   }
 
   @Override
@@ -40,9 +44,9 @@ public class ReferralAdapter extends RecyclerView.Adapter<ReferralAdapter.ViewHo
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
-    @Bind(R.id.referral_photo) ImageView photo;
-    @Bind(R.id.referral_name) TextView name;
-    @Bind(R.id.referral_status) TextView description;
+    @Bind(id.referral_photo) ImageView photo;
+    @Bind(id.referral_name) TextView name;
+    @Bind(id.referral_status) TextView description;
 
     public ViewHolder(View view) {
       super(view);

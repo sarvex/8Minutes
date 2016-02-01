@@ -33,6 +33,7 @@ import android.support.v17.leanback.widget.OnItemViewClickedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
+import android.support.v17.leanback.widget.RowPresenter.ViewHolder;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -42,6 +43,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.eightmins.eightminutes.R.color;
+import com.eightmins.eightminutes.R.drawable;
+import com.eightmins.eightminutes.R.string;
 
 import java.util.Collections;
 import java.util.List;
@@ -73,7 +77,7 @@ public class VideoDetailsFragment extends DetailsFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate DetailsFragment");
+        Log.d(VideoDetailsFragment.TAG, "onCreate DetailsFragment");
         super.onCreate(savedInstanceState);
 
         prepareBackgroundManager();
@@ -102,7 +106,7 @@ public class VideoDetailsFragment extends DetailsFragment {
     private void prepareBackgroundManager() {
         mBackgroundManager = BackgroundManager.getInstance(getActivity());
         mBackgroundManager.attach(getActivity().getWindow());
-        mDefaultBackground = getResources().getDrawable(R.drawable.default_background);
+        mDefaultBackground = getResources().getDrawable(drawable.default_background);
         mMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
     }
@@ -128,34 +132,34 @@ public class VideoDetailsFragment extends DetailsFragment {
     }
 
     private void setupDetailsOverviewRow() {
-        Log.d(TAG, "doInBackground: " + mSelectedMovie.toString());
+        Log.d(VideoDetailsFragment.TAG, "doInBackground: " + mSelectedMovie);
         final DetailsOverviewRow row = new DetailsOverviewRow(mSelectedMovie);
-        row.setImageDrawable(getResources().getDrawable(R.drawable.default_background));
+        row.setImageDrawable(getResources().getDrawable(drawable.default_background));
         int width = Utils.convertDpToPixel(getActivity()
-                .getApplicationContext(), DETAIL_THUMB_WIDTH);
+                .getApplicationContext(), VideoDetailsFragment.DETAIL_THUMB_WIDTH);
         int height = Utils.convertDpToPixel(getActivity()
-                .getApplicationContext(), DETAIL_THUMB_HEIGHT);
+                .getApplicationContext(), VideoDetailsFragment.DETAIL_THUMB_HEIGHT);
         Glide.with(getActivity())
                 .load(mSelectedMovie.getCardImageUrl())
                 .centerCrop()
-                .error(R.drawable.default_background)
+                .error(drawable.default_background)
                 .into(new SimpleTarget<GlideDrawable>(width, height) {
                     @Override
                     public void onResourceReady(GlideDrawable resource,
                                                 GlideAnimation<? super GlideDrawable>
                                                         glideAnimation) {
-                        Log.d(TAG, "details overview card image url ready: " + resource);
+                        Log.d(VideoDetailsFragment.TAG, "details overview card image url ready: " + resource);
                         row.setImageDrawable(resource);
                         mAdapter.notifyArrayItemRangeChanged(0, mAdapter.size());
                     }
                 });
 
-        row.addAction(new Action(ACTION_WATCH_TRAILER, getResources().getString(
-                R.string.watch_trailer_1), getResources().getString(R.string.watch_trailer_2)));
-        row.addAction(new Action(ACTION_RENT, getResources().getString(R.string.rent_1),
-                getResources().getString(R.string.rent_2)));
-        row.addAction(new Action(ACTION_BUY, getResources().getString(R.string.buy_1),
-                getResources().getString(R.string.buy_2)));
+        row.addAction(new Action(VideoDetailsFragment.ACTION_WATCH_TRAILER, getResources().getString(
+                string.watch_trailer_1), getResources().getString(string.watch_trailer_2)));
+        row.addAction(new Action(VideoDetailsFragment.ACTION_RENT, getResources().getString(string.rent_1),
+                getResources().getString(string.rent_2)));
+        row.addAction(new Action(VideoDetailsFragment.ACTION_BUY, getResources().getString(string.buy_1),
+                getResources().getString(string.buy_2)));
 
         mAdapter.add(row);
     }
@@ -164,7 +168,7 @@ public class VideoDetailsFragment extends DetailsFragment {
         // Set detail background and style.
         DetailsOverviewRowPresenter detailsPresenter =
                 new DetailsOverviewRowPresenter(new DetailsDescriptionPresenter());
-        detailsPresenter.setBackgroundColor(getResources().getColor(R.color.selected_background));
+        detailsPresenter.setBackgroundColor(getResources().getColor(color.selected_background));
         detailsPresenter.setStyleLarge(true);
 
         // Hook up transition element.
@@ -174,7 +178,7 @@ public class VideoDetailsFragment extends DetailsFragment {
         detailsPresenter.setOnActionClickedListener(new OnActionClickedListener() {
             @Override
             public void onActionClicked(Action action) {
-                if (action.getId() == ACTION_WATCH_TRAILER) {
+                if (action.getId() == VideoDetailsFragment.ACTION_WATCH_TRAILER) {
                     Intent intent = new Intent(getActivity(), PlaybackOverlayActivity.class);
                     intent.putExtra(DetailsActivity.MOVIE, mSelectedMovie);
                     startActivity(intent);
@@ -187,12 +191,12 @@ public class VideoDetailsFragment extends DetailsFragment {
     }
 
     private void setupMovieListRow() {
-        String subcategories[] = {getString(R.string.related_movies)};
+        String subcategories[] = {getString(string.related_movies)};
         List<Movie> list = MovieList.list;
 
         Collections.shuffle(list);
         ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenter());
-        for (int j = 0; j < NUM_COLS; j++) {
+        for (int j = 0; j < VideoDetailsFragment.NUM_COLS; j++) {
             listRowAdapter.add(list.get(j % 5));
         }
 
@@ -207,14 +211,14 @@ public class VideoDetailsFragment extends DetailsFragment {
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
-                                  RowPresenter.ViewHolder rowViewHolder, Row row) {
+                                  ViewHolder rowViewHolder, Row row) {
 
             if (item instanceof Movie) {
                 Movie movie = (Movie) item;
-                Log.d(TAG, "Item: " + item.toString());
+                Log.d(VideoDetailsFragment.TAG, "Item: " + item);
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra(getResources().getString(R.string.movie), mSelectedMovie);
-                intent.putExtra(getResources().getString(R.string.should_start), true);
+                intent.putExtra(getResources().getString(string.movie), mSelectedMovie);
+                intent.putExtra(getResources().getString(string.should_start), true);
                 startActivity(intent);
 
 

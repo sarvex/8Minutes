@@ -37,12 +37,15 @@ import android.support.v17.leanback.widget.OnItemViewSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
+import android.support.v17.leanback.widget.RowPresenter.ViewHolder;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +53,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.eightmins.eightminutes.R.color;
+import com.eightmins.eightminutes.R.drawable;
+import com.eightmins.eightminutes.R.string;
 
 public class MainFragment extends BrowseFragment {
     private static final String TAG = "MainFragment";
@@ -70,7 +76,7 @@ public class MainFragment extends BrowseFragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        Log.i(TAG, "onCreate");
+        Log.i(MainFragment.TAG, "onCreate");
         super.onActivityCreated(savedInstanceState);
 
         prepareBackgroundManager();
@@ -86,7 +92,7 @@ public class MainFragment extends BrowseFragment {
     public void onDestroy() {
         super.onDestroy();
         if (null != mBackgroundTimer) {
-            Log.d(TAG, "onDestroy: " + mBackgroundTimer.toString());
+            Log.d(MainFragment.TAG, "onDestroy: " + mBackgroundTimer);
             mBackgroundTimer.cancel();
         }
     }
@@ -98,12 +104,12 @@ public class MainFragment extends BrowseFragment {
         CardPresenter cardPresenter = new CardPresenter();
 
         int i;
-        for (i = 0; i < NUM_ROWS; i++) {
+        for (i = 0; i < MainFragment.NUM_ROWS; i++) {
             if (i != 0) {
                 Collections.shuffle(list);
             }
             ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(cardPresenter);
-            for (int j = 0; j < NUM_COLS; j++) {
+            for (int j = 0; j < MainFragment.NUM_COLS; j++) {
                 listRowAdapter.add(list.get(j % 5));
             }
                 HeaderItem header = new HeaderItem(i, MovieList.MOVIE_CATEGORY[i]);
@@ -114,9 +120,9 @@ public class MainFragment extends BrowseFragment {
 
         GridItemPresenter mGridPresenter = new GridItemPresenter();
         ArrayObjectAdapter gridRowAdapter = new ArrayObjectAdapter(mGridPresenter);
-        gridRowAdapter.add(getResources().getString(R.string.grid_view));
-        gridRowAdapter.add(getString(R.string.error_fragment));
-        gridRowAdapter.add(getResources().getString(R.string.personal_settings));
+        gridRowAdapter.add(getResources().getString(string.grid_view));
+        gridRowAdapter.add(getString(string.error_fragment));
+        gridRowAdapter.add(getResources().getString(string.personal_settings));
         mRowsAdapter.add(new ListRow(gridHeader, gridRowAdapter));
 
         setAdapter(mRowsAdapter);
@@ -127,7 +133,7 @@ public class MainFragment extends BrowseFragment {
 
         mBackgroundManager = BackgroundManager.getInstance(getActivity());
         mBackgroundManager.attach(getActivity().getWindow());
-        mDefaultBackground = getResources().getDrawable(R.drawable.default_background);
+        mDefaultBackground = getResources().getDrawable(drawable.default_background);
         mMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
     }
@@ -135,19 +141,19 @@ public class MainFragment extends BrowseFragment {
     private void setupUIElements() {
         // setBadgeDrawable(getActivity().getResources().getDrawable(
         // R.drawable.videos_by_google_banner));
-        setTitle(getString(R.string.browse_title)); // Badge, when set, takes precedent
+        setTitle(getString(string.browse_title)); // Badge, when set, takes precedent
         // over title
-        setHeadersState(HEADERS_ENABLED);
+        setHeadersState(BrowseFragment.HEADERS_ENABLED);
         setHeadersTransitionOnBackEnabled(true);
 
         // set fastLane (or headers) background color
-        setBrandColor(getResources().getColor(R.color.fastlane_background));
+        setBrandColor(getResources().getColor(color.fastlane_background));
         // set search icon color
-        setSearchAffordanceColor(getResources().getColor(R.color.search_opaque));
+        setSearchAffordanceColor(getResources().getColor(color.search_opaque));
     }
 
     private void setupEventListeners() {
-        setOnSearchClickedListener(new View.OnClickListener() {
+        setOnSearchClickedListener(new OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -163,11 +169,11 @@ public class MainFragment extends BrowseFragment {
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
-                                  RowPresenter.ViewHolder rowViewHolder, Row row) {
+                                  ViewHolder rowViewHolder, Row row) {
 
             if (item instanceof Movie) {
                 Movie movie = (Movie) item;
-                Log.d(TAG, "Item: " + item.toString());
+                Log.d(MainFragment.TAG, "Item: " + item);
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
                 intent.putExtra(DetailsActivity.MOVIE, movie);
 
@@ -177,11 +183,11 @@ public class MainFragment extends BrowseFragment {
                         DetailsActivity.SHARED_ELEMENT_NAME).toBundle();
                 getActivity().startActivity(intent, bundle);
             } else if (item instanceof String) {
-                if (((String) item).indexOf(getString(R.string.error_fragment)) >= 0) {
+                if (((String) item).indexOf(getString(string.error_fragment)) >= 0) {
                     Intent intent = new Intent(getActivity(), BrowseErrorActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getActivity(), ((String) item), Toast.LENGTH_SHORT)
+                    Toast.makeText(getActivity(), (String) item, Toast.LENGTH_SHORT)
                             .show();
                 }
             }
@@ -191,7 +197,7 @@ public class MainFragment extends BrowseFragment {
     private final class ItemViewSelectedListener implements OnItemViewSelectedListener {
         @Override
         public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item,
-                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
+                                   ViewHolder rowViewHolder, Row row) {
             if (item instanceof Movie) {
                 mBackgroundURI = ((Movie) item).getBackgroundImageURI();
                 startBackgroundTimer();
@@ -223,7 +229,7 @@ public class MainFragment extends BrowseFragment {
             mBackgroundTimer.cancel();
         }
         mBackgroundTimer = new Timer();
-        mBackgroundTimer.schedule(new UpdateBackgroundTask(), BACKGROUND_UPDATE_DELAY);
+        mBackgroundTimer.schedule(new UpdateBackgroundTask(), MainFragment.BACKGROUND_UPDATE_DELAY);
     }
 
     private class UpdateBackgroundTask extends TimerTask {
@@ -246,10 +252,10 @@ public class MainFragment extends BrowseFragment {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent) {
             TextView view = new TextView(parent.getContext());
-            view.setLayoutParams(new ViewGroup.LayoutParams(GRID_ITEM_WIDTH, GRID_ITEM_HEIGHT));
+            view.setLayoutParams(new LayoutParams(MainFragment.GRID_ITEM_WIDTH, MainFragment.GRID_ITEM_HEIGHT));
             view.setFocusable(true);
             view.setFocusableInTouchMode(true);
-            view.setBackgroundColor(getResources().getColor(R.color.default_background));
+            view.setBackgroundColor(getResources().getColor(color.default_background));
             view.setTextColor(Color.WHITE);
             view.setGravity(Gravity.CENTER);
             return new ViewHolder(view);

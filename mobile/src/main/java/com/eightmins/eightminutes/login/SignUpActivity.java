@@ -16,35 +16,28 @@ import android.widget.Toast;
 
 import com.eightmins.eightminutes.MainActivity;
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.R.id;
+import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.utility.Utils;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
-import com.mobsandgeeks.saripaar.ValidationError;
-import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
-import com.mobsandgeeks.saripaar.annotation.Email;
-import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Password;
 import com.parse.ParseException;
 import com.parse.SignUpCallback;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 
-public class SignUpActivity extends AppCompatActivity implements Validator.ValidationListener {
-  @Bind(R.id.name) @NotEmpty EditText name;
-  @Bind(R.id.username) @NotEmpty EditText username;
-  @Bind(R.id.password) @Password(scheme = Password.Scheme.ALPHA_NUMERIC, message = "Password should be more than 6 alphanumeric characters") EditText password;
-  @Bind(R.id.confirm) @ConfirmPassword EditText confirm;
-  @Bind(R.id.email) @NotEmpty @Email EditText email;
-  @Bind(R.id.phone) @NotEmpty EditText phone;
-  @Bind(R.id.sign_up) FloatingActionButton signUp;
+public class SignUpActivity extends AppCompatActivity {
+  @Bind(id.name) EditText name;
+  @Bind(id.username) EditText username;
+  @Bind(id.password) EditText password;
+  @Bind(id.confirm) EditText confirm;
+  @Bind(id.email) EditText email;
+  @Bind(id.phone) EditText phone;
+  @Bind(id.sign_up) FloatingActionButton signUp;
 
   private ProgressDialog progress;
-  private Validator validator;
 
   @Override
   protected void attachBaseContext(Context newBase) {
@@ -55,29 +48,12 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_sign_up);
+    setContentView(layout.activity_sign_up);
     ButterKnife.bind(this);
-
-    validator = new Validator(this);
-    validator.setValidationListener(this);
   }
 
-  @OnClick(R.id.sign_up)
-  public void signUpClicked(final View view) {
-    validator.validate();
-  }
-
-  @OnEditorAction(R.id.phone)
-  boolean password(int actionId) {
-    if (actionId == EditorInfo.IME_ACTION_DONE) {
-      signUp.performClick();
-      return true;
-    }
-    return false;
-  }
-
-  @Override
-  public void onValidationSucceeded() {
+  @OnClick(id.sign_up)
+  public void signUpClicked(View view) {
     Utils.hideKeyboard(this);
     Utils.showProgressBar(this, progress, "Signing Up...");
 
@@ -102,18 +78,12 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
     });
   }
 
-  @Override
-  public void onValidationFailed(List<ValidationError> errors) {
-    for (ValidationError error : errors) {
-      View view = error.getView();
-      String message = error.getCollatedErrorMessage(this);
-
-      // Display error messages ;)
-      if (view instanceof EditText) {
-        ((EditText) view).setError(message);
-      } else {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-      }
+  @OnEditorAction(id.phone)
+  boolean password(int actionId) {
+    if (actionId == EditorInfo.IME_ACTION_DONE) {
+      signUp.performClick();
+      return true;
     }
+    return false;
   }
 }

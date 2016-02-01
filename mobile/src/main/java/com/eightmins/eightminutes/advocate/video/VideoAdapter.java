@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,9 @@ import android.widget.TextView;
 
 import com.eightmins.eightminutes.BuildConfig;
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.R.id;
+import com.eightmins.eightminutes.R.layout;
+import com.eightmins.eightminutes.advocate.video.VideoAdapter.ViewHolder;
 import com.google.android.youtube.player.YouTubeApiServiceUtil;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeIntents;
@@ -32,9 +36,9 @@ import butterknife.OnClick;
 /**
  * Created by nabhilax on 23/01/16.
  */
-public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
+public class VideoAdapter extends Adapter<ViewHolder> {
   protected final List<Video> videos;
-  private Context context;
+  private final Context context;
 
   public VideoAdapter(Context context, List<Video> videos) {
     this.context = context;
@@ -43,10 +47,10 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_video, parent, false));  }
+    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(layout.item_video, parent, false));  }
 
   @Override
-  public void onBindViewHolder(final ViewHolder holder, final int position) {
+  public void onBindViewHolder(ViewHolder holder, int position) {
     holder.bind(videos.get(position));
   }
 
@@ -57,17 +61,17 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
   public class ViewHolder extends RecyclerView.ViewHolder {
 
-    @Bind(R.id.youtube_title) TextView title;
-    @Bind(R.id.youtube_description) TextView description;
-    @Bind(R.id.youtube_layout) RelativeLayout relativeLayout;
-    @Bind(R.id.youtube_thumbnail) YouTubeThumbnailView youTubeThumbnailView;
+    @Bind(id.youtube_title) TextView title;
+    @Bind(id.youtube_description) TextView description;
+    @Bind(id.youtube_layout) RelativeLayout relativeLayout;
+    @Bind(id.youtube_thumbnail) YouTubeThumbnailView youTubeThumbnailView;
 
     public ViewHolder(View view) {
       super(view);
       ButterKnife.bind(this, view);
     }
 
-    @OnClick(R.id.youtube_play)
+    @OnClick(id.youtube_play)
     public void onClick(View v) {
 
       if(YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS)){

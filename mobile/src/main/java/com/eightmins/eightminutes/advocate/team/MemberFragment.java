@@ -1,5 +1,6 @@
 package com.eightmins.eightminutes.advocate.team;
 
+import android.R.string;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.net.Uri;
@@ -15,6 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.R.id;
+import com.eightmins.eightminutes.R.layout;
+import com.eightmins.eightminutes.advocate.team.MemberFragment.OnFragmentInteractionListener;
 import com.eightmins.eightminutes.login.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -30,15 +34,15 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MemberFragment.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link MemberFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class MemberFragment extends Fragment {
-  @Bind(R.id.progress_bar) ProgressBar progressBar;
-  @Bind(R.id.progress_text) TextView progressText;
-  @Bind(R.id.team_recycler_view) RecyclerView recyclerView;
+  @Bind(id.progress_bar) ProgressBar progressBar;
+  @Bind(id.progress_text) TextView progressText;
+  @Bind(id.team_recycler_view) RecyclerView recyclerView;
 
   private List<User> members = new ArrayList<>(1);
 
@@ -62,8 +66,8 @@ public class MemberFragment extends Fragment {
   public static MemberFragment newInstance(String param1, String param2) {
     MemberFragment fragment = new MemberFragment();
     Bundle args = new Bundle();
-    args.putString(ARG_PARAM1, param1);
-    args.putString(ARG_PARAM2, param2);
+    args.putString(MemberFragment.ARG_PARAM1, param1);
+    args.putString(MemberFragment.ARG_PARAM2, param2);
     fragment.setArguments(args);
     return fragment;
   }
@@ -76,8 +80,8 @@ public class MemberFragment extends Fragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) {
-      mParam1 = getArguments().getString(ARG_PARAM1);
-      mParam2 = getArguments().getString(ARG_PARAM2);
+      mParam1 = getArguments().getString(MemberFragment.ARG_PARAM1);
+      mParam2 = getArguments().getString(MemberFragment.ARG_PARAM2);
     }
   }
 
@@ -85,7 +89,7 @@ public class MemberFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     // Inflate the layout for this fragment
-    View view = inflater.inflate(R.layout.fragment_member, container, false);
+    View view = inflater.inflate(layout.fragment_member, container, false);
     ButterKnife.bind(this, view);
     load();
 
@@ -107,15 +111,15 @@ public class MemberFragment extends Fragment {
         hideProgress();
         if (exception == null) {
           if (objects == null) {
-            new Builder(getActivity()).setTitle(R.string.error_title).setMessage("Unable to Load Members").setPositiveButton(android.R.string.ok, null).create().show();
+            new Builder(getActivity()).setTitle(R.string.error_title).setMessage("Unable to Load Members").setPositiveButton(string.ok, null).create().show();
           } else {
             members = new ArrayList<>(objects);
-            final MemberAdapter videoAdapter = new MemberAdapter(members);
+            MemberAdapter videoAdapter = new MemberAdapter(members);
             recyclerView.setAdapter(videoAdapter);
             videoAdapter.notifyDataSetChanged();
           }
         } else {
-          new Builder(getActivity()).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
+          new Builder(getActivity()).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(string.ok, null).create().show();
         }
       }
     });
@@ -134,7 +138,7 @@ public class MemberFragment extends Fragment {
     if (context instanceof OnFragmentInteractionListener) {
       mListener = (OnFragmentInteractionListener) context;
     } else {
-      throw new RuntimeException(context.toString()
+      throw new RuntimeException(context
           + " must implement OnFragmentInteractionListener");
     }
   }

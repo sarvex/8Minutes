@@ -16,7 +16,7 @@ public final class MovieList {
     public static List<Movie> list;
 
     public static List<Movie> setupMovies() {
-        list = new ArrayList<Movie>();
+        MovieList.list = new ArrayList<Movie>();
         String title[] = {
                 "Zeitgeist 2010_ Year in Review",
                 "Google Demo Slam_ 20ft Search",
@@ -54,18 +54,18 @@ public final class MovieList {
                 "http://commondatastorage.googleapis.com/android-tv/Sample%20videos/April%20Fool's%202013/Introducing%20Google%20Nose/card.jpg"
         };
 
-        list.add(buildMovieInfo("category", title[0],
+        MovieList.list.add(MovieList.buildMovieInfo("category", title[0],
                 description, "Studio Zero", videoUrl[0], cardImageUrl[0], bgImageUrl[0]));
-        list.add(buildMovieInfo("category", title[1],
+        MovieList.list.add(MovieList.buildMovieInfo("category", title[1],
                 description, "Studio One", videoUrl[1], cardImageUrl[1], bgImageUrl[1]));
-        list.add(buildMovieInfo("category", title[2],
+        MovieList.list.add(MovieList.buildMovieInfo("category", title[2],
                 description, "Studio Two", videoUrl[2], cardImageUrl[2], bgImageUrl[2]));
-        list.add(buildMovieInfo("category", title[3],
+        MovieList.list.add(MovieList.buildMovieInfo("category", title[3],
                 description, "Studio Three", videoUrl[3], cardImageUrl[3], bgImageUrl[3]));
-        list.add(buildMovieInfo("category", title[4],
+        MovieList.list.add(MovieList.buildMovieInfo("category", title[4],
                 description, "Studio Four", videoUrl[4], cardImageUrl[4], bgImageUrl[4]));
 
-        return list;
+        return MovieList.list;
     }
 
     private static Movie buildMovieInfo(String category, String title,

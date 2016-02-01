@@ -11,7 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 public class Utils {
 
   public static void hideProgressBar(ProgressDialog progress) {
-    if ((progress != null) && progress.isShowing()) {
+    if (progress != null && progress.isShowing()) {
       progress.dismiss();
     }
   }

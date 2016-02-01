@@ -1,5 +1,6 @@
 package com.eightmins.eightminutes.advocate.refer;
 
+import android.R.string;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.net.Uri;
@@ -15,6 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.R.id;
+import com.eightmins.eightminutes.R.layout;
+import com.eightmins.eightminutes.advocate.refer.ReferralFragment.OnFragmentInteractionListener;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -29,15 +33,15 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ReferralFragment.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link ReferralFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class ReferralFragment extends Fragment {
-  @Bind(R.id.progress_bar) ProgressBar progressBar;
-  @Bind(R.id.progress_text) TextView progressText;
-  @Bind(R.id.referral_recycler_view) RecyclerView recyclerView;
+  @Bind(id.progress_bar) ProgressBar progressBar;
+  @Bind(id.progress_text) TextView progressText;
+  @Bind(id.referral_recycler_view) RecyclerView recyclerView;
   private List<Referral> referrals = new ArrayList<>(1);
 
   private static final String ARG_PARAM1 = "param1";
@@ -60,8 +64,8 @@ public class ReferralFragment extends Fragment {
   public static ReferralFragment newInstance(String param1, String param2) {
     ReferralFragment fragment = new ReferralFragment();
     Bundle args = new Bundle();
-    args.putString(ARG_PARAM1, param1);
-    args.putString(ARG_PARAM2, param2);
+    args.putString(ReferralFragment.ARG_PARAM1, param1);
+    args.putString(ReferralFragment.ARG_PARAM2, param2);
     fragment.setArguments(args);
     return fragment;
   }  public ReferralFragment() {
@@ -72,15 +76,15 @@ public class ReferralFragment extends Fragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) {
-      mParam1 = getArguments().getString(ARG_PARAM1);
-      mParam2 = getArguments().getString(ARG_PARAM2);
+      mParam1 = getArguments().getString(ReferralFragment.ARG_PARAM1);
+      mParam2 = getArguments().getString(ReferralFragment.ARG_PARAM2);
     }
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_referral, container, false);
+    View view = inflater.inflate(layout.fragment_referral, container, false);
     ButterKnife.bind(this, view);
     load();
 
@@ -103,15 +107,15 @@ public class ReferralFragment extends Fragment {
           hideProgress();
           if (exception == null) {
             if (objects == null) {
-              new Builder(getActivity()).setTitle(R.string.error_title).setMessage("Unable to Load Referral").setPositiveButton(android.R.string.ok, null).create().show();
+              new Builder(getActivity()).setTitle(R.string.error_title).setMessage("Unable to Load Referral").setPositiveButton(string.ok, null).create().show();
             } else {
               referrals = new ArrayList<>(objects);
-              final ReferralAdapter videoAdapter = new ReferralAdapter(referrals);
+              ReferralAdapter videoAdapter = new ReferralAdapter(referrals);
               recyclerView.setAdapter(videoAdapter);
               videoAdapter.notifyDataSetChanged();
             }
           } else {
-            new Builder(getActivity()).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(android.R.string.ok, null).create().show();
+            new Builder(getActivity()).setTitle(R.string.error_title).setMessage(exception.getMessage()).setPositiveButton(string.ok, null).create().show();
           }
         }
       });
@@ -131,7 +135,7 @@ public class ReferralFragment extends Fragment {
     if (context instanceof OnFragmentInteractionListener) {
       mListener = (OnFragmentInteractionListener) context;
     } else {
-      throw new RuntimeException(context.toString()
+      throw new RuntimeException(context
           + " must implement OnFragmentInteractionListener");
     }
   }

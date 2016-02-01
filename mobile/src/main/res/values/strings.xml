@@ -44,4 +44,5 @@
   <string name="logging_out">Logging out…</string>
   <string name="referring">Referring…</string>
   <string name="adding_member">Adding Member…</string>
+  <string name="logging_in">Logging In…</string>
 </resources>

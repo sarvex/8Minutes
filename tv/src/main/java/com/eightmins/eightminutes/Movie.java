@@ -26,7 +26,7 @@ import java.net.URISyntaxException;
  */
 public class Movie implements Serializable {
     static final long serialVersionUID = 727566175075960653L;
-    private static long count = 0;
+    private static long count;
     private long id;
     private String title;
     private String description;
@@ -40,11 +40,11 @@ public class Movie implements Serializable {
     }
 
     public static long getCount() {
-        return count;
+        return Movie.count;
     }
 
     public static void incCount() {
-        count++;
+        Movie.count++;
     }
 
     public long getId() {
@@ -136,7 +136,7 @@ public class Movie implements Serializable {
                 ", title='" + title + '\'' +
                 ", videoUrl='" + videoUrl + '\'' +
                 ", backgroundImageUrl='" + bgImageUrl + '\'' +
-                ", backgroundImageURI='" + getBackgroundImageURI().toString() + '\'' +
+                ", backgroundImageURI='" + getBackgroundImageURI() + '\'' +
                 ", cardImageUrl='" + cardImageUrl + '\'' +
                 '}';
     }

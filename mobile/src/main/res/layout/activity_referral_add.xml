@@ -5,7 +5,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="com.eightmins.eightminutes.advocate.ReferActivity">
+  tools:context=".advocate.refer.AddActivity">
 
   <ScrollView
     android:id="@+id/scroll_view"
@@ -103,13 +103,13 @@
           android:id="@+id/phone_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="@string/phone_placeholder"
           app:hintAnimationEnabled="true">
 
           <EditText
             android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+          android:hint="@string/phone_placeholder"
             android:imeOptions="actionNext"
             android:inputType="phone"/>
         </android.support.design.widget.TextInputLayout>
@@ -178,12 +178,12 @@
           android:id="@+id/locality_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="@string/locality_placeholder"
           app:hintAnimationEnabled="true">
 
           <EditText
             android:id="@+id/locality"
             android:layout_width="match_parent"
+          android:hint="@string/locality_placeholder"
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
             android:inputType="textPostalAddress"/>
@@ -203,13 +203,13 @@
           android:id="@+id/pincode_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="@string/pincode_placeholder"
           app:hintAnimationEnabled="true">
 
           <EditText
             android:id="@+id/pincode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+          android:hint="@string/pincode_placeholder"
             android:imeOptions="actionNext"
             android:inputType="textPostalAddress"/>
         </android.support.design.widget.TextInputLayout>
@@ -228,13 +228,13 @@
           android:id="@+id/city_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="@string/city_placeholder"
           app:hintAnimationEnabled="true">
 
           <EditText
             android:id="@+id/city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+          android:hint="@string/city_placeholder"
             android:imeOptions="actionNext"
             android:inputType="textPostalAddress"/>
         </android.support.design.widget.TextInputLayout>
@@ -254,13 +254,13 @@
           android:id="@+id/average_bill_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="@string/average_bill_placeholder"
           app:hintAnimationEnabled="true">
 
           <EditText
             android:id="@+id/average_bill"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+          android:hint="@string/average_bill_placeholder"
             android:imeOptions="actionNext"
             android:inputType="numberDecimal"/>
         </android.support.design.widget.TextInputLayout>
@@ -279,7 +279,6 @@
           android:id="@+id/notes_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="@string/notes_placeholder"
           app:hintAnimationEnabled="true">
 
           <EditText
@@ -287,6 +286,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
+          android:hint="@string/notes_placeholder"
             android:inputType="textAutoComplete"/>
         </android.support.design.widget.TextInputLayout>
       </android.support.v7.widget.CardView>

@@ -7,7 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.R.id;
+import com.eightmins.eightminutes.R.layout;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
@@ -20,11 +21,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ProfileActivity extends AppCompatActivity {
-  @Bind(R.id.username) EditText username;
-  @Bind(R.id.name) EditText name;
-  @Bind(R.id.password) EditText password;
-  @Bind(R.id.email) EditText email;
-  @Bind(R.id.phone) EditText phone;
+  @Bind(id.username) EditText username;
+  @Bind(id.name) EditText name;
+  @Bind(id.password) EditText password;
+  @Bind(id.email) EditText email;
+  @Bind(id.phone) EditText phone;
 
   @Override
   protected void attachBaseContext(Context newBase) {
@@ -34,7 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_profile);
+    setContentView(layout.activity_profile);
     ButterKnife.bind(this);
 
     ParseUser user = ParseUser.getCurrentUser();
@@ -48,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
   }
 
 
-  @OnClick(R.id.link_facebook)
+  @OnClick(id.link_facebook)
   public void linkFacebook(View view) {
     final ParseUser user = ParseUser.getCurrentUser();
     if (ParseFacebookUtils.isLinked(user)) {
@@ -72,7 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
   }
 
-  @OnClick(R.id.link_twitter)
+  @OnClick(id.link_twitter)
   public void linkTwitter(View view) {
     final ParseUser user = ParseUser.getCurrentUser();
     if (ParseTwitterUtils.isLinked(user)) {

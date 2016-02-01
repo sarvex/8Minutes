@@ -17,8 +17,13 @@ package com.eightmins.eightminutes;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.media.MediaMetadata;
+import android.media.MediaMetadata.Builder;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
+import android.media.MediaPlayer.OnErrorListener;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.media.session.MediaSession;
+import android.media.session.MediaSession.Callback;
 import android.media.session.PlaybackState;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,12 +33,16 @@ import android.widget.VideoView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.eightmins.eightminutes.PlaybackOverlayFragment.OnPlayPauseClickedListener;
+import com.eightmins.eightminutes.R.id;
+import com.eightmins.eightminutes.R.layout;
+import com.eightmins.eightminutes.R.string;
 
 /**
  * PlaybackOverlayActivity for video playback that loads PlaybackOverlayFragment
  */
 public class PlaybackOverlayActivity extends Activity implements
-        PlaybackOverlayFragment.OnPlayPauseClickedListener {
+        OnPlayPauseClickedListener {
     private static final String TAG = "PlaybackOverlayActivity";
 
     private VideoView mVideoView;
@@ -47,7 +56,7 @@ public class PlaybackOverlayActivity extends Activity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.playback_controls);
+        setContentView(layout.playback_controls);
         loadViews();
         setupCallbacks();
         mSession = new MediaSession (this, "LeanbackSampleApp");
@@ -67,7 +76,7 @@ public class PlaybackOverlayActivity extends Activity implements
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        PlaybackOverlayFragment playbackOverlayFragment = (PlaybackOverlayFragment) getFragmentManager().findFragmentById(R.id.playback_controls_fragment);
+        PlaybackOverlayFragment playbackOverlayFragment = (PlaybackOverlayFragment) getFragmentManager().findFragmentById(id.playback_controls_fragment);
         switch (keyCode) {
             case KeyEvent.KEYCODE_MEDIA_PLAY:
                 playbackOverlayFragment.togglePlayback(false);
@@ -90,6 +99,7 @@ public class PlaybackOverlayActivity extends Activity implements
     /**
      * Implementation of OnPlayPauseClickedListener
      */
+    @Override
     public void onFragmentPlayPause(Movie movie, int position, Boolean playPause) {
         mVideoView.setVideoPath(movie.getVideoUrl());
 
@@ -135,8 +145,8 @@ public class PlaybackOverlayActivity extends Activity implements
         return actions;
     }
 
-    private void updateMetadata(final Movie movie) {
-        final MediaMetadata.Builder metadataBuilder = new MediaMetadata.Builder();
+    private void updateMetadata(Movie movie) {
+        final Builder metadataBuilder = new Builder();
 
         String title = movie.getTitle().replace("_", " -");
 
@@ -163,24 +173,24 @@ public class PlaybackOverlayActivity extends Activity implements
     }
 
     private void loadViews() {
-        mVideoView = (VideoView) findViewById(R.id.videoView);
+        mVideoView = (VideoView) findViewById(id.videoView);
         mVideoView.setFocusable(false);
         mVideoView.setFocusableInTouchMode(false);
     }
 
     private void setupCallbacks() {
 
-        mVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+        mVideoView.setOnErrorListener(new OnErrorListener() {
 
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
                 String msg = "";
                 if (extra == MediaPlayer.MEDIA_ERROR_TIMED_OUT) {
-                    msg = getString(R.string.video_error_media_load_timeout);
+                    msg = getString(string.video_error_media_load_timeout);
                 } else if (what == MediaPlayer.MEDIA_ERROR_SERVER_DIED) {
-                    msg = getString(R.string.video_error_server_inaccessible);
+                    msg = getString(string.video_error_server_inaccessible);
                 } else {
-                    msg = getString(R.string.video_error_unknown_error);
+                    msg = getString(string.video_error_unknown_error);
                 }
                 mVideoView.stopPlayback();
                 mPlaybackState = LeanbackPlaybackState.IDLE;
@@ -188,7 +198,7 @@ public class PlaybackOverlayActivity extends Activity implements
             }
         });
 
-        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        mVideoView.setOnPreparedListener(new OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 if (mPlaybackState == LeanbackPlaybackState.PLAYING) {
@@ -197,7 +207,7 @@ public class PlaybackOverlayActivity extends Activity implements
             }
         });
 
-        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        mVideoView.setOnCompletionListener(new OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 mPlaybackState = LeanbackPlaybackState.IDLE;
@@ -250,6 +260,6 @@ public class PlaybackOverlayActivity extends Activity implements
         PLAYING, PAUSED, BUFFERING, IDLE;
     }
 
-    private class MediaSessionCallback extends MediaSession.Callback {
+    private class MediaSessionCallback extends Callback {
     }
 }

@@ -11,62 +11,40 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.R.id;
+import com.eightmins.eightminutes.R.layout;
 import com.eightmins.eightminutes.utility.Utils;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
-import com.mobsandgeeks.saripaar.ValidationError;
-import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.Email;
-import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 
-public class ForgotActivity extends AppCompatActivity implements Validator.ValidationListener {
-  @Bind(R.id.email) @NotEmpty @Email EditText email;
-  @Bind(R.id.forgot) FloatingActionButton forgot;
+public class ForgotActivity extends AppCompatActivity {
+  @Bind(id.email) EditText email;
+  @Bind(id.forgot) FloatingActionButton forgot;
 
   private ProgressDialog progress;
-  private Validator validator;
 
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_forgot);
+    setContentView(layout.activity_forgot);
     ButterKnife.bind(this);
-
-    validator = new Validator(this);
-    validator.setValidationListener(this);
   }
 
-  @OnClick(R.id.forgot)
-  public void forgotClicked(final View view) {
-    validator.validate();
-  }
-
-  @OnEditorAction(R.id.email)
-  boolean email(int actionId) {
-    if (actionId == EditorInfo.IME_ACTION_DONE) {
-      forgot.performClick();
-      return true;
-    }
-    return false;
-  }
-
-  @Override
-  public void onValidationSucceeded() {
+  @OnClick(id.forgot)
+  public void forgotClicked(View view) {
     Utils.showProgressBar(this, progress, "Checking Email...");
 
     ParseUser.requestPasswordResetInBackground(email.getText().toString().trim(), new RequestPasswordResetCallback() {
+      @Override
       public void done(ParseException exception) {
         if (exception == null) {
           Toast.makeText(getApplicationContext(), "Reset Password Email successfully sent.", Toast.LENGTH_SHORT).show();
@@ -78,23 +56,17 @@ public class ForgotActivity extends AppCompatActivity implements Validator.Valid
     });
   }
 
-  @Override
-  protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
+  @OnEditorAction(id.email)
+  boolean email(int actionId) {
+    if (actionId == EditorInfo.IME_ACTION_DONE) {
+      forgot.performClick();
+      return true;
+    }
+    return false;
   }
 
   @Override
-  public void onValidationFailed(List<ValidationError> errors) {
-    for (ValidationError error : errors) {
-      View view = error.getView();
-      String message = error.getCollatedErrorMessage(this);
-
-      // Display error messages ;)
-      if (view instanceof EditText) {
-        ((EditText) view).setError(message);
-      } else {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-      }
-    }
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
   }
 }

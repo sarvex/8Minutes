@@ -1,12 +1,16 @@
 package com.eightmins.eightminutes.advocate.team;
 
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.R.id;
+import com.eightmins.eightminutes.R.layout;
+import com.eightmins.eightminutes.advocate.team.MemberAdapter.ViewHolder;
 import com.eightmins.eightminutes.login.User;
 
 import java.util.List;
@@ -17,7 +21,7 @@ import butterknife.ButterKnife;
 /**
  * Created by nabhilax on 14/01/16.
  */
-public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
+public class MemberAdapter extends Adapter<ViewHolder> {
   private final List<User> users;
 
   public MemberAdapter(List<User> users) {
@@ -26,7 +30,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_member, parent, false));
+    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(layout.item_member, parent, false));
   }
 
   @Override
@@ -40,16 +44,16 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
-    @Bind(R.id.name) TextView name;
-    @Bind(R.id.members) TextView members;
-    @Bind(R.id.members_label) TextView membersLabel;
-    @Bind(R.id.installed) TextView installed;
-    @Bind(R.id.installed_label) TextView installedLabel;
-    @Bind(R.id.progress) TextView progress;
-    @Bind(R.id.progress_label) TextView progressLabel;
-    @Bind(R.id.pending) TextView pending;
-    @Bind(R.id.pending_label) TextView pendingLabel;
-    @Bind(R.id.earnings) TextView earnings;
+    @Bind(id.name) TextView name;
+    @Bind(id.members) TextView members;
+    @Bind(id.members_label) TextView membersLabel;
+    @Bind(id.installed) TextView installed;
+    @Bind(id.installed_label) TextView installedLabel;
+    @Bind(id.progress) TextView progress;
+    @Bind(id.progress_label) TextView progressLabel;
+    @Bind(id.pending) TextView pending;
+    @Bind(id.pending_label) TextView pendingLabel;
+    @Bind(id.earnings) TextView earnings;
 
     public ViewHolder(View view) {
       super(view);
@@ -66,7 +70,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
       progressLabel.setText(" Progress");
       pending.setText(String.valueOf(user.getInstalled()));
       pendingLabel.setText(" Pending");
-      earnings.setText("Rs. " + String.valueOf(user.getEarnings()));
+      earnings.setText("Rs. " + user.getEarnings());
     }
   }
 }

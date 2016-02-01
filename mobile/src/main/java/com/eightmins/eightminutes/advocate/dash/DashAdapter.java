@@ -1,12 +1,16 @@
 package com.eightmins.eightminutes.advocate.dash;
 
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.eightmins.eightminutes.R;
+import com.eightmins.eightminutes.R.id;
+import com.eightmins.eightminutes.R.layout;
+import com.eightmins.eightminutes.advocate.dash.DashAdapter.ViewHolder;
 
 import java.util.List;
 
@@ -16,7 +20,7 @@ import butterknife.ButterKnife;
 /**
  * Created by nabhilax on 20/01/16.
  */
-public class DashAdapter extends RecyclerView.Adapter<DashAdapter.ViewHolder> {
+public class DashAdapter extends Adapter<ViewHolder> {
 
   public DashAdapter(List<Dash> dashes) {
     this.dashes = dashes;
@@ -26,7 +30,7 @@ public class DashAdapter extends RecyclerView.Adapter<DashAdapter.ViewHolder> {
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_dash, parent, false));
+    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(layout.item_dash, parent, false));
 
   }
 
@@ -41,8 +45,8 @@ public class DashAdapter extends RecyclerView.Adapter<DashAdapter.ViewHolder> {
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
-    @Bind(R.id.dash_title) TextView title;
-    @Bind(R.id.dash_description) TextView description;
+    @Bind(id.dash_title) TextView title;
+    @Bind(id.dash_description) TextView description;
 
     public ViewHolder(View view) {
       super(view);
