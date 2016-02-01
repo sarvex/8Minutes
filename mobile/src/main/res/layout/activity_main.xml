@@ -72,11 +72,12 @@
     android:layout_height="wrap_content"
     android:layout_gravity="end|bottom"
     android:layout_margin="16dp"
-    app:tabMode="scrollable"
-    app:tabGravity="fill"
     android:visibility="invisible"
+    app:borderWidth="0dp"
+    app:ico_color="@color/primary"
     app:ico_icon="gmd-person-add"
     app:ico_size="48dp"
-    app:borderWidth="0dp"/>
+    app:tabGravity="fill"
+    app:tabMode="scrollable"/>
 
 </android.support.design.widget.CoordinatorLayout>

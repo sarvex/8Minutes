@@ -5,10 +5,8 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:layout_margin="6sp"
-  android:layout_marginTop="10dp"
   android:clickable="true"
   app:cardBackgroundColor="@color/primary"
-  app:cardCornerRadius="6sp"
   app:cardElevation="6sp">
 
 
@@ -32,24 +30,25 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_alignParentTop="true"
-      android:text="@string/title"
-      android:gravity="left"/>
+      android:gravity="left"
+      android:text="@string/title"/>
 
     <ImageView
       android:id="@+id/youtube_play"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:scaleType="center"
-      app:ico_size="48dp"
-      app:ico_icon="gmd-play-circle"/>
+      app:ico_color="@color/primary"
+      app:ico_icon="gmd-play-circle"
+      app:ico_size="48dp"/>
 
     <TextView
       android:id="@+id/youtube_description"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"
-      android:text="@string/description_placeholder"
-      android:gravity="end"/>
+      android:gravity="end"
+      android:text="@string/description_placeholder"/>
 
   </RelativeLayout>
 </android.support.v7.widget.CardView>

@@ -140,3 +140,9 @@
 -keepattributes *Annotation,Signature
 -dontwarn com.github.siyamed.**
 -keep class com.github.siyamed.shapeimageview.**{ *; }
+
+#Iconics
+-keep class .R
+-keep class **.R$* {
+    <fields>;
+}

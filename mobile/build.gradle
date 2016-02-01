@@ -160,7 +160,6 @@ dependencies {
   compile 'com.github.glomadrian:dashed-circular-progress:1fe8b13942'
   compile 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
   compile 'com.anton46:stepsview:0.0.2'
-  compile 'com.mobsandgeeks:android-saripaar:2.0.3'
   compile 'com.mikepenz:iconics-core:2.5.5@aar'
   compile 'com.mikepenz:google-material-typeface:2.1.0.1.original@aar'
   compile 'com.mikepenz:fontawesome-typeface:4.5.0.1@aar'

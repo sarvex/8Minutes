@@ -7,6 +7,9 @@ import com.crashlytics.android.answers.Answers;
 import com.eightmins.eightminutes.advocate.refer.Referral;
 import com.eightmins.eightminutes.advocate.video.Video;
 import com.eightmins.eightminutes.login.User;
+import com.mikepenz.fontawesome_typeface_library.FontAwesome;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.Iconics;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseInstallation;
@@ -38,5 +41,9 @@ public class MainApplication extends Application {
 
     Fabric.with(this, new Crashlytics(), new Answers());
     LeakCanary.install(this);
+
+    Iconics.init(this);
+    Iconics.registerFont(new GoogleMaterial());
+    Iconics.registerFont(new FontAwesome());
   }
 }

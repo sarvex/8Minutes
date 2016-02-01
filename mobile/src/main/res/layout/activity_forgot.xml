@@ -21,14 +21,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="6sp"
         app:cardBackgroundColor="@color/primary"
-        app:cardCornerRadius="6sp"
         app:cardElevation="6sp">
 
         <android.support.design.widget.TextInputLayout
           android:id="@+id/email_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          app:errorEnabled="true"
           app:hintAnimationEnabled="true">
 
           <EditText
@@ -51,9 +49,10 @@
     android:layout_gravity="end|bottom"
     android:layout_margin="16dp"
     android:layout_marginTop="48dp"
+    app:borderWidth="0dp"
+    app:ico_color="@color/primary"
     app:ico_icon="gmd-help"
     app:ico_size="48dp"
-    app:borderWidth="0dp"
     app:layout_anchor="@+id/email_card"
     app:layout_anchorGravity="bottom|end|right"
     app:tabGravity="fill"
