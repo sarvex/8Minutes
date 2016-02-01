@@ -2,3 +2,4 @@
 	path = volley
 	url = https://android.googlesource.com/platform/frameworks/volley
 	branch = master
+	master = master
