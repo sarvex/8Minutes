@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'com.jakewharton.hugo'
+apply plugin: 'android-apt'
 
 android {
   compileSdkVersion Integer.parseInt(project.COMPILE_SDK)
@@ -166,6 +167,9 @@ dependencies {
 
   compile 'frankiesardo:icepick:3.1.0'
   provided 'frankiesardo:icepick-processor:3.1.0'
+
+  apt "org.androidannotations:androidannotations:3.3.2"
+  compile "org.androidannotations:androidannotations-api:3.3.2"
 }
 
 apply plugin: 'com.google.gms.google-services'
