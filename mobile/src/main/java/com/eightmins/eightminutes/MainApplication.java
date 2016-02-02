@@ -2,6 +2,8 @@ package com.eightmins.eightminutes;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.StrictMode;
+import android.os.StrictMode.ThreadPolicy.Builder;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
@@ -26,12 +28,13 @@ import io.fabric.sdk.android.Fabric;
  */
 public class MainApplication extends Application {
 
+  private RefWatcher refWatcher;
+
   public static RefWatcher getRefWatcher(Context context) {
     MainApplication application = (MainApplication) context.getApplicationContext();
     return application.refWatcher;
   }
 
-  private RefWatcher refWatcher;
 
   @Override
   public void onCreate() {
@@ -49,7 +52,9 @@ public class MainApplication extends Application {
     ParseInstallation.getCurrentInstallation().saveInBackground();
 
     Fabric.with(this, new Crashlytics(), new Answers());
-    LeakCanary.install(this);
+
+    StrictMode.setThreadPolicy(new Builder().detectAll().penaltyLog().penaltyDeath().build());
+    refWatcher = LeakCanary.install(this);
 
     Iconics.init(this);
     Iconics.registerFont(new GoogleMaterial());
