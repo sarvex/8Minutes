@@ -51,7 +51,7 @@ public class MainApplication extends Application {
     ParseTwitterUtils.initialize(BuildConfig.TWITTER_KEY, BuildConfig.TWITTER_SECRET);
     ParseInstallation.getCurrentInstallation().saveInBackground();
 
-    Fabric.with(this, new Crashlytics(), new Answers());
+//    Fabric.with(this, new Crashlytics(), new Answers());
 
     StrictMode.setThreadPolicy(new Builder().detectAll().penaltyLog().penaltyDeath().build());
     refWatcher = LeakCanary.install(this);
