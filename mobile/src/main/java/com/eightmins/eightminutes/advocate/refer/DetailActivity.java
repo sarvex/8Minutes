@@ -2,7 +2,7 @@ package com.eightmins.eightminutes.advocate.refer;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.eightmins.eightminutes.R;
 import com.mikepenz.iconics.context.IconicsContextWrapper;

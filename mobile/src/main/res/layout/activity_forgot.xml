@@ -1,4 +1,4 @@
-<android.support.design.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
@@ -15,7 +15,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
 
-      <android.support.v7.widget.CardView
+      <androidx.cardview.widget.CardView
         android:id="@+id/email_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
         app:cardBackgroundColor="@color/primary"
         app:cardElevation="6sp">
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
           android:id="@+id/email_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -36,13 +36,13 @@
             android:hint="@string/email_placeholder"
             android:imeOptions="actionDone"
             android:inputType="textEmailAddress"/>
-        </android.support.design.widget.TextInputLayout>
-      </android.support.v7.widget.CardView>
+        </com.google.android.material.textfield.TextInputLayout>
+      </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
   </ScrollView>
 
-  <android.support.design.widget.FloatingActionButton
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
     android:id="@+id/forgot"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -57,4 +57,4 @@
     app:layout_anchorGravity="bottom|end|right"
     app:tabGravity="fill"
     app:tabMode="scrollable"/>
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

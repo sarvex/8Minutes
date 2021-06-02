@@ -13,7 +13,7 @@
     android:id="@+id/action_share"
     app:ico_size="48dp"
     app:ico_icon="gmd-share"
-    app:actionProviderClass="android.support.v7.widget.ShareActionProvider"
+    app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"
     app:showAsAction="ifRoom|collapseActionView"/>
 
   <item
@@ -21,6 +21,6 @@
     app:ico_size="48dp"
     app:ico_icon="gmd-search"
     android:orderInCategory="100"
-    app:actionViewClass="android.support.v7.widget.SearchView"
+    app:actionViewClass="androidx.appcompat.widget.SearchView"
     app:showAsAction="ifRoom|collapseActionView"/>
 </menu>
