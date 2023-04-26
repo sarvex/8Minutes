@@ -119,7 +119,7 @@ dependencies {
   stagingImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
   testImplementation 'junit:junit:4.13.2'
 
-  implementation('com.mikepenz:materialdrawer:8.4.5@aar') {
+  implementation('com.mikepenz:materialdrawer:9.0.1@aar') {
     transitive = true
   }
 
