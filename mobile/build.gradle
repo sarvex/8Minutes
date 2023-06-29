@@ -112,11 +112,11 @@ android {
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-  debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.11'
+  debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.12'
   releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
   betaImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
   alphaImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
-  stagingImplementation 'com.squareup.leakcanary:leakcanary-android:2.11'
+  stagingImplementation 'com.squareup.leakcanary:leakcanary-android:2.12'
   testImplementation 'junit:junit:4.13.2'
 
   implementation('com.mikepenz:materialdrawer:9.0.1@aar') {
